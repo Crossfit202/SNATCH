@@ -29,6 +29,76 @@ public class Heist {
 	
 	@Column(name = "crew_id")
 	private int crewId;
+
+	public Heist() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Heist(int heistId, String description, String location, boolean isAssigned, boolean status, int crewId) {
+		super();
+		this.heistId = heistId;
+		this.description = description;
+		this.location = location;
+		this.isAssigned = isAssigned;
+		this.status = status;
+		this.crewId = crewId;
+	}
+
+	public int getHeistId() {
+		return heistId;
+	}
+
+	public void setHeistId(int heistId) {
+		this.heistId = heistId;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public boolean isAssigned() {
+		return isAssigned;
+	}
+
+	public void setAssigned(boolean isAssigned) {
+		this.isAssigned = isAssigned;
+	}
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
+	public int getCrewId() {
+		return crewId;
+	}
+
+	public void setCrewId(int crewId) {
+		this.crewId = crewId;
+	}
+
+	@Override
+	public String toString() {
+		return "Heist [heistId=" + heistId + ", description=" + description + ", location=" + location + ", isAssigned="
+				+ isAssigned + ", status=" + status + ", crewId=" + crewId + "]";
+	}
+	
 	
 		
 }
