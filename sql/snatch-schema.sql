@@ -24,7 +24,6 @@ CREATE TABLE `snatch`.`captain` (
   `leader_id` INT NULL,
   PRIMARY KEY (`captain_id`),
   UNIQUE INDEX `captain_name_UNIQUE` (`captain_name` ASC) VISIBLE,
-  UNIQUE INDEX `leader_id_UNIQUE` (`leader_id` ASC) VISIBLE,
   CONSTRAINT `leader_id`
     FOREIGN KEY (`leader_id`)
     REFERENCES `snatch`.`leader` (`leader_id`)

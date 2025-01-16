@@ -27,7 +27,7 @@ VALUES
 ('Sneaky', 'Raccoon', 'https://example.com/images/sneaky.jpg', TRUE, 1), 
 ('Claws', 'Fox', 'https://example.com/images/claws.jpg', TRUE, 1), 
 ('Swift', 'Hawk', 'https://example.com/images/swift.jpg', TRUE, 2), 
-('Shadow', 'Panther', NULL, FALSE, NULL), 
+('Shadow', 'Panther', NULL, FALSE, 3), 
 ('Digger', 'Mole', 'https://example.com/images/digger.jpg', TRUE, 2);
 
 SELECT * FROM personnel;
@@ -73,7 +73,7 @@ INSERT INTO `snatch`.`heist` (description, location, is_assigned, status, crew_i
 VALUES 
 ('Steal gold bars from the downtown bank vault', 'Downtown Bank', TRUE, 'In Progress', 1), 
 ('Retrieve the ancient artifact from the museum', 'City Museum', TRUE, 'Planned', 2), 
-('Intercept the jewel shipment on Highway 52', 'Highway 52', FALSE, 'Pending Crew Assignment', NULL), 
+('Intercept the jewel shipment on Highway 52', 'Highway 52', FALSE, 'Pending Crew Assignment', 2), 
 ('Rescue stolen treasure from rival gang', 'Forest Hideout', TRUE, 'Completed', 3), 
 ('Retrieve classified documents from the library', 'Grand Library', TRUE, 'In Progress', 2);
 

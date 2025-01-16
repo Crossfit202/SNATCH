@@ -25,7 +25,7 @@ public class Heist {
 	private boolean isAssigned; 
 	
 	@Column(name = "status")
-	private boolean status; 
+	private String status; 
 	
 	@Column(name = "crew_id")
 	private int crewId;
@@ -35,7 +35,7 @@ public class Heist {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Heist(int heistId, String description, String location, boolean isAssigned, boolean status, int crewId) {
+	public Heist(int heistId, String description, String location, boolean isAssigned, String status, int crewId) {
 		super();
 		this.heistId = heistId;
 		this.description = description;
@@ -77,11 +77,11 @@ public class Heist {
 		this.isAssigned = isAssigned;
 	}
 
-	public boolean isStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(boolean status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
