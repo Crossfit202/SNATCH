@@ -41,14 +41,14 @@ public class CaptainService {
 	// CREATE ONE
 	public ResponseEntity<Captain> addOne(CaptainDTO captainDTO) {
 		return ResponseEntity.status(HttpStatus.CREATED)
-							 .body(repo.save(new Captain(0, captainDTO.getCaptainName(), captainDTO.getLeaderId())));
+							 .body(repo.save(new Captain(0, captainDTO.getCaptainName(), null, null)));
 	}
 	
 	// UPDATE ONE
 	public ResponseEntity<Captain> updateOne(int captainId, CaptainDTO captainDTO) {
 		if(repo.existsById(captainId)) {
 			return ResponseEntity.status(HttpStatus.OK)
-			 			 		 .body(repo.save(new Captain(captainId, captainDTO.getCaptainName(), captainDTO.getLeaderId())));
+			 			 		 .body(repo.save(new Captain(captainId, captainDTO.getCaptainName(), null, null)));
 		} else {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 								 .body(null);

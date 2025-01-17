@@ -1,10 +1,17 @@
 package com.skillstorm.models;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,22 +34,30 @@ public class Crew {
 	@Column(name = "has_captain")
 	private boolean hasCaptain;
 	
-	@Column(name = "captain_id")
-	private int captainId;
+	@OneToOne
+	@JoinColumn(name = "captain_id", referencedColumnName = "captain_id")
+	@JsonIgnoreProperties({"leader", "crew"})
+	private Captain captain;
+	
+	@OneToMany(mappedBy = "crew")
+	@JsonIgnoreProperties("crew")
+	private List<Personnel> personnels;
 
 	public Crew() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Crew(int crewId, String crewName, int maxCapacity, boolean availability, boolean hasCaptain, int captainId) {
+	public Crew(int crewId, String crewName, int maxCapacity, boolean availability, boolean hasCaptain, Captain captain,
+			List<Personnel> personnels) {
 		super();
 		this.crewId = crewId;
 		this.crewName = crewName;
 		this.maxCapacity = maxCapacity;
 		this.availability = availability;
 		this.hasCaptain = hasCaptain;
-		this.captainId = captainId;
+		this.captain = captain;
+		this.personnels = personnels;
 	}
 
 	public int getCrewId() {
@@ -85,23 +100,29 @@ public class Crew {
 		this.hasCaptain = hasCaptain;
 	}
 
-	public int getCaptainId() {
-		return captainId;
+	public Captain getCaptain() {
+		return captain;
 	}
 
-	public void setCaptainId(int captainId) {
-		this.captainId = captainId;
+	public void setCaptain(Captain captain) {
+		this.captain = captain;
+	}
+
+	public List<Personnel> getPersonnels() {
+		return personnels;
+	}
+
+	public void setPersonnels(List<Personnel> personnels) {
+		this.personnels = personnels;
 	}
 
 	@Override
 	public String toString() {
 		return "Crew [crewId=" + crewId + ", crewName=" + crewName + ", maxCapacity=" + maxCapacity + ", availability="
-				+ availability + ", hasCaptain=" + hasCaptain + ", captainId=" + captainId + "]";
+				+ availability + ", hasCaptain=" + hasCaptain + ", captain=" + captain + ", personnels=" + personnels
+				+ "]";
 	}
-	
-	
-	
-	
-	
+
+
 	
 }

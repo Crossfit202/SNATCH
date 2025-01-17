@@ -1,10 +1,16 @@
 package com.skillstorm.models;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,19 +25,25 @@ public class Captain {
 	@Column(name = "captain_name")
 	private String captainName;
 	
-	// FOREIGN KEY - MODIFY LATER
-	@Column(name = "leader_id")
-	private int leaderId;
+	@ManyToOne
+	@JoinColumn(name = "leader_id", referencedColumnName = "leader_id")
+	private Leader leader;
 	
+	@OneToOne(mappedBy = "captain")
+	@JsonIgnoreProperties({"captain", "hasCaptain", "personnels"})
+	private Crew crew;
+
 	public Captain() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public Captain(int captainId, String captainName, int leaderId) {
+	public Captain(int captainId, String captainName, Leader leader, Crew crew) {
 		super();
 		this.captainId = captainId;
 		this.captainName = captainName;
-		this.leaderId = leaderId;
+		this.leader = leader;
+		this.crew = crew;
 	}
 
 	public int getCaptainId() {
@@ -50,17 +62,28 @@ public class Captain {
 		this.captainName = captainName;
 	}
 
-	public int getLeaderId() {
-		return leaderId;
+	public Leader getLeader() {
+		return leader;
 	}
 
-	public void setLeaderId(int leaderId) {
-		this.leaderId = leaderId;
+	public void setLeader(Leader leader) {
+		this.leader = leader;
+	}
+
+	public Crew getCrew() {
+		return crew;
+	}
+
+	public void setCrew(Crew crew) {
+		this.crew = crew;
 	}
 
 	@Override
 	public String toString() {
-		return "Captain [captainId=" + captainId + ", captainName=" + captainName + ", leaderId=" + leaderId + "]";
+		return "Captain [captainId=" + captainId + ", captainName=" + captainName + ", leader=" + leader + ", crew="
+				+ crew + "]";
 	}
+
+
 	
 }

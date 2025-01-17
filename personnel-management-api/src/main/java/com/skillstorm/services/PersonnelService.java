@@ -43,7 +43,8 @@ public class PersonnelService {
 				            		                     personnelDTO.getSpecies(),
 				            		                     personnelDTO.getProfileImg(),
 				            		                     personnelDTO.isAssigned(),
-				            		                     personnelDTO.getCrewId())));
+				            		                     null,
+				            		                     null)));
 	}
 	
 	
@@ -55,7 +56,8 @@ public class PersonnelService {
 		    			            		                                    personnelDTO.getSpecies(),
 		    			            		                                    personnelDTO.getProfileImg(),
 		    			            		                                    personnelDTO.isAssigned(),
-		    			            		                                    personnelDTO.getCrewId())));
+		    			            		                                    null,
+		    			            		                                    null)));
 		    	
 		    else
 		    	return ResponseEntity.status(HttpStatus.BAD_REQUEST)

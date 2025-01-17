@@ -40,7 +40,7 @@ public class SkillService {
 //	CREATE ONE - POST
 	public ResponseEntity<Skill> addOne(SkillDTO skillDTO) {
 		return ResponseEntity.status(HttpStatus.CREATED)
-				             .body(repo.save(new Skill(0, skillDTO.getSkillName())));
+				             .body(repo.save(new Skill(0, skillDTO.getSkillName(), null)));
 	}
 	
 	
@@ -48,7 +48,7 @@ public class SkillService {
 		public ResponseEntity<Skill> updateOne(int skillId, SkillDTO skillDTO) {
 		    if (repo.existsById(skillId))
 		    	return ResponseEntity.status(HttpStatus.OK)
-		    			             .body(repo.save(new Skill(skillId, skillDTO.getSkillName())));
+		    			             .body(repo.save(new Skill(skillId, skillDTO.getSkillName(), null)));
 		    	
 		    else
 		    	return ResponseEntity.status(HttpStatus.BAD_REQUEST)

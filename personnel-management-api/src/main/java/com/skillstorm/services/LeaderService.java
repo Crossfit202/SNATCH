@@ -41,14 +41,14 @@ public class LeaderService {
 	// CREATE ONE
 	public ResponseEntity<Leader> addOne(LeaderDTO leaderDTO) {
 		return ResponseEntity.status(HttpStatus.CREATED)
-							 .body(repo.save(new Leader(0, leaderDTO.getLeaderName())));
+							 .body(repo.save(new Leader(0, leaderDTO.getLeaderName(), null)));
 	}
 	
 	// UPDATE ONE
 	public ResponseEntity<Leader> updateOne(int leaderId, LeaderDTO leaderDTO) {
 		if(repo.existsById(leaderId)) {
 			return ResponseEntity.status(HttpStatus.OK)
-			 			 		 .body(repo.save(new Leader(leaderId, leaderDTO.getLeaderName())));
+			 			 		 .body(repo.save(new Leader(leaderId, leaderDTO.getLeaderName(), null)));
 	
 		} else {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
