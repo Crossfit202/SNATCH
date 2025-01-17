@@ -24,11 +24,12 @@ spring:
    - id: personnel-management-api-route
      uri: lb://personnel-management-api
      predicates:
-     - Path=/leader/**
-     - Path=/captain/**
-     - Path=/crew/**
-     - Path=/personnel/**
-     - Path=/skill/**
+     - Path=/**
+#     - Path=/leader/**
+#     - Path=/captain/**
+#     - Path=/crew/**
+#     - Path=/personnel/**
+#     - Path=/skill/**
 
 # typical port for gateways is 9000
 server:

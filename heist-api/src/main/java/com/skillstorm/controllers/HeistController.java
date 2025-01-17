@@ -41,6 +41,12 @@ public class HeistController {
 		return service.findById(heistId);
 	}
 	
+//	GET BY CREW ID
+	@GetMapping("/crew/{crewId}")
+	public ResponseEntity<Heist> findByCrewId(@PathVariable("crewId") int crewId) {
+		return service.findByCrewId(crewId);
+	}
+	
 //	CREATE - POST
 	@PostMapping
 	public ResponseEntity<Heist> addOne(@RequestBody HeistDTO heistDTO) {

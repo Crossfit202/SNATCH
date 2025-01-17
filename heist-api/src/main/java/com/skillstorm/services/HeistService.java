@@ -35,6 +35,17 @@ public class HeistService {
 				                  .body(null);
 	}
 	
+// GET HEIST BY CREW ID
+	public ResponseEntity<Heist> findByCrewId(int crewId) {
+		if (repo.existsById(crewId)) {
+			return ResponseEntity.status(HttpStatus.OK)
+								 .body(repo.findById(crewId).get());
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+								 .body(null);
+		}
+	}
+	
 	
 //	CREATE ONE - POST
 	public ResponseEntity<Heist> addOne(HeistDTO heistDTO) {

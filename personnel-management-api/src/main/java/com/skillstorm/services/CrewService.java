@@ -4,7 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.skillstorm.apis.HeistClient;
 import com.skillstorm.dtos.CrewDTO;
+import com.skillstorm.dtos.HeistDTO;
 import com.skillstorm.models.Crew;
 import com.skillstorm.repositories.CrewRepository;
 
@@ -13,10 +15,12 @@ import com.skillstorm.repositories.CrewRepository;
 @Service
 public class CrewService {
 	private CrewRepository repo;
+	private HeistClient heistClient;
 
-	public CrewService(CrewRepository repo) {
+	public CrewService(CrewRepository repo, HeistClient heistClient) {
 		super();
 		this.repo = repo;
+		this.heistClient = heistClient;
 	}
 
 //	SERVICE METHODS
@@ -34,6 +38,16 @@ public class CrewService {
 							     .body(repo.findById(crewId).get());
 		else return ResponseEntity.status(HttpStatus.NOT_FOUND)
 				                  .body(null);
+	}
+	
+//	GET HEIST BY CREW ID
+	public ResponseEntity<HeistDTO> findHeistByCrewId(int crewId) {
+		if (repo.existsById(crewId)) {
+			return heistClient.findByCrewId(crewId);
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+								 .body(null);
+		}
 	}
 	
 	

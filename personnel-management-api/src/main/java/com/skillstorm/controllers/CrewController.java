@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.skillstorm.apis.HeistClient;
 import com.skillstorm.dtos.CrewDTO;
+import com.skillstorm.dtos.HeistDTO;
 import com.skillstorm.models.Crew;
 import com.skillstorm.services.CrewService;
 
@@ -20,10 +22,12 @@ import com.skillstorm.services.CrewService;
 public class CrewController {
 
 	private CrewService service;
-
-	public CrewController(CrewService service) {
+	private HeistClient heistClient;
+	
+	public CrewController(CrewService service, HeistClient heistClient) {
 		super();
 		this.service = service;
+		this.heistClient = heistClient;
 	}
 	
 //	GET ALL
@@ -38,6 +42,12 @@ public class CrewController {
 	@GetMapping("/{crewId}")
 	public ResponseEntity<Crew> findById(@PathVariable("crewId") int crewId) {
 		return service.findById(crewId);
+	}
+	
+//	GET HEIST BY CREW ID
+	@GetMapping("/heist/{crewId}")
+	public ResponseEntity<HeistDTO> findHeistByCrewId(@PathVariable("crewId") int crewId) {
+		return heistClient.findByCrewId(crewId);
 	}
 	
 //	CREATE - POST
