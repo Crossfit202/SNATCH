@@ -6,10 +6,10 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class InventoryApiApplication {
+public class SnatchGatewayApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(InventoryApiApplication.class, args);
+		SpringApplication.run(SnatchGatewayApplication.class, args);
 	}
 
 }
