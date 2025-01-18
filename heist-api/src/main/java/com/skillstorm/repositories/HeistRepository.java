@@ -10,4 +10,6 @@ import com.skillstorm.models.Heist;
 @Repository
 public interface HeistRepository extends CrudRepository<Heist, Integer> {
 
+	Heist findByCrewId(int crewId);
+	
 }
