@@ -73,9 +73,7 @@ INSERT INTO `snatch`.`heist` (description, location, is_assigned, status, crew_i
 VALUES 
 ('Steal gold bars from the downtown bank vault', 'Downtown Bank', TRUE, 'In Progress', 1), 
 ('Retrieve the ancient artifact from the museum', 'City Museum', TRUE, 'Planned', 2), 
-('Intercept the jewel shipment on Highway 52', 'Highway 52', FALSE, 'Pending Crew Assignment', 2), 
-('Rescue stolen treasure from rival gang', 'Forest Hideout', TRUE, 'Completed', 3), 
-('Retrieve classified documents from the library', 'Grand Library', TRUE, 'In Progress', 2);
+('Rescue stolen treasure from rival gang', 'Forest Hideout', TRUE, 'Completed', 3);
 
 SELECT * FROM heist;
 
