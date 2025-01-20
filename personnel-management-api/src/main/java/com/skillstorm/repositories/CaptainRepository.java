@@ -7,5 +7,5 @@ import com.skillstorm.models.Captain;
 
 @Repository
 public interface CaptainRepository extends CrudRepository<Captain, Integer> {
-
+	boolean existsByCaptainNameIgnoreCase(String captainName);
 }

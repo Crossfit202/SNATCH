@@ -43,7 +43,7 @@ public class PersonnelService {
 				            		                     personnelDTO.getSpecies(),
 				            		                     personnelDTO.getProfileImg(),
 				            		                     personnelDTO.isAssigned(),
-				            		                     null,
+				            		                     personnelDTO.getCrew(),
 				            		                     null)));
 	}
 	
@@ -56,7 +56,7 @@ public class PersonnelService {
 		    			            		                                    personnelDTO.getSpecies(),
 		    			            		                                    personnelDTO.getProfileImg(),
 		    			            		                                    personnelDTO.isAssigned(),
-		    			            		                                    null,
+		    			            		                                    personnelDTO.getCrew(),
 		    			            		                                    null)));
 		    	
 		    else
