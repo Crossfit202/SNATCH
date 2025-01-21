@@ -8,17 +8,19 @@ public class CrewDTO {
 	
 	private int maxCapacity;
 	
-	private boolean avaiability;
+	private boolean availability;
 	
 	private boolean hasCaptain;
 	
 	private Captain captain;
+	
+	
 
 	public CrewDTO(String crewName, int maxCapacity, boolean avaiability, boolean hasCaptain, Captain captain) {
 		super();
 		this.crewName = crewName;
 		this.maxCapacity = maxCapacity;
-		this.avaiability = avaiability;
+		this.availability = avaiability;
 		this.hasCaptain = hasCaptain;
 		this.captain = captain;
 	}
@@ -39,12 +41,12 @@ public class CrewDTO {
 		this.maxCapacity = maxCapacity;
 	}
 
-	public boolean isAvaiability() {
-		return avaiability;
+	public boolean isAvailability() {
+		return availability;
 	}
 
-	public void setAvaiability(boolean avaiability) {
-		this.avaiability = avaiability;
+	public void setAvailability(boolean avaiability) {
+		this.availability = avaiability;
 	}
 
 	public boolean isHasCaptain() {
@@ -66,7 +68,7 @@ public class CrewDTO {
 	
 	@Override
 	public String toString() {
-		return "CrewDTO [crewName=" + crewName + ", maxCapacity=" + maxCapacity + ", avaiability=" + avaiability
+		return "CrewDTO [crewName=" + crewName + ", maxCapacity=" + maxCapacity + ", availability=" + availability
 				+ ", hasCaptain=" + hasCaptain + ", captain=" + captain + "]";
 	}
 	

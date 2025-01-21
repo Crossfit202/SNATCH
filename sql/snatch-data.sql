@@ -122,6 +122,3 @@ SELECT * FROM loot;
 
 
 -- DESCRIBE `snatch`.`loot`;
-
-
-
