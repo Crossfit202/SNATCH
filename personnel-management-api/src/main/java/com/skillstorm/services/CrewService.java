@@ -57,7 +57,7 @@ public class CrewService {
 		return ResponseEntity.status(HttpStatus.CREATED)
 				             .body(repo.save(new Crew(0, crewDTO.getCrewName(),
 				            		                     crewDTO.getMaxCapacity(),
-				            		                     crewDTO.isAvaiability(),
+				            		                     crewDTO.isAvailability(),
 				            		                     crewDTO.isHasCaptain(),
 				            		                     crewDTO.getCaptain(), 
 				            		                     null
@@ -71,7 +71,7 @@ public class CrewService {
 		    	return ResponseEntity.status(HttpStatus.OK)
 		    			             .body(repo.save(new Crew(crewId, crewDTO.getCrewName(),
 	            		                                              crewDTO.getMaxCapacity(),
-	            		                                              crewDTO.isAvaiability(),
+	            		                                              crewDTO.isAvailability(),
 	            		                                              crewDTO.isHasCaptain(),
 	            		                                              crewDTO.getCaptain(),
 	            		                                              null)));

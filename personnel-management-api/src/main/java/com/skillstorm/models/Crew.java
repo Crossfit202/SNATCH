@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -39,7 +40,7 @@ public class Crew {
 	@JsonIgnoreProperties({"leader", "crew"})
 	private Captain captain;
 	
-	@OneToMany(mappedBy = "crew")
+	@OneToMany(mappedBy = "crew", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("crew")
 	private List<Personnel> personnels;
 
