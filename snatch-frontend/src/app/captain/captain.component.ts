@@ -5,6 +5,7 @@ import { CaptainService } from '../services/captain.service';
 import { Captain } from '../models/Captain';
 import { Leader } from '../models/Leader';
 import { Crew } from '../models/Crew';
+import { LeaderService } from '../services/leader.service';
 
 // Define the Angular component
 @Component({
@@ -28,14 +29,14 @@ export class CaptainComponent implements OnInit {
   crews: Crew[] = [];
 
   // Constructor to inject the CaptainService into the component
-  constructor(private captainService: CaptainService) { }
+  constructor(private captainService: CaptainService, private leaderService: LeaderService) { }
 
   // Lifecycle hook that gets called once the component is initialized
   ngOnInit(): void {
     // Load the list of captains from the backend
     this.loadCaptains();
     // Load the list of leaders for the dropdown
-    // this.loadLeaders();
+    this.loadLeaders();
     // // Load the list of crews for the dropdown
     // this.loadCrews();
   }
@@ -47,12 +48,12 @@ export class CaptainComponent implements OnInit {
     });
   }
 
-  // // Method to fetch the list of leaders from the backend and assign it to the leaders array
-  // loadLeaders(): void {
-  //   this.captainService.getAllLeaders().subscribe(data => {
-  //     this.leaders = data; // Update the leaders array with the data from the API
-  //   });
-  // }
+  // Method to fetch the list of leaders from the backend and assign it to the leaders array
+  loadLeaders(): void {
+    this.leaderService.getLeaders().subscribe(data => {
+      this.leaders = data; // Update the leaders array with the data from the API
+    });
+  }
 
   // // Method to fetch the list of crews from the backend and assign it to the crews array
   // loadCrews(): void {

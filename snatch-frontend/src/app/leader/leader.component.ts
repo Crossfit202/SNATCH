@@ -20,12 +20,25 @@ export class LeaderComponent implements OnInit {
 
   ngOnInit(): void {
     // Load the list of captains from the backend
-    this.loadLeaders();
+    this.getLeaders();
   }
 
-  loadLeaders(): void {
-    this.leaderService.getAllLeaders().subscribe(data => {
+  getLeaders(): void {
+    this.leaderService.getLeaders().subscribe(data => {
       this.leaders = data;
+    });
+  }
+
+  addLeader(): void {
+    this.leaderService.addLeader(this.newLeader).subscribe(data => {
+      this.leaders.push(data);
+      this.newLeader = new Leader(0, '');
+    });
+  }
+
+  deleteLeader(id: number): void {
+    this.leaderService.deleteLeader(id).subscribe(() => {
+      this.leaders = this.leaders.filter(leader => leader.leaderId !== id);
     });
   }
 }

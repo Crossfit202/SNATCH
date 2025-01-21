@@ -2,9 +2,18 @@
 
 
 <ul>
-
     <li *ngFor="let leader of leaders">
-
         {{ leader.leaderName }}
+        <button (click)="deleteLeader(leader.leaderId)">Delete</button>
     </li>
 </ul>
+
+<h2>Add Leader</h2>
+
+<form (ngSubmit)="addLeader()">
+
+    <label for="leaderName">Leader Name:</label>
+    <input id="leaderName" [(ngModel)]="newLeader.leaderName" name="leaderName" required />
+
+    <button type="submit">Add</button>
+</form>

@@ -11,8 +11,16 @@ export class LeaderService {
   private apiUrl = '/api/leader';
   constructor(private http: HttpClient) { }
 
-  getAllLeaders(): Observable<Leader[]> {
+  getLeaders(): Observable<Leader[]> {
     return this.http.get<Leader[]>(this.apiUrl)
+  }
+
+  addLeader(leader: Leader): Observable<Leader> {
+    return this.http.post<Leader>(this.apiUrl, leader);
+  }
+
+  deleteLeader(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
 
