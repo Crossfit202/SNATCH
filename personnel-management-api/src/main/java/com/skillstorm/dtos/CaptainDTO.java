@@ -1,16 +1,17 @@
 package com.skillstorm.dtos;
 
+import com.skillstorm.models.Leader;
+
 public class CaptainDTO {
 
 	private String captainName;
 	
-	// FOREIGN KEY - MODIFY LATER
-	private int leaderId;
+	private Leader leader;
 
-	public CaptainDTO(String captainName, int leaderId) {
+	public CaptainDTO(String captainName, Leader leader) {
 		super();
 		this.captainName = captainName;
-		this.leaderId = leaderId;
+		this.leader = leader;
 	}
 
 	public String getCaptainName() {
@@ -21,17 +22,19 @@ public class CaptainDTO {
 		this.captainName = captainName;
 	}
 
-	public int getLeaderId() {
-		return leaderId;
+	public Leader getLeader() {
+		return leader;
 	}
 
-	public void setLeaderId(int leaderId) {
-		this.leaderId = leaderId;
+	public void setLeader(Leader leader) {
+		this.leader = leader;
 	}
 
 	@Override
 	public String toString() {
-		return "CaptainDTO [captainName=" + captainName + ", leaderId=" + leaderId + "]";
+		return "CaptainDTO [captainName=" + captainName + ", leader=" + leader + "]";
 	}
+
+
 	
 }

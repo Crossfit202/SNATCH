@@ -59,7 +59,7 @@ public class CrewService {
 				            		                     crewDTO.getMaxCapacity(),
 				            		                     crewDTO.isAvaiability(),
 				            		                     crewDTO.isHasCaptain(),
-				            		                     null, 
+				            		                     crewDTO.getCaptain(), 
 				            		                     null
 				            		                     )));
 	}
@@ -73,9 +73,9 @@ public class CrewService {
 	            		                                              crewDTO.getMaxCapacity(),
 	            		                                              crewDTO.isAvaiability(),
 	            		                                              crewDTO.isHasCaptain(),
-	            		                                              null,
+	            		                                              crewDTO.getCaptain(),
 	            		                                              null)));
-		    	else
+		    else
 		    	return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 		    			             .body(null);
 		}

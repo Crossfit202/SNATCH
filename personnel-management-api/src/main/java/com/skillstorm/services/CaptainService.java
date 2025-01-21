@@ -48,7 +48,7 @@ public class CaptainService {
 		}
 		
 		return ResponseEntity.status(HttpStatus.CREATED)
-				 .body(repo.save(new Captain(0, captainDTO.getCaptainName(), null, null)));
+				 .body(repo.save(new Captain(0, captainDTO.getCaptainName(), captainDTO.getLeader(), null)));
 		
 	}
 	
@@ -56,7 +56,7 @@ public class CaptainService {
 	public ResponseEntity<Captain> updateOne(int captainId, CaptainDTO captainDTO) {
 		if(repo.existsById(captainId)) {
 			return ResponseEntity.status(HttpStatus.OK)
-			 			 		 .body(repo.save(new Captain(captainId, captainDTO.getCaptainName(), null, null)));
+			 			 		 .body(repo.save(new Captain(captainId, captainDTO.getCaptainName(), captainDTO.getLeader(), null)));
 		} else {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 					             .header("Error-Message", "A Captain with this name already exists")

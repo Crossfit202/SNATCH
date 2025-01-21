@@ -1,5 +1,7 @@
 package com.skillstorm.dtos;
 
+import com.skillstorm.models.Captain;
+
 public class CrewDTO {
 	
 	private String crewName;
@@ -10,15 +12,15 @@ public class CrewDTO {
 	
 	private boolean hasCaptain;
 	
-	private int captainId;
+	private Captain captain;
 
-	public CrewDTO(String crewName, int maxCapacity, boolean avaiability, boolean hasCaptain, int captainId) {
+	public CrewDTO(String crewName, int maxCapacity, boolean avaiability, boolean hasCaptain, Captain captain) {
 		super();
 		this.crewName = crewName;
 		this.maxCapacity = maxCapacity;
 		this.avaiability = avaiability;
 		this.hasCaptain = hasCaptain;
-		this.captainId = captainId;
+		this.captain = captain;
 	}
 
 	public String getCrewName() {
@@ -53,23 +55,20 @@ public class CrewDTO {
 		this.hasCaptain = hasCaptain;
 	}
 
-	public int getCaptainId() {
-		return captainId;
+	public Captain getCaptain() {
+		return captain;
 	}
 
-	public void setCaptainId(int captainId) {
-		this.captainId = captainId;
+	public void setCaptain(Captain captain) {
+		this.captain = captain;
 	}
 
+	
 	@Override
 	public String toString() {
 		return "CrewDTO [crewName=" + crewName + ", maxCapacity=" + maxCapacity + ", avaiability=" + avaiability
-				+ ", hasCaptain=" + hasCaptain + ", captainId=" + captainId + "]";
+				+ ", hasCaptain=" + hasCaptain + ", captain=" + captain + "]";
 	}
-	
-	
-
-	
 	
 
 }
