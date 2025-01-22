@@ -3,41 +3,47 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Heist } from '../models/Heist';
 import { HeistService } from '../services/heist.service';
+import { DomElementSchemaRegistry } from '@angular/compiler';
+
 
 @Component({
   selector: 'app-heist',
+  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './heist.component.html',
-  styleUrl: './heist.component.css'
+  styleUrls: ['./heist.component.css']
 })
 export class HeistComponent implements OnInit {
 
   heists: Heist[] = [];
-
   newHeist: Heist = new Heist(0, '', '', false, '', 0);
+
 
   constructor(private heistService: HeistService) { }
 
   ngOnInit(): void {
+
     this.loadHeists();
+
+
   }
 
   loadHeists(): void {
-    this.heistService.getAllHeists().subscribe(heists => {
-      this.heists = heists;
+
+    this.heistService.getAllHeist().subscribe(data => {
+      this.heists = data;
     });
   }
 
   addHeist(): void {
-    this.heistService.addHeist(this.newHeist).subscribe(heist => {
+    this.heistService.createHeist(this.newHeist).subscribe(heist => {
       this.heists.push(heist);
     });
   }
 
   updateHeist(): void {
-    this.heistService.addHeist(this.newHeist).subscribe(heist => {
-      this.heists.push(heist);
-      this.newHeist = new Heist(0, '', '', false, '', 0);
+    this.heistService.updateHeist(this.newHeist).subscribe(updatedHeist => {
+      this.heists = this.heists.map(heist => heist.heistId === updatedHeist.heistId ? updatedHeist : heist);
     });
   }
 
@@ -45,9 +51,12 @@ export class HeistComponent implements OnInit {
     this.newHeist = heist;
   }
 
+
+
   deleteHeist(id: number): void {
     this.heistService.deleteHeist(id).subscribe(() => {
       this.heists = this.heists.filter(heist => heist.heistId !== id);
     });
   }
+
 }
