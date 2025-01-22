@@ -55,6 +55,17 @@ export class CaptainComponent implements OnInit {
     });
   }
 
+  updateCaptain(): void {
+    this.captainService.updateCaptain(this.newCaptain).subscribe(updatedCaptain => {
+      // Update the local captains array with the updated captain object
+      this.captains = this.captains.map(c => c.captainId === updatedCaptain.captainId ? updatedCaptain : c);
+    });
+  }
+
+  editCaptain(captain: Captain): void {
+    this.newCaptain = { ...captain }; // Create a copy of the captain object
+  }
+
   // // Method to fetch the list of crews from the backend and assign it to the crews array
   // loadCrews(): void {
   //   this.captainService.getAllCrews().subscribe(data => {

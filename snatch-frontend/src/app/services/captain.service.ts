@@ -27,8 +27,8 @@ export class CaptainService {
   }
 
   // Update an existing captain
-  updateCaptain(id: number, captain: Captain): Observable<Captain> {
-    return this.http.put<Captain>(`${this.apiUrl}/${id}`, captain);
+  updateCaptain(captain: Captain): Observable<Captain> {
+    return this.http.put<Captain>(`${this.apiUrl}/${captain.captainId}`, captain);
   }
 
   // Delete a captain by ID

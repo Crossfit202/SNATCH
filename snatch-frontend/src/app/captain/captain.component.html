@@ -9,6 +9,8 @@
     {{ captain.captainName }}
     <!-- Button to delete the current captain, calling deleteCaptain() with the captain's ID -->
     <button (click)="deleteCaptain(captain.captainId)">Delete</button>
+    <!-- Button to edit the current captain, calling editCaptain() with the captain object -->
+    <button (click)="editCaptain(captain)">Edit</button>
   </li>
 </ul>
 
