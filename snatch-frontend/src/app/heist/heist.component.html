@@ -1,1 +1,20 @@
-<p>heist works!</p>
+<h1>Heists</h1>
+
+<ul>
+    <li *ngFor="let heist of heists">
+        {{ heist.description }}
+        <button (click)="deleteHeist(heist.heistId)">Delete</button>
+        <button (click)="editHeist(heist)">Edit</button>
+    </li>
+</ul>
+
+<h2>Add Heist</h2>
+
+<form (ngSubmit)="addHeist()">
+
+    <label for="heistName">Description:</label>
+    <input id="heistName" [(ngModel)]="newHeist.description" name="description" required />
+
+    <button type="submit">Add</button>
+</form>
+

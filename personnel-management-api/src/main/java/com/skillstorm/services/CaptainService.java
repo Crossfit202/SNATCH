@@ -28,14 +28,13 @@ public class CaptainService {
 	}
 	
 	// GET BY ID
-	public ResponseEntity<Captain> findById(int captainId) {
+	public ResponseEntity<Object> findById(int captainId) {
 		if(repo.existsById(captainId)) {
 			return ResponseEntity.status(HttpStatus.OK)
 								 .body(repo.findById(captainId).get());
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-					      .header("Error-Message", "This Captain ID does not exist")
-						  .body(null);
+						  .body("Captain with this ID Does not exist");
 		}
 	}
 	
@@ -43,7 +42,6 @@ public class CaptainService {
 	public ResponseEntity<Captain> addOne(CaptainDTO captainDTO) {
 		if(repo.existsByCaptainNameIgnoreCase(captainDTO.getCaptainName())) {
 			return ResponseEntity.status(HttpStatus.CONFLICT)
-								 .header("Error-Message", "A Captain with this name already exists")
 					             .body(null);
 		}
 		
@@ -59,7 +57,6 @@ public class CaptainService {
 			 			 		 .body(repo.save(new Captain(captainId, captainDTO.getCaptainName(), captainDTO.getLeader(), null)));
 		} else {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					             .header("Error-Message", "A Captain with this name already exists")
 								 .body(null);
 		}
 	}

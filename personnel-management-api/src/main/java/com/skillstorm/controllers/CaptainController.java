@@ -33,7 +33,7 @@ public class CaptainController {
 
 	// GET BY ID
 	@GetMapping("/{captainId}")
-	public ResponseEntity<Captain> findById(@PathVariable int captainId) {
+	public ResponseEntity<Object> findById(@PathVariable int captainId) {
 		return service.findById(captainId);
 	}
 
