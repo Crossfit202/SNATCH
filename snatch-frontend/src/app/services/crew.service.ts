@@ -1,9 +1,32 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Crew } from '../models/Crew';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CrewService {
 
-  constructor() { }
+  private apiURL = '/api/crew'
+
+  constructor(private http: HttpClient) { }
+
+  getAllCrews(): Observable<Crew[]> {
+    return this.http.get<Crew[]>(this.apiURL);
+  }
+
+  updateCrew(crew: Crew): Observable<Crew> {
+    // Send an HTTP PUT request to update the crew by its ID
+    return this.http.put<Crew>(`${this.apiURL}/${crew.crewId}`, crew);
+  }
+
+
+  addCrew(crew: Crew): Observable<Crew> {
+    return this.http.post<Crew>(this.apiURL, crew);
+  }
+
+  deleteCrew(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiURL}/${id}`);
+  }
 }

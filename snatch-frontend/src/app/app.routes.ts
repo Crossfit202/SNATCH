@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { CaptainComponent } from './captain/captain.component';
 import { LeaderComponent } from './leader/leader.component';
+import { CrewComponent } from './crew/crew.component';
 
 // Define and export the application's routing configuration
 export const routes: Routes = [
@@ -13,5 +14,9 @@ export const routes: Routes = [
     {
         path: 'leaders', // The URL segment that maps to this route
         component: LeaderComponent // The component to render when this route is accessed
+    },
+    {
+        path: 'crews',
+        component: CrewComponent
     }
 ];

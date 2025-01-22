@@ -1,1 +1,47 @@
-<p>crew works!</p>
+<h1>Crews</h1>
+
+
+<ul>
+
+    <li *ngFor="let crew of crews">
+
+        {{ crew.crewName }}
+
+        <button (click)="deleteCrew(crew.crewId)">Delete</button>
+        <button (click)="editCrew(crew)">Edit</button>
+    </li>
+</ul>
+
+<h2>Add Crew</h2>
+
+<form (ngSubmit)="addCrew()">
+
+    <label for="crewName">Crew Name:</label>
+    <input id="crewName" [(ngModel)]="newCrew.crewName" name="crewName" required />
+
+    <button type="submit">Add</button>
+</form>
+
+<h2>Update Crew</h2>
+
+<form (ngSubmit)="updateCrew()">
+    <!-- Crew Name -->
+    <label for="updateCrewName">Crew Name:</label>
+    <input id="updateCrewName" [(ngModel)]="newCrew.crewName" name="updateCrewName" required />
+
+    <!-- Has Captain -->
+    <label for="hasCaptain">Has Captain:</label>
+    <input id="hasCaptain" type="checkbox" [(ngModel)]="newCrew.hasCaptain" name="hasCaptain" />
+
+    <!-- Captain -->
+    <label for="captain">Captain:</label>
+    <select id="captain" [(ngModel)]="newCrew.captain" name="captain">
+        <option [ngValue]="null">None</option>
+        <option *ngFor="let captain of captains" [ngValue]="captain">
+            {{ captain.captainName }}
+        </option>
+    </select>
+
+    <!-- Submit Button -->
+    <button type="submit">Update</button>
+</form>
