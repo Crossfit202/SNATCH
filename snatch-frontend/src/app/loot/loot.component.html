@@ -6,6 +6,7 @@
     <li *ngFor="let loot of loots">
 
         {{ loot.itemName }}
+        {{ loot.quantity }}
 
         <button (click)="deleteLoot(loot.lootId)">Delete</button>
         <button (click)="editLoot(loot)">Edit</button>
@@ -23,18 +24,4 @@
     <input id="quantity" [(ngModel)]="newLoot.quantity" name="quantity" required />
 
     <button type="submit">Add</button>
-</form>
-
-<h2>Update Loot</h2>
-
-<form (ngSubmit)="updateLoot()">
-    <!-- Item Name -->
-    <label for="updateItemName">Item Name:</label>
-    <input id="updateItemName" [(ngModel)]="newLoot.itemName" name="updateItemName" required />
-
-    <!-- Quantity -->
-    <label for="updateQuantity">Quantity:</label>
-    <input id="updateQuantity" [(ngModel)]="newLoot.quantity" name="updateQuantity" required />
-
-    <button type="submit">Update</button>
 </form>

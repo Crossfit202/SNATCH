@@ -17,11 +17,20 @@ export class SkillComponent implements OnInit {
 
   skills: Skill[] = [];
 
+  newSkill: Skill = new Skill();
+
   constructor(private skillService: SkillService) { }
 
   loadSkills(): void {
     this.skillService.getAllSkills().subscribe(skills => {
       this.skills = skills;
+    });
+  }
+
+  addSkill(): void {
+    this.skillService.addSkill(this.newSkill).subscribe(skill => {
+      this.skills.push(skill);
+      this.newSkill = new Skill();
     });
   }
 

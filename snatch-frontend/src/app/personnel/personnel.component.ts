@@ -18,11 +18,21 @@ export class PersonnelComponent implements OnInit {
 
   personnels: Personnel[] = [];
 
+  newPersonnel: Personnel = new Personnel(0, '');
+
+
   constructor(private personnelService: PersonnelService) { }
 
   loadPersonnels(): void {
     this.personnelService.getAllPersonnels().subscribe((personnels: Personnel[]) => {
       this.personnels = personnels;
+    });
+  }
+
+  addPersonnel(): void {
+    this.personnelService.addPersonnel(this.newPersonnel).subscribe((personnel: Personnel) => {
+      this.personnels.push(personnel);
+      this.newPersonnel = new Personnel(0, '');
     });
   }
 

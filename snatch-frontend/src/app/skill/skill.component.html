@@ -6,3 +6,11 @@
         <button (click)="deleteSkills(skill.skillId)">Delete</button>
     </li>
 </ul>
+
+<h2>Add Skill</h2>
+
+<form (ngSubmit)="addSkill()">
+    <label for="skillName">Skill Name:</label>
+    <input id="skillName" [(ngModel)]="newSkill.skillName" name="skillName" required />
+    <button type="submit">Add</button>
+</form>

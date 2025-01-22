@@ -15,10 +15,6 @@ export class LootService {
         return this.http.get<Loot[]>(this.apiUrl);
     }
 
-    updateLoot(loot: Loot): Observable<Loot> {
-        return this.http.put<Loot>(`${this.apiUrl}/${loot.lootId}`, loot);
-    }
-
     addLoot(loot: Loot): Observable<Loot> {
         return this.http.post<Loot>(this.apiUrl, loot);
     }

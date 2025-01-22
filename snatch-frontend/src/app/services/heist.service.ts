@@ -21,15 +21,8 @@ export class HeistService {
         return this.http.get<Heist>(`${this.apiUrl}/${id}`);
     }
 
-    // Create a new heist
-    createHeist(heist: Heist): Observable<Heist> {
+    addHeist(heist: Heist): Observable<Heist> {
         return this.http.post<Heist>(this.apiUrl, heist);
-    }
-
-    // Update an existing heist
-    updateHeist(heist: Heist): Observable<Heist> {
-        return this.http.put<Heist>(`${this.apiUrl}/${heist.heistId
-            }`, heist);
     }
 
     // Delete a heist by ID

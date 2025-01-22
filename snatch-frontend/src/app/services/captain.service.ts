@@ -16,6 +16,10 @@ export class CaptainService {
     return this.http.get<Captain[]>(this.apiUrl);
   }
 
+  getAllCrews(): Observable<Captain[]> {
+    return this.http.get<Captain[]>(this.apiUrl);
+  }
+
   // Get a single captain by ID
   getCaptainById(id: number): Observable<Captain> {
     return this.http.get<Captain>(`${this.apiUrl}/${id}`);

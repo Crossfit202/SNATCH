@@ -2,11 +2,12 @@
 
 <ul>
     <li *ngFor="let heist of heists">
-        <div>{{ heist.description }}</div>
+        <strong>Description:</strong>
+        {{ heist.description }}
+        <strong>Location:</strong>
         {{ heist.location }}
 
         <button (click)="deleteHeist(heist.heistId)">Delete</button>
-        <button (click)="editHeist(heist)">Edit</button>
     </li>
 </ul>
 
@@ -15,6 +16,21 @@
 <form (ngSubmit)="addHeist()">
     <label for="description">Description:</label>
     <input id="description" [(ngModel)]="newHeist.description" name="description" required />
+
     <label for="location">Location:</label>
     <input id="location" [(ngModel)]="newHeist.location" name="location" required />
+
+    <label for="status">Status:</label>
+    <select id="status" [(ngModel)]="newHeist.status" name="status" required>
+        <option value="In Progress">In Progress</option>
+        <option value="Completed">Completed</option>
+    </select>
+
+    <label for="crewId">Crew ID:</label>
+    <input id="crewId" type="number" [(ngModel)]="newHeist.crewId" name="crewId" required />
+
+    <label for="isAssigned">Assigned:</label>
+    <input id="isAssigned" type="checkbox" [(ngModel)]="newHeist.isAssigned" name="isAssigned" />
+
     <button type="submit">Add</button>
+</form>

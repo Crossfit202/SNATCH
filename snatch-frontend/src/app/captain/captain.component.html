@@ -6,7 +6,9 @@
   <!-- Loop through each captain in the captains array -->
   <li *ngFor="let captain of captains">
     <!-- Display the name of the captain -->
+    <strong>Captain:</strong>
     {{ captain.captainName }}
+    <strong>Leader:</strong> {{ captain.leader?.leaderName }}
     <!-- Button to delete the current captain, calling deleteCaptain() with the captain's ID -->
     <button (click)="deleteCaptain(captain.captainId)">Delete</button>
     <!-- Button to edit the current captain, calling editCaptain() with the captain object -->
