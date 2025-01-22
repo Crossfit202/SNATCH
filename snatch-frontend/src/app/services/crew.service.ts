@@ -16,12 +16,6 @@ export class CrewService {
     return this.http.get<Crew[]>(this.apiURL);
   }
 
-  updateCrew(crew: Crew): Observable<Crew> {
-    // Send an HTTP PUT request to update the crew by its ID
-    return this.http.put<Crew>(`${this.apiURL}/${crew.crewId}`, crew);
-  }
-
-
   addCrew(crew: Crew): Observable<Crew> {
     return this.http.post<Crew>(this.apiURL, crew);
   }

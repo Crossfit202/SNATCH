@@ -2,7 +2,20 @@
 
 <ul>
     <li *ngFor="let personnel of personnels">
+        <strong>Personnel:</strong>
         {{ personnel.personnelName }}
+        <strong>Species:</strong>
+        {{ personnel.species }}
         <button (click)="deletePersonnel(personnel.personnelId)">Delete</button>
     </li>
 </ul>
+
+<h2>Add Personnel</h2>
+
+<form (ngSubmit)="addPersonnel()">
+    <label for="personnelName">Personnel Name:</label>
+    <input id="personnelName" [(ngModel)]="newPersonnel.personnelName" name="personnelName" required />
+    <label for="species">Species:</label>
+    <input id="species" [(ngModel)]="newPersonnel.species" name="species" required />
+    <button type="submit">Add</button>
+</form>

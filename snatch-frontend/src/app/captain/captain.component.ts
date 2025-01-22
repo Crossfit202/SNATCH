@@ -6,6 +6,7 @@ import { Captain } from '../models/Captain';
 import { Leader } from '../models/Leader';
 import { Crew } from '../models/Crew';
 import { LeaderService } from '../services/leader.service';
+import { CrewService } from '../services/crew.service';
 
 // Define the Angular component
 @Component({
@@ -29,7 +30,7 @@ export class CaptainComponent implements OnInit {
   crews: Crew[] = [];
 
   // Constructor to inject the CaptainService into the component
-  constructor(private captainService: CaptainService, private leaderService: LeaderService) { }
+  constructor(private captainService: CaptainService, private leaderService: LeaderService, private crewService: CrewService) { }
 
   // Lifecycle hook that gets called once the component is initialized
   ngOnInit(): void {
@@ -38,7 +39,7 @@ export class CaptainComponent implements OnInit {
     // Load the list of leaders for the dropdown
     this.loadLeaders();
     // // Load the list of crews for the dropdown
-    // this.loadCrews();
+    this.loadCrews();
   }
 
   // Method to fetch the list of captains from the backend and assign it to the captains array
@@ -55,6 +56,13 @@ export class CaptainComponent implements OnInit {
     });
   }
 
+  // Method to fetch the list of crews from the backend and assign it to the crews array
+  loadCrews(): void {
+    this.crewService.getAllCrews().subscribe(data => {
+      this.crews = data; // Update the crews array with the data from the API
+    });
+  }
+
   updateCaptain(): void {
     this.captainService.updateCaptain(this.newCaptain).subscribe(updatedCaptain => {
       // Update the local captains array with the updated captain object
@@ -65,13 +73,6 @@ export class CaptainComponent implements OnInit {
   editCaptain(captain: Captain): void {
     this.newCaptain = { ...captain }; // Create a copy of the captain object
   }
-
-  // // Method to fetch the list of crews from the backend and assign it to the crews array
-  // loadCrews(): void {
-  //   this.captainService.getAllCrews().subscribe(data => {
-  //     this.crews = data; // Update the crews array with the data from the API
-  //   });
-  // }
 
   // Method to add a new captain using the CaptainService
   addCaptain(): void {

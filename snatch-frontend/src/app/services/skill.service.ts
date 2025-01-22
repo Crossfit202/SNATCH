@@ -16,6 +16,10 @@ export class SkillService {
     return this.http.get<Skill[]>(this.apiURL);
   }
 
+  addSkill(skill: Skill): Observable<Skill> {
+    return this.http.post<Skill>(this.apiURL, skill);
+  }
+
   deleteSkill(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiURL}/${id}`);
   }

@@ -55,21 +55,6 @@ export class CrewComponent implements OnInit {
     });
   }
 
-  updateCrew(): void {
-    this.crewService.updateCrew(this.newCrew).subscribe(updatedCrew => {
-      // Update the local crews array with the updated crew object
-      this.crews = this.crews.map(c => c.crewId === updatedCrew.crewId ? updatedCrew : c);
-
-      // Optionally reset the `newCrew` object after update
-      this.newCrew = new Crew();
-    });
-  }
-
-  editCrew(crew: Crew): void {
-    this.newCrew = { ...crew };
-  }
-
-
 
   deleteCrew(id: number): void {
     this.crewService.deleteCrew(id).subscribe(() => {

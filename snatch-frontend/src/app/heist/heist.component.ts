@@ -16,7 +16,8 @@ import { DomElementSchemaRegistry } from '@angular/compiler';
 export class HeistComponent implements OnInit {
 
   heists: Heist[] = [];
-  newHeist: Heist = new Heist(0, '', '', false, '', 0);
+  newHeist: Heist = new Heist(0, '', '', '', 0, false);
+
 
 
   constructor(private heistService: HeistService) { }
@@ -36,20 +37,11 @@ export class HeistComponent implements OnInit {
   }
 
   addHeist(): void {
-    this.heistService.createHeist(this.newHeist).subscribe(heist => {
+    this.heistService.addHeist(this.newHeist).subscribe(heist => {
       this.heists.push(heist);
     });
   }
 
-  updateHeist(): void {
-    this.heistService.updateHeist(this.newHeist).subscribe(updatedHeist => {
-      this.heists = this.heists.map(heist => heist.heistId === updatedHeist.heistId ? updatedHeist : heist);
-    });
-  }
-
-  editHeist(heist: Heist): void {
-    this.newHeist = heist;
-  }
 
 
 
