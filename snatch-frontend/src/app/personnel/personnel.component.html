@@ -1,1 +1,8 @@
-<p>personnel works!</p>
+<h1>Personnel</h1>
+
+<ul>
+    <li *ngFor="let personnel of personnels">
+        {{ personnel.personnelName }}
+        <button (click)="deletePersonnel(personnel.personnelId)">Delete</button>
+    </li>
+</ul>
