@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Captain } from '../models/Captain';
 import { Heist } from '../models/Heist';
 
 @Injectable({
@@ -12,15 +11,31 @@ export class HeistService {
 
     constructor(private http: HttpClient) { }
 
-    getAllHeists(): Observable<Heist[]> {
+    // Get all captains
+    getAllHeist(): Observable<Heist[]> {
         return this.http.get<Heist[]>(this.apiUrl);
     }
 
-    addHeist(heist: Heist): Observable<Heist> {
+    // Get a single heist by ID
+    getHeistById(id: number): Observable<Heist> {
+        return this.http.get<Heist>(`${this.apiUrl}/${id}`);
+    }
+
+    // Create a new heist
+    createHeist(heist: Heist): Observable<Heist> {
         return this.http.post<Heist>(this.apiUrl, heist);
     }
 
-    deleteHeist(id: number): Observable<void> {
-        return this.http.delete<void>(this.apiUrl);
+    // Update an existing heist
+    updateHeist(heist: Heist): Observable<Heist> {
+        return this.http.put<Heist>(`${this.apiUrl}/${heist.heistId
+            }`, heist);
     }
+
+    // Delete a heist by ID
+    deleteHeist(id: number): Observable<void> {
+        return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    }
+
+
 }

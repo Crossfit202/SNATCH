@@ -1,8 +1,10 @@
-<h1>Heists</h1>
+<h2>Heists</h2>
 
 <ul>
     <li *ngFor="let heist of heists">
-        {{ heist.description }}
+        <div>{{ heist.description }}</div>
+        {{ heist.location }}
+
         <button (click)="deleteHeist(heist.heistId)">Delete</button>
         <button (click)="editHeist(heist)">Edit</button>
     </li>
@@ -11,10 +13,8 @@
 <h2>Add Heist</h2>
 
 <form (ngSubmit)="addHeist()">
-
-    <label for="heistName">Description:</label>
-    <input id="heistName" [(ngModel)]="newHeist.description" name="description" required />
-
+    <label for="description">Description:</label>
+    <input id="description" [(ngModel)]="newHeist.description" name="description" required />
+    <label for="location">Location:</label>
+    <input id="location" [(ngModel)]="newHeist.location" name="location" required />
     <button type="submit">Add</button>
-</form>
-
