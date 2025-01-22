@@ -4,6 +4,9 @@ import { LeaderComponent } from './leader/leader.component';
 import { CrewComponent } from './crew/crew.component';
 import { LootComponent } from './loot/loot.component';
 import { HeistComponent } from './heist/heist.component';
+import { Personnel } from './models/Personnel';
+import { SkillComponent } from './skill/skill.component';
+import { PersonnelComponent } from './personnel/personnel.component';
 
 // Define and export the application's routing configuration
 export const routes: Routes = [
@@ -28,5 +31,13 @@ export const routes: Routes = [
     {
         path: 'heists',
         component: HeistComponent
+    },
+    {
+        path: 'personnels',
+        component: PersonnelComponent
+    },
+    {
+        path: 'skills',
+        component: SkillComponent
     }
 ];

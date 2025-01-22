@@ -1,1 +1,8 @@
-<p>skill works!</p>
+<h2>Skills</h2>
+
+<ul>
+    <li *ngFor="let skill of skills">
+        {{ skill.skillName }}
+        <button (click)="deleteSkills(skill.skillId)">Delete</button>
+    </li>
+</ul>
