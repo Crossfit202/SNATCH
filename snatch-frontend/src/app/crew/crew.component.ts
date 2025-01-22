@@ -22,11 +22,14 @@ export class CrewComponent implements OnInit {
 
   newCrew: Crew = new Crew(0, '');
 
-  constructor(private crewService: CrewService) { }
+  captains: Captain[] = [];
+
+  constructor(private crewService: CrewService, private captainService: CaptainService) { }
 
   ngOnInit(): void {
 
     this.loadCrews();
+    this.loadCaptains();
 
   }
 
@@ -36,6 +39,14 @@ export class CrewComponent implements OnInit {
       this.crews = data;
     });
   }
+
+  loadCaptains(): void {
+    this.captainService.getAllCaptains().subscribe(data => {
+      this.captains = data; // Assign API response to captains array
+      console.log('Loaded Captains:', this.captains); // Debugging: Log captains
+    });
+  }
+
 
 
   addCrew(): void {

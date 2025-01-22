@@ -35,6 +35,7 @@
 
     <!-- Captain -->
     <label for="captain">Captain:</label>
+
     <select id="captain" [(ngModel)]="newCrew.captain" name="captain">
         <option [ngValue]="null">None</option>
         <option *ngFor="let captain of captains" [ngValue]="captain">

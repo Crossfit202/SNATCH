@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { CaptainComponent } from './captain/captain.component';
 import { LeaderComponent } from './leader/leader.component';
 import { CrewComponent } from './crew/crew.component';
+import { LootComponent } from './loot/loot.component';
 
 // Define and export the application's routing configuration
 export const routes: Routes = [
@@ -18,5 +19,9 @@ export const routes: Routes = [
     {
         path: 'crews',
         component: CrewComponent
+    },
+    {
+        path: 'loot',
+        component: LootComponent
     }
 ];
