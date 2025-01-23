@@ -1,35 +1,41 @@
-<h1>Personnel</h1>
+<h1 class="text-center mb-4">Personnel</h1>
 
-<ul>
-    <li *ngFor="let personnel of personnels">
-        <div>
-            <img [src]="'assets/images/mugshot/' + personnel.profileImg" alt="{{ personnel.personnelName }}"
-                width="100" />
+<div class="container">
+    <ul class="list-unstyled">
+        <li *ngFor="let personnel of personnels" class="mb-4 bg-light p-3 rounded shadow-sm">
+            <div class="d-flex justify-content-between align-items-start">
+                <!-- Left Section: Image and Details -->
+                <div class="d-flex align-items-start">
+                    <img [src]="'assets/images/mugshot/' + personnel.profileImg" alt="{{ personnel.personnelName }}"
+                        class="rounded-circle me-3" width="80" height="80" />
+                    <ul class="list-unstyled mb-0">
+                        <li><strong>Personnel:</strong> {{ personnel.personnelName }}</li>
+                        <li><strong>Species:</strong> {{ personnel.species }}</li>
+                        <li *ngFor="let skill of personnel.skills">
+                            <strong>Skill:</strong> {{ skill.skillName }}
+                        </li>
+                    </ul>
+                </div>
+                <!-- Right Section: Delete Button -->
+                <button (click)="deletePersonnel(personnel.personnelId)" class="btn btn-danger btn-sm">Delete</button>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<h2 class="text-center mt-5 mb-4">Add Personnel</h2>
+
+<div class="container">
+    <form (ngSubmit)="addPersonnel()" class="bg-light p-4 rounded shadow-sm">
+        <div class="mb-3">
+            <label for="personnelName" class="form-label">Personnel Name:</label>
+            <input id="personnelName" [(ngModel)]="newPersonnel.personnelName" name="personnelName" class="form-control"
+                required />
         </div>
-        <div>
-            <strong>Personnel:</strong>
-            {{ personnel.personnelName }}
+        <div class="mb-3">
+            <label for="species" class="form-label">Species:</label>
+            <input id="species" [(ngModel)]="newPersonnel.species" name="species" class="form-control" required />
         </div>
-        <div>
-            <strong>Species:</strong>
-            {{ personnel.species }}
-        </div>
-        <ul>
-            <li *ngFor="let skill of personnel.skills">
-                <strong>Skill:</strong> {{ skill.skillName }}
-            </li>
-        </ul>
-        <button (click)="deletePersonnel(personnel.personnelId)">Delete</button>
-    </li>
-</ul>
-
-
-<h2>Add Personnel</h2>
-
-<form (ngSubmit)="addPersonnel()">
-    <label for="personnelName">Personnel Name:</label>
-    <input id="personnelName" [(ngModel)]="newPersonnel.personnelName" name="personnelName" required />
-    <label for="species">Species:</label>
-    <input id="species" [(ngModel)]="newPersonnel.species" name="species" required />
-    <button type="submit">Add</button>
-</form>
+        <button type="submit" class="btn btn-success w-100">Add</button>
+    </form>
+</div>

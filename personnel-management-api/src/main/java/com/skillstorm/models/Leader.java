@@ -10,7 +10,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,10 +20,10 @@ public class Leader {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "leader_id")
 	private int leaderId;
-	
+
 	@Column(name = "leader_name")
 	private String leaderName;
-	
+
 	@OneToMany(mappedBy = "leader")
 	@JsonIgnoreProperties("leader")
 	private List<Captain> captains;
@@ -69,7 +68,5 @@ public class Leader {
 	public String toString() {
 		return "Leader [leaderId=" + leaderId + ", leaderName=" + leaderName + ", captains=" + captains + "]";
 	}
-	
-	
-	
+
 }

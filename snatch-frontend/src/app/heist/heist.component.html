@@ -1,41 +1,58 @@
-<h2>Heists</h2>
+<h2 class="text-center mb-4">Heists</h2>
 
-<ul>
-    <li *ngFor="let heist of heists">
-        <div>
-            <strong>Description:</strong>
-            {{ heist.description }}
+<!-- Heists List -->
+<div class="container">
+    <ul class="list-group">
+        <li *ngFor="let heist of heists" class="list-group-item d-flex justify-content-between align-items-start">
+            <div>
+                <div>
+                    <strong>Description:</strong> {{ heist.description }}
+                </div>
+                <div>
+                    <strong>Location:</strong> {{ heist.location }}
+                </div>
+                <div>
+                    <strong>Status:</strong> {{ heist.status }}
+                </div>
+            </div>
+            <button (click)="deleteHeist(heist.heistId)" class="btn btn-danger btn-sm align-self-start">
+                Delete
+            </button>
+        </li>
+    </ul>
+</div>
+
+<h2 class="text-center mt-5 mb-4">Add Heist</h2>
+
+<!-- Add Heist Form -->
+<div class="container">
+    <form (ngSubmit)="addHeist()" class="bg-light p-4 rounded shadow-sm">
+        <div class="mb-3">
+            <label for="description" class="form-label">Description:</label>
+            <input id="description" [(ngModel)]="newHeist.description" name="description" class="form-control"
+                required />
         </div>
-        <div><strong>Location:</strong>
-            {{ heist.location }}</div>
-        <div><strong>Status:</strong>
-            {{ heist.status }}</div>
-
-
-        <button (click)="deleteHeist(heist.heistId)">Delete</button>
-    </li>
-</ul>
-
-<h2>Add Heist</h2>
-
-<form (ngSubmit)="addHeist()">
-    <label for="description">Description:</label>
-    <input id="description" [(ngModel)]="newHeist.description" name="description" required />
-
-    <label for="location">Location:</label>
-    <input id="location" [(ngModel)]="newHeist.location" name="location" required />
-
-    <label for="status">Status:</label>
-    <select id="status" [(ngModel)]="newHeist.status" name="status" required>
-        <option value="In Progress">In Progress</option>
-        <option value="Completed">Completed</option>
-    </select>
-
-    <label for="crewId">Crew ID:</label>
-    <input id="crewId" type="number" [(ngModel)]="newHeist.crewId" name="crewId" required />
-
-    <label for="isAssigned">Assigned:</label>
-    <input id="isAssigned" type="checkbox" [(ngModel)]="newHeist.isAssigned" name="isAssigned" />
-
-    <button type="submit">Add</button>
-</form>
+        <div class="mb-3">
+            <label for="location" class="form-label">Location:</label>
+            <input id="location" [(ngModel)]="newHeist.location" name="location" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label for="status" class="form-label">Status:</label>
+            <select id="status" [(ngModel)]="newHeist.status" name="status" class="form-select" required>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="crewId" class="form-label">Crew ID:</label>
+            <input id="crewId" type="number" [(ngModel)]="newHeist.crewId" name="crewId" class="form-control"
+                required />
+        </div>
+        <div class="mb-3 form-check">
+            <input id="isAssigned" type="checkbox" [(ngModel)]="newHeist.isAssigned" name="isAssigned"
+                class="form-check-input" />
+            <label for="isAssigned" class="form-check-label">Assigned</label>
+        </div>
+        <button type="submit" class="btn btn-success w-100">Add</button>
+    </form>
+</div>

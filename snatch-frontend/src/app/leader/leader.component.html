@@ -1,20 +1,28 @@
-<h1>Leaders</h1>
+<h1 class="text-center mb-4">Leaders</h1>
 
+<!-- Leaders List -->
+<div class="container">
+    <ul class="list-group">
+        <li *ngFor="let leader of leaders" class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+                <strong>Leader:</strong> {{ leader.leaderName }}
+            </div>
+            <button (click)="deleteLeader(leader.leaderId)" class="btn btn-danger btn-sm">
+                Delete
+            </button>
+        </li>
+    </ul>
+</div>
 
-<ul>
-    <li *ngFor="let leader of leaders">
-        <strong>Leader:</strong>
-        {{ leader.leaderName }}
-        <button (click)="deleteLeader(leader.leaderId)">Delete</button>
-    </li>
-</ul>
+<h2 class="text-center mt-5 mb-4">Add Leader</h2>
 
-<h2>Add Leader</h2>
-
-<form (ngSubmit)="addLeader()">
-
-    <label for="leaderName">Leader Name:</label>
-    <input id="leaderName" [(ngModel)]="newLeader.leaderName" name="leaderName" required />
-
-    <button type="submit">Add</button>
-</form>
+<!-- Add Leader Form -->
+<div class="container">
+    <form (ngSubmit)="addLeader()" class="bg-light p-4 rounded shadow-sm">
+        <div class="mb-3">
+            <label for="leaderName" class="form-label">Leader Name:</label>
+            <input id="leaderName" [(ngModel)]="newLeader.leaderName" name="leaderName" class="form-control" required />
+        </div>
+        <button type="submit" class="btn btn-success w-100">Add</button>
+    </form>
+</div>

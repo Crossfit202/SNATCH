@@ -1,29 +1,34 @@
-<h1>Crews</h1>
+<h1 class="text-center mb-4">Crews</h1>
 
-<ul>
-  <li *ngFor="let crew of crews">
-    <ul>
-      <li><strong>Crew:</strong>
-        {{ crew.crewName }}</li>
-      <li><strong>Max Capacity:</strong>
-        {{ crew.personnels.length }} / {{ crew.maxCapacity }}</li>
-      <li><strong>Captain:</strong>
-        {{ crew.captain?.captainName }}</li>
-      <li> <strong>Personnel:</strong>
-        <ul>
-          <li *ngFor="let personnel of crew.personnels">
-            {{ personnel.personnelName }}
+<div class="container">
+  <ul class="list-unstyled">
+    <li *ngFor="let crew of crews" class="mb-4 bg-light p-3 rounded shadow-sm">
+      <div class="d-flex justify-content-between align-items-start">
+        <ul class="list-unstyled ps-3 mb-0">
+          <li><strong>Crew:</strong> {{ crew.crewName }}</li>
+          <li><strong>Max Capacity:</strong> {{ crew.personnels.length }} / {{ crew.maxCapacity }}</li>
+          <li><strong>Captain:</strong> {{ crew.captain?.captainName }}</li>
+          <li>
+            <strong>Personnel:</strong>
+            <ul class="list-unstyled ps-3">
+              <li *ngFor="let personnel of crew.personnels">{{ personnel.personnelName }}</li>
+            </ul>
+          </li>
         </ul>
-      </li>
-    </ul>
-    <button (click)="deleteCrew(crew.crewId)">Delete</button>
-  </li>
-</ul>
+        <button (click)="deleteCrew(crew.crewId)" class="btn btn-danger btn-sm">Delete</button>
+      </div>
+    </li>
+  </ul>
+</div>
 
-<h2>Add Crew</h2>
+<h2 class="text-center mt-5 mb-4">Add Crew</h2>
 
-<form (ngSubmit)="addCrew()">
-  <label for="crewName">Crew Name:</label>
-  <input id="crewName" [(ngModel)]="newCrew.crewName" name="crewName" required />
-  <button type="submit">Add</button>
-</form>
+<div class="container">
+  <form (ngSubmit)="addCrew()" class="bg-light p-4 rounded shadow-sm">
+    <div class="mb-3">
+      <label for="crewName" class="form-label">Crew Name:</label>
+      <input id="crewName" [(ngModel)]="newCrew.crewName" name="crewName" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-success w-100">Add</button>
+  </form>
+</div>
