@@ -8,4 +8,6 @@ import com.skillstorm.models.Leader;
 @Repository
 public interface LeaderRepository extends CrudRepository<Leader, Integer> {
 
+	boolean existsByLeaderNameIgnoreCase(String leaderName);
+	
 }
