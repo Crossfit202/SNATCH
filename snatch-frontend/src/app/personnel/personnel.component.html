@@ -1,26 +1,31 @@
 <h1 class="text-center mb-4">Personnel</h1>
 
 <div class="container">
-    <ul class="list-unstyled">
-        <li *ngFor="let personnel of personnels" class="mb-4 bg-light p-3 rounded shadow-sm">
-            <div class="d-flex justify-content-between align-items-start">
-                <!-- Left Section: Image and Details -->
-                <div class="d-flex align-items-start">
-                    <img [src]="'assets/images/mugshot/' + personnel.profileImg" alt="{{ personnel.personnelName }}"
-                        class="rounded-circle me-3" width="80" height="80" />
-                    <ul class="list-unstyled mb-0">
-                        <li><strong>Personnel:</strong> {{ personnel.personnelName }}</li>
-                        <li><strong>Species:</strong> {{ personnel.species }}</li>
+    <div class="row g-3">
+        <!-- Card for each personnel -->
+        <div *ngFor="let personnel of personnels" class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <!-- Card Image -->
+                <img [src]="'assets/images/mugshot/' + personnel.profileImg" alt="{{ personnel.personnelName }}"
+                    class="card-img-top rounded-circle mx-auto mt-3" style="width: 100px; height: 100px;" />
+                <!-- Card Body -->
+                <div class="card-body">
+                    <h5 class="card-title">{{ personnel.personnelName }}</h5>
+                    <p class="card-text"><strong>Species:</strong> {{ personnel.species }}</p>
+                    <ul class="list-unstyled">
                         <li *ngFor="let skill of personnel.skills">
                             <strong>Skill:</strong> {{ skill.skillName }}
                         </li>
                     </ul>
                 </div>
-                <!-- Right Section: Delete Button -->
-                <button (click)="deletePersonnel(personnel.personnelId)" class="btn btn-danger btn-sm">Delete</button>
+                <!-- Card Footer with Delete Button -->
+                <div class="card-footer text-end">
+                    <button (click)="deletePersonnel(personnel.personnelId)"
+                        class="btn btn-danger btn-sm">Delete</button>
+                </div>
             </div>
-        </li>
-    </ul>
+        </div>
+    </div>
 </div>
 
 <h2 class="text-center mt-5 mb-4">Add Personnel</h2>
