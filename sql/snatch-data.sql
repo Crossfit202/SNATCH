@@ -1,3 +1,4 @@
+
 INSERT INTO `snatch`.`leader` (leader_name) VALUES 
 ('Master Sly'),
 ('Rogue Paw'),
@@ -24,11 +25,11 @@ SELECT * FROM crew;
 INSERT INTO `snatch`.`personnel` 
 (personnel_name, species, profile_img, is_assigned, crew_id) 
 VALUES 
-('Sneaky', 'Raccoon', 'https://example.com/images/sneaky.jpg', TRUE, 1), 
-('Claws', 'Fox', 'https://example.com/images/claws.jpg', TRUE, 1), 
-('Swift', 'Hawk', 'https://example.com/images/swift.jpg', TRUE, 2), 
-('Shadow', 'Panther', NULL, FALSE, 3), 
-('Digger', 'Mole', 'https://example.com/images/digger.jpg', TRUE, 2);
+('Sneaky', 'Raccoon', 'sneaky.webp', TRUE, 1), 
+('Claws', 'Fox', 'claws.webp', TRUE, 1), 
+('Swift', 'Hawk', 'swift.webp', TRUE, 2), 
+('Shadow', 'Panther', 'shadow.webp', FALSE, 3), 
+('Digger', 'Mole', 'digger.webp', TRUE, 2);
 
 SELECT * FROM personnel;
 

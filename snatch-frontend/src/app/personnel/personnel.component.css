@@ -1,0 +1,4 @@
+li {
+    list-style-type: none;
+    /* Ensures individual list items have no bullets */
+}
