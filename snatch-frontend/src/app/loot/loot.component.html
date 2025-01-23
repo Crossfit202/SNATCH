@@ -4,9 +4,10 @@
 <ul>
 
     <li *ngFor="let loot of loots">
-
-        {{ loot.itemName }}
-        {{ loot.quantity }}
+        <div><strong>Item:</strong>
+            {{ loot.itemName }}</div>
+        <div><strong>Quantity:</strong>
+            {{ loot.quantity }}</div>
 
         <button (click)="deleteLoot(loot.lootId)">Delete</button>
         <button (click)="editLoot(loot)">Edit</button>
