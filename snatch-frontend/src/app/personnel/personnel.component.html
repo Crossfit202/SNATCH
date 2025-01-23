@@ -3,6 +3,10 @@
 <ul>
     <li *ngFor="let personnel of personnels">
         <div>
+            <img [src]="'assets/images/mugshot/' + personnel.profileImg" alt="{{ personnel.personnelName }}"
+                width="100" />
+        </div>
+        <div>
             <strong>Personnel:</strong>
             {{ personnel.personnelName }}
         </div>
