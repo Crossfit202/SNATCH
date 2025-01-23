@@ -2,13 +2,23 @@
 
 <ul>
     <li *ngFor="let personnel of personnels">
-        <strong>Personnel:</strong>
-        {{ personnel.personnelName }}
-        <strong>Species:</strong>
-        {{ personnel.species }}
+        <div>
+            <strong>Personnel:</strong>
+            {{ personnel.personnelName }}
+        </div>
+        <div>
+            <strong>Species:</strong>
+            {{ personnel.species }}
+        </div>
+        <ul>
+            <li *ngFor="let skill of personnel.skills">
+                <strong>Skill:</strong> {{ skill.skillName }}
+            </li>
+        </ul>
         <button (click)="deletePersonnel(personnel.personnelId)">Delete</button>
     </li>
 </ul>
+
 
 <h2>Add Personnel</h2>
 
