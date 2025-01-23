@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
 export class LootComponent implements OnInit {
 
   loots: Loot[] = [];
-  newLoot: Loot = new Loot(0, '', 0);
+  newLoot: Loot = new Loot();
 
   constructor(private lootService: LootService) { }
 
@@ -33,7 +33,7 @@ export class LootComponent implements OnInit {
   updateLoot(): void {
     this.lootService.addLoot(this.newLoot).subscribe(data => {
       this.loots.push(data);
-      this.newLoot = new Loot(0, '', 0);
+      this.newLoot = new Loot();
     });
   }
 
