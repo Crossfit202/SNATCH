@@ -33,19 +33,19 @@ public class LeaderController {
 	
 	// GET BY ID
 	@GetMapping("/{leaderId}")
-	public ResponseEntity<Leader> findById(@PathVariable int leaderId) {
+	public ResponseEntity<Object> findById(@PathVariable int leaderId) {
 		return service.findById(leaderId);
 	}
 	
 	// CREATE ONE
 	@PostMapping
-	public ResponseEntity<Leader> addOne(@RequestBody LeaderDTO leaderDTO) {
+	public ResponseEntity<Object> addOne(@RequestBody LeaderDTO leaderDTO) {
 		return service.addOne(leaderDTO);
 	}
 	
 	// UPDATE ONE
 	@PutMapping("/{leaderId}")
-	public ResponseEntity<Leader> updateOne(@PathVariable int leaderId, @RequestBody LeaderDTO leaderDTO) {
+	public ResponseEntity<Object> updateOne(@PathVariable int leaderId, @RequestBody LeaderDTO leaderDTO) {
 		return service.updateOne(leaderId, leaderDTO);
 	}
 	

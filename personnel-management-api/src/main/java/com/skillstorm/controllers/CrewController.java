@@ -40,7 +40,7 @@ public class CrewController {
 //	GET BY ID
 	
 	@GetMapping("/{crewId}")
-	public ResponseEntity<Crew> findById(@PathVariable("crewId") int crewId) {
+	public ResponseEntity<Object> findById(@PathVariable("crewId") int crewId) {
 		return service.findById(crewId);
 	}
 	
@@ -52,13 +52,13 @@ public class CrewController {
 	
 //	CREATE - POST
 	@PostMapping
-	public ResponseEntity<Crew> addOne(@RequestBody CrewDTO crewDTO) {
+	public ResponseEntity<Object> addOne(@RequestBody CrewDTO crewDTO) {
 		return service.addOne(crewDTO);
 	}
 	
 //	UPDATE - PUT
 	@PutMapping("/{crewId}")
-	public ResponseEntity<Crew> updateOne(@PathVariable("crewId") int crewId, @RequestBody CrewDTO crewDTO) { 
+	public ResponseEntity<Object> updateOne(@PathVariable("crewId") int crewId, @RequestBody CrewDTO crewDTO) { 
 		return service.updateOne(crewId, crewDTO);
 	}
 	

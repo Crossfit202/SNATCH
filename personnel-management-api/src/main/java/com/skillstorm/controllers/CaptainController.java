@@ -39,13 +39,13 @@ public class CaptainController {
 
 	// CREATE ONE
 	@PostMapping
-	public ResponseEntity<Captain> addOne(@RequestBody CaptainDTO captainDTO) {
+	public ResponseEntity<Object> addOne(@RequestBody CaptainDTO captainDTO) {
 		return service.addOne(captainDTO);
 	}
 
 	// UPDATE ONE
 	@PutMapping("/{captainId}")
-	public ResponseEntity<Captain> updateOne(@PathVariable int captainId, @RequestBody CaptainDTO captainDTO) {
+	public ResponseEntity<Object> updateOne(@PathVariable int captainId, @RequestBody CaptainDTO captainDTO) {
 		return service.updateOne(captainId, captainDTO);
 	}
 
