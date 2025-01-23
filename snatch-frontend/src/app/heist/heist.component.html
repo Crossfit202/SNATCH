@@ -2,10 +2,15 @@
 
 <ul>
     <li *ngFor="let heist of heists">
-        <strong>Description:</strong>
-        {{ heist.description }}
-        <strong>Location:</strong>
-        {{ heist.location }}
+        <div>
+            <strong>Description:</strong>
+            {{ heist.description }}
+        </div>
+        <div><strong>Location:</strong>
+            {{ heist.location }}</div>
+        <div><strong>Status:</strong>
+            {{ heist.status }}</div>
+
 
         <button (click)="deleteHeist(heist.heistId)">Delete</button>
     </li>
