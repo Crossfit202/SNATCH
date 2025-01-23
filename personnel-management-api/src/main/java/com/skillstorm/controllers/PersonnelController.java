@@ -36,13 +36,13 @@ public class PersonnelController {
 //	GET BY ID
 	
 	@GetMapping("/{personnelId}")
-	public ResponseEntity<Personnel> findById(@PathVariable("personnelId") int personnelId) {
+	public ResponseEntity<Object> findById(@PathVariable("personnelId") int personnelId) {
 		return service.findById(personnelId);
 	}
 	
 //	CREATE - POST
 	@PostMapping
-	public ResponseEntity<Personnel> addOne(@RequestBody PersonnelDTO personnelDTO) {
+	public ResponseEntity<Object> addOne(@RequestBody PersonnelDTO personnelDTO) {
 		return service.addOne(personnelDTO);
 	}
 	
