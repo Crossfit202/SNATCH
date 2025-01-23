@@ -3,6 +3,7 @@
 
 <ul>
     <li *ngFor="let leader of leaders">
+        <strong>Leader:</strong>
         {{ leader.leaderName }}
         <button (click)="deleteLeader(leader.leaderId)">Delete</button>
     </li>

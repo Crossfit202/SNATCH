@@ -2,7 +2,20 @@
 
 <ul>
   <li *ngFor="let crew of crews">
-    {{ crew.crewName }}
+    <ul>
+      <li><strong>Crew:</strong>
+        {{ crew.crewName }}</li>
+      <li><strong>Max Capacity:</strong>
+        {{ crew.personnels.length }} / {{ crew.maxCapacity }}</li>
+      <li><strong>Captain:</strong>
+        {{ crew.captain?.captainName }}</li>
+      <li> <strong>Personnel:</strong>
+        <ul>
+          <li *ngFor="let personnel of crew.personnels">
+            {{ personnel.personnelName }}
+        </ul>
+      </li>
+    </ul>
     <button (click)="deleteCrew(crew.crewId)">Delete</button>
   </li>
 </ul>

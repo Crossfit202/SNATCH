@@ -1,23 +1,30 @@
+import { Personnel } from './Personnel';
 import { Captain } from './Captain';
 
 export class Crew {
     crewId: number;
     crewName: string;
-    captain: Captain | null;
+    maxCapacity: number;
+    availability: boolean;
     hasCaptain: boolean;
-    personnels: any[]; // Adjust type if there's a Personnel model
+    captain: Captain | null;
+    personnels: Personnel[];
 
     constructor(
         crewId: number = 0,
         crewName: string = '',
-        captain: Captain | null = null,
+        maxCapacity: number = 0,
+        availability: boolean = false,
         hasCaptain: boolean = false,
-        personnels: any[] = []
+        captain: Captain | null = null,
+        personnels: Personnel[] = []
     ) {
         this.crewId = crewId;
         this.crewName = crewName;
-        this.captain = captain;
+        this.maxCapacity = maxCapacity;
+        this.availability = availability;
         this.hasCaptain = hasCaptain;
+        this.captain = captain;
         this.personnels = personnels;
     }
 }
