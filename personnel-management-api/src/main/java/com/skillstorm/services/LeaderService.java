@@ -28,31 +28,38 @@ public class LeaderService {
 	}
 	
 	// GET BY ID
-	public ResponseEntity<Leader> findById(int leaderId) {
+	public ResponseEntity<Object> findById(int leaderId) {
 		if(repo.existsById(leaderId)) {
 			return ResponseEntity.status(HttpStatus.OK)
 								 .body(repo.findById(leaderId).get());
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-						  .body(null);
+						  .body(String.format("Leader with ID %d does not exist!", leaderId));
 		}
 	}
 	
 	// CREATE ONE
-	public ResponseEntity<Leader> addOne(LeaderDTO leaderDTO) {
-		return ResponseEntity.status(HttpStatus.CREATED)
-							 .body(repo.save(new Leader(0, leaderDTO.getLeaderName(), null)));
+	public ResponseEntity<Object> addOne(LeaderDTO leaderDTO) {
+		if(repo.existsByLeaderNameIgnoreCase(leaderDTO.getLeaderName())) {
+			return ResponseEntity.status(HttpStatus.CONFLICT)
+								 .body(String.format("Leader with name '%s' already exists!", leaderDTO.getLeaderName()));
+		} else {
+			return ResponseEntity.status(HttpStatus.CREATED)
+					 .body(repo.save(new Leader(0, leaderDTO.getLeaderName(), null)));
+		}
+		
+		
 	}
 	
 	// UPDATE ONE
-	public ResponseEntity<Leader> updateOne(int leaderId, LeaderDTO leaderDTO) {
+	public ResponseEntity<Object> updateOne(int leaderId, LeaderDTO leaderDTO) {
 		if(repo.existsById(leaderId)) {
 			return ResponseEntity.status(HttpStatus.OK)
 			 			 		 .body(repo.save(new Leader(leaderId, leaderDTO.getLeaderName(), null)));
 	
 		} else {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-								 .body(null);
+								 .body(String.format("Failed to update! Leader with ID %d does not exist. Ensure the ID is correct or create a new Leader.", leaderId));
 		}
 	}
 	

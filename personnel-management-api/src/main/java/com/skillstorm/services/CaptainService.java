@@ -34,30 +34,31 @@ public class CaptainService {
 								 .body(repo.findById(captainId).get());
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-						  .body("Captain with this ID Does not exist");
+						  .body(String.format("Captain with ID %d does not exist!", captainId));
 		}
 	}
 	
 	// CREATE ONE
-	public ResponseEntity<Captain> addOne(CaptainDTO captainDTO) {
+	public ResponseEntity<Object> addOne(CaptainDTO captainDTO) {
 		if(repo.existsByCaptainNameIgnoreCase(captainDTO.getCaptainName())) {
 			return ResponseEntity.status(HttpStatus.CONFLICT)
-					             .body(null);
+					             .body(String.format("'%s' already exists!", captainDTO.getCaptainName()));
+		} else {
+			return ResponseEntity.status(HttpStatus.CREATED)
+					 .body(repo.save(new Captain(0, captainDTO.getCaptainName(), captainDTO.getLeader(), null)));
 		}
-		
-		return ResponseEntity.status(HttpStatus.CREATED)
-				 .body(repo.save(new Captain(0, captainDTO.getCaptainName(), captainDTO.getLeader(), null)));
+
 		
 	}
 	
 	// UPDATE ONE
-	public ResponseEntity<Captain> updateOne(int captainId, CaptainDTO captainDTO) {
+	public ResponseEntity<Object> updateOne(int captainId, CaptainDTO captainDTO) {
 		if(repo.existsById(captainId)) {
 			return ResponseEntity.status(HttpStatus.OK)
 			 			 		 .body(repo.save(new Captain(captainId, captainDTO.getCaptainName(), captainDTO.getLeader(), null)));
 		} else {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-								 .body(null);
+								 .body(String.format("Failed to update! Captain with ID %d does not exist. Ensure the ID is correct or create a new Captain.", captainId));
 		}
 	}
 	
