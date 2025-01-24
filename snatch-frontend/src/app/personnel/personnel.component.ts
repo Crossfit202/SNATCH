@@ -12,24 +12,29 @@ import { NavbarComponent } from '../reused-components/navbar.component';
   styleUrl: './personnel.component.css'
 })
 export class PersonnelComponent implements OnInit {
-  ngOnInit(): void {
 
+  // Array to store personnel data fetched from the API
+  personnels: Personnel[] = [];
+
+  // Object to represent a new personnel being added
+  newPersonnel: Personnel = new Personnel(0, '');
+
+  // Service Injection
+  constructor(private personnelService: PersonnelService) { }
+
+  // Runs while the component is initialized
+  ngOnInit(): void {
     this.loadPersonnels();
   }
 
-  personnels: Personnel[] = [];
-
-  newPersonnel: Personnel = new Personnel(0, '');
-
-
-  constructor(private personnelService: PersonnelService) { }
-
+  // GET ALL
   loadPersonnels(): void {
     this.personnelService.getAllPersonnels().subscribe((personnels: Personnel[]) => {
       this.personnels = personnels;
     });
   }
 
+  // POST
   addPersonnel(): void {
     this.personnelService.addPersonnel(this.newPersonnel).subscribe((personnel: Personnel) => {
       this.personnels.push(personnel);
@@ -37,11 +42,10 @@ export class PersonnelComponent implements OnInit {
     });
   }
 
+  // DELETE
   deletePersonnel(id: number): void {
     this.personnelService.deletePersonnel(id).subscribe(() => {
       this.loadPersonnels();
     });
   }
-
-
 }

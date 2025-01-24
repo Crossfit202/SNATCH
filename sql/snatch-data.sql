@@ -29,8 +29,8 @@ VALUES
 ('Claws', 'Fox', 'claws.webp', TRUE, 1), 
 ('Swift', 'Hawk', 'swift.webp', TRUE, 2), 
 ('Shadow', 'Panther', 'shadow.webp', FALSE, null), 
-('Bart', 'Pangolin', 'bart.webp', False, null),
-('Digger', 'Mole', 'digger.webp', TRUE, 2);
+('Digger', 'Mole', 'digger.webp', TRUE, 2),
+('Bart', 'Pangolin', 'bart.webp', False, null);
 
 SELECT * FROM personnel;
 
@@ -67,7 +67,11 @@ VALUES
 
 -- Digger (personnel_id = 5)
 (5, 4), -- Digging
-(5, 8); -- Agility
+(5, 8), -- Agility
+
+-- Bart (personnel_id = 6)
+(6, 3),
+(6, 6);
 
 SELECT * FROM personnel_skill;
 

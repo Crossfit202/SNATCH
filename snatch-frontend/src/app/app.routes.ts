@@ -15,12 +15,12 @@ export const routes: Routes = [
         path: '', component: HomePageComponent, pathMatch: 'full'
     },
     {
-        path: 'leaders', // The URL segment that maps to this route
-        component: LeaderComponent // The component to render when this route is accessed
+        path: 'leaders',
+        component: LeaderComponent
     },
     {
-        path: 'captains', // The URL segment that maps to this route
-        component: CaptainComponent // The component to render when this route is accessed
+        path: 'captains',
+        component: CaptainComponent
     },
     {
         path: 'crews',
