@@ -28,7 +28,8 @@ VALUES
 ('Sneaky', 'Raccoon', 'sneaky.webp', TRUE, 1), 
 ('Claws', 'Fox', 'claws.webp', TRUE, 1), 
 ('Swift', 'Hawk', 'swift.webp', TRUE, 2), 
-('Shadow', 'Panther', 'shadow.webp', FALSE, 3), 
+('Shadow', 'Panther', 'shadow.webp', FALSE, null), 
+('Bart', 'Pangolin', 'bart.webp', False, null),
 ('Digger', 'Mole', 'digger.webp', TRUE, 2);
 
 SELECT * FROM personnel;

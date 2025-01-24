@@ -3,10 +3,11 @@ import { Personnel } from '../models/Personnel';
 import { PersonnelService } from '../services/personnel.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { NavbarComponent } from '../reused-components/navbar.component';
 
 @Component({
   selector: 'app-personnel',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NavbarComponent],
   templateUrl: './personnel.component.html',
   styleUrl: './personnel.component.css'
 })

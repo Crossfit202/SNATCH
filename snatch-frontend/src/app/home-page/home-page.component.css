@@ -1,0 +1,15 @@
+header {
+    background-color: grey;
+    background-size: cover;
+    background-position: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    height: 60vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+footer {
+    background-color: darkgrey;
+}

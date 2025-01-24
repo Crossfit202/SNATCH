@@ -1,17 +1,8 @@
 spring:
  application:
-  # this name is what will be registered on Eureka Server as the service name
   name: snatch-gateway
  cloud:
   gateway:
-   # essentially a list of routes
-   #    - id = whatever we want to call the route (usually will identify it as the route for the particular service)
-   #    - uri = which load balancer we are sending requests to
-   #          - the service name after the lb:// MUST MATCH THE NAME DESIGNATED IN THE OTHER SERVICE!!!
-   #          - i.e., must name the service instances the exact same name or the load balancer will not find it
-   #    - predicates = under what circumstances are we sending requests to the uri (i.e., what paths should go to the particular Service)
-   #          - set up as a list--can have more than one
-   #          - keep with REST protocol (organized and clean)
    routes:
    - id: heist-api-route
      uri: lb://heist-api
@@ -25,13 +16,7 @@ spring:
      uri: lb://personnel-management-api
      predicates:
      - Path=/**
-#     - Path=/leader/**
-#     - Path=/captain/**
-#     - Path=/crew/**
-#     - Path=/personnel/**
-#     - Path=/skill/**
 
-# typical port for gateways is 9000
 server:
  port: 9000
  

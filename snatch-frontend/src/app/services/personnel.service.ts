@@ -8,10 +8,12 @@ import { Personnel } from '../models/Personnel';
 })
 export class PersonnelService {
 
+  // Backend URL
   private apiURL = '/api/personnel'
 
   constructor(private http: HttpClient) { }
 
+  //METHODS 
   getAllPersonnels(): Observable<Personnel[]> {
     return this.http.get<Personnel[]>(this.apiURL);
   }

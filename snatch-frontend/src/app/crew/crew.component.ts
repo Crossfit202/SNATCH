@@ -5,14 +5,13 @@ import { CaptainService } from '../services/captain.service';
 import { Captain } from '../models/Captain';
 import { Leader } from '../models/Leader';
 import { Crew } from '../models/Crew';
-import { LeaderService } from '../services/leader.service';
 import { CrewService } from '../services/crew.service';
-import { Observable } from 'rxjs';
+import { NavbarComponent } from '../reused-components/navbar.component';
 
 @Component({
   selector: 'app-crew',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NavbarComponent],
   templateUrl: './crew.component.html',
   styleUrl: './crew.component.css'
 })

@@ -1,3 +1,4 @@
+<app-navbar></app-navbar>
 <h1 class="text-center mb-4">Personnel</h1>
 
 <div class="container">
@@ -11,7 +12,8 @@
                 <!-- Card Body -->
                 <div class="card-body">
                     <h5 class="card-title">{{ personnel.personnelName }}</h5>
-                    <p class="card-text"><strong>Species:</strong> {{ personnel.species }}</p>
+                    <div><strong>Species:</strong> {{ personnel.species }}</div>
+                    <div><strong>Availabe:</strong> {{ personnel.isAssigned ? 'Yes' : 'No' }}</div>
                     <ul class="list-unstyled">
                         <li *ngFor="let skill of personnel.skills">
                             <strong>Skill:</strong> {{ skill.skillName }}

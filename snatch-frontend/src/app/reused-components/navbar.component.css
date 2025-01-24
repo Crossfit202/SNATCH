@@ -1,0 +1,5 @@
+/* Optional styling for active links */
+.navbar-nav .nav-link.active {
+    font-weight: bold;
+    text-decoration: underline;
+}

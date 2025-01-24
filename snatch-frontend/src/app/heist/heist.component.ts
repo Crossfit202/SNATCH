@@ -4,12 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { Heist } from '../models/Heist';
 import { HeistService } from '../services/heist.service';
 import { DomElementSchemaRegistry } from '@angular/compiler';
+import { NavbarComponent } from '../reused-components/navbar.component';
 
 
 @Component({
   selector: 'app-heist',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NavbarComponent],
   templateUrl: './heist.component.html',
   styleUrls: ['./heist.component.css']
 })

@@ -3,10 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Skill } from '../models/Skill';
 import { SkillService } from '../services/skill.service';
+import { NavbarComponent } from '../reused-components/navbar.component';
 
 @Component({
   selector: 'app-skill',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NavbarComponent],
   templateUrl: './skill.component.html',
   styleUrl: './skill.component.css'
 })

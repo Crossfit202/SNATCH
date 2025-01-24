@@ -3,10 +3,11 @@ import { Loot } from '../models/Loot';
 import { LootService } from '../services/loot.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { NavbarComponent } from '../reused-components/navbar.component';
 
 @Component({
   selector: 'app-loot',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NavbarComponent],
   templateUrl: './loot.component.html',
   styleUrl: './loot.component.css'
 })

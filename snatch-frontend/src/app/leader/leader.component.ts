@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LeaderService } from '../services/leader.service';
 import { Leader } from '../models/Leader';
+import { NavbarComponent } from '../reused-components/navbar.component';
 
 @Component({
   selector: 'app-leader',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NavbarComponent],
   templateUrl: './leader.component.html',
   styleUrl: './leader.component.css'
 })

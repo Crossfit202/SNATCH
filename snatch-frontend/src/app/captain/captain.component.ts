@@ -7,12 +7,13 @@ import { Leader } from '../models/Leader';
 import { Crew } from '../models/Crew';
 import { LeaderService } from '../services/leader.service';
 import { CrewService } from '../services/crew.service';
+import { NavbarComponent } from '../reused-components/navbar.component';
 
 // Define the Angular component
 @Component({
   selector: 'app-captain', // Defines the HTML tag for this component
   standalone: true, // Indicates that this is a standalone component (doesn't rely on an NgModule)
-  imports: [CommonModule, FormsModule], // Includes CommonModule and FormsModule for directives and data binding
+  imports: [CommonModule, FormsModule, NavbarComponent], // Includes CommonModule and FormsModule for directives and data binding
   templateUrl: './captain.component.html', // Specifies the HTML file for the component template
   styleUrls: ['./captain.component.css'] // Specifies the CSS file for the component styling
 })

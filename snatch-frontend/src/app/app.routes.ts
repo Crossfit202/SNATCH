@@ -7,37 +7,41 @@ import { HeistComponent } from './heist/heist.component';
 import { Personnel } from './models/Personnel';
 import { SkillComponent } from './skill/skill.component';
 import { PersonnelComponent } from './personnel/personnel.component';
+import { HomePageComponent } from './home-page/home-page.component';
 
 // Define and export the application's routing configuration
 export const routes: Routes = [
-    // Route configuration for the 'captains' path
     {
-        path: 'captains', // The URL segment that maps to this route
-        component: CaptainComponent // The component to render when this route is accessed
+        path: '', component: HomePageComponent, pathMatch: 'full'
     },
-    // Route configuration for the 'leaders' path
     {
         path: 'leaders', // The URL segment that maps to this route
         component: LeaderComponent // The component to render when this route is accessed
+    },
+    {
+        path: 'captains', // The URL segment that maps to this route
+        component: CaptainComponent // The component to render when this route is accessed
     },
     {
         path: 'crews',
         component: CrewComponent
     },
     {
-        path: 'loot',
-        component: LootComponent
+        path: 'personnels',
+        component: PersonnelComponent
     },
     {
         path: 'heists',
         component: HeistComponent
     },
-    {
-        path: 'personnels',
-        component: PersonnelComponent
-    },
+
     {
         path: 'skills',
         component: SkillComponent
-    }
+    },
+    {
+        path: 'loot',
+        component: LootComponent
+    },
+
 ];
