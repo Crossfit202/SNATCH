@@ -27,6 +27,7 @@ public class Captain {
 	
 	@ManyToOne
 	@JoinColumn(name = "leader_id", referencedColumnName = "leader_id")
+	@JsonIgnoreProperties("captains")
 	private Leader leader;
 	
 	@OneToOne(mappedBy = "captain")
