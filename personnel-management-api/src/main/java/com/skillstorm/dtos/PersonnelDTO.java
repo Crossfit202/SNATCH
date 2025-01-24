@@ -1,6 +1,9 @@
 package com.skillstorm.dtos;
 
+import java.util.List;
+
 import com.skillstorm.models.Crew;
+import com.skillstorm.models.Skill;
 
 public class PersonnelDTO {
 	
@@ -13,14 +16,18 @@ public class PersonnelDTO {
 	private boolean isAssigned;
 	
 	private Crew crew;
+	
+	private List<Skill> skills;
 
-	public PersonnelDTO(String personnelName, String species, String profileImg, boolean isAssigned, Crew crew) {
+	public PersonnelDTO(String personnelName, String species, String profileImg, boolean isAssigned, Crew crew,
+			List<Skill> skills) {
 		super();
 		this.personnelName = personnelName;
 		this.species = species;
 		this.profileImg = profileImg;
 		this.isAssigned = isAssigned;
 		this.crew = crew;
+		this.skills = skills;
 	}
 
 	public String getPersonnelName() {
@@ -63,11 +70,20 @@ public class PersonnelDTO {
 		this.crew = crew;
 	}
 
+	public List<Skill> getSkills() {
+		return skills;
+	}
+
+	public void setSkills(List<Skill> skills) {
+		this.skills = skills;
+	}
+
 	@Override
 	public String toString() {
 		return "PersonnelDTO [personnelName=" + personnelName + ", species=" + species + ", profileImg=" + profileImg
-				+ ", isAssigned=" + isAssigned + ", crew=" + crew + "]";
+				+ ", isAssigned=" + isAssigned + ", crew=" + crew + ", skills=" + skills + "]";
 	}
+
 	
 	
 }
