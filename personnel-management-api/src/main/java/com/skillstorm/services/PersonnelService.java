@@ -1,5 +1,6 @@
 package com.skillstorm.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,15 +43,13 @@ public class PersonnelService {
 			return ResponseEntity.status(HttpStatus.CONFLICT)
 					.body(String.format("Personnel with name '%s' already exists!", personnelDTO.getPersonnelName()));
 		}
-
-		// get list of personnels for selected crew
-		List<Personnel> personnels = repo.findAllPersonnelsByCrewId(personnelDTO.getCrew().getCrewId());
-		// testing
-		System.out.println(personnels.size());
-		System.out.println(repo.findMaxCapByCrewId(personnelDTO.getCrew().getCrewId()));
+		
+		// if selected crew is not null
+		// get list of personnels, else give empty list
+		List<Personnel> personnels = (personnelDTO.getCrew() != null) ? repo.findAllPersonnelsByCrewId(personnelDTO.getCrew().getCrewId()) : new ArrayList<>();
 
 		// check if the crew selected has already hit its max capacity or not
-		if (personnels.size() >= repo.findMaxCapByCrewId(personnelDTO.getCrew().getCrewId())) {
+		if (personnelDTO.getCrew() != null && personnels.size() >= repo.findMaxCapByCrewId(personnelDTO.getCrew().getCrewId())) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 					.body(String.format("Max capacity reached for Crew. Please assign a different Crew."));
 		} else {
