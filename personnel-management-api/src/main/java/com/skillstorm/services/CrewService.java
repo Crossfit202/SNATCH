@@ -1,14 +1,22 @@
 package com.skillstorm.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.skillstorm.apis.HeistClient;
 import com.skillstorm.dtos.CrewDTO;
 import com.skillstorm.dtos.HeistDTO;
+import com.skillstorm.models.Captain;
 import com.skillstorm.models.Crew;
+import com.skillstorm.models.Personnel;
+import com.skillstorm.repositories.CaptainRepository;
 import com.skillstorm.repositories.CrewRepository;
+import com.skillstorm.repositories.PersonnelRepository;
 
 
 
@@ -16,11 +24,15 @@ import com.skillstorm.repositories.CrewRepository;
 public class CrewService {
 	private CrewRepository repo;
 	private HeistClient heistClient;
+	private PersonnelRepository personnelRepo;
+	private CaptainRepository captainRepo;
 
-	public CrewService(CrewRepository repo, HeistClient heistClient) {
+	public CrewService(CrewRepository repo, HeistClient heistClient, PersonnelRepository personnelRepo, CaptainRepository captainRepo) {
 		super();
 		this.repo = repo;
 		this.heistClient = heistClient;
+		this.personnelRepo = personnelRepo;
+		this.captainRepo = captainRepo;
 	}
 
 //	SERVICE METHODS
@@ -67,35 +79,51 @@ public class CrewService {
 			return ResponseEntity.status(HttpStatus.CONFLICT)
                     .body(String.format("Captain with ID '%d' is already assigned to a crew!", crewDTO.getCaptain().getCaptainId()));
 		} else {
-			return ResponseEntity.status(HttpStatus.CREATED)
-		             .body(repo.save(new Crew(0, crewDTO.getCrewName(),
-		            		                     crewDTO.getMaxCapacity(),
-		            		                     crewDTO.isAvailability(),
-		            		                     crewDTO.isHasCaptain(),
-		            		                     crewDTO.getCaptain(), 
-		            		                     null
-		            		                     )));
+			
+			Captain captain = captainRepo.findById(crewDTO.getCaptain().getCaptainId()).orElse(null);
+			
+			Crew savedCrew = repo.save(new Crew(0, crewDTO.getCrewName(),
+                    							   crewDTO.getMaxCapacity(),
+                    							   crewDTO.isAvailability(),
+                    							   crewDTO.isHasCaptain(),
+                    							   captain, 
+                    							   null));
+			Crew completeCrew = repo.findById(savedCrew.getCrewId()).orElse(null);
+			
+			if(completeCrew != null) {
+				return ResponseEntity.status(HttpStatus.CREATED)
+			             			 .body(completeCrew);
+			} else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+           			 .body("Error occurred while retrieving the saved Crew.");
+			}
+
 		}
 	
 	}
 	
 	
 //	PUT
+		@Transactional
 		public ResponseEntity<Object> updateOne(int crewId, CrewDTO crewDTO) {
-			// Check if the Crew ID exists in DB, else exit
+			// Check if the Crew ID exists in DB, else quick exit (no point in doing the rest!)
 		    if(!repo.existsById(crewId)) {
 		    	return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 			             .body(String.format("Failed to update! Crew with ID %d does not exist. Ensure the ID is correct or create a new Crew.", crewId));
 		    }
 		    
-		    // Get the urrent Crew's ID
+		    // Get the current Crew's ID
 		    Crew currentCrew = repo.findById(crewId).get();
 			
+		    
+		    /*
+		     * CAPTAIN AND CREW NAME CONFLICT VALIDATION
+		     */
+		    
 		    // Check if the Captain ID is already assigned to a Crew
 		    // and is not the one it is currently assigned to
 		    boolean captainExists = repo.existsByCaptain_CaptainId(crewDTO.getCaptain().getCaptainId()) 
 		    						&& (currentCrew.getCaptain().getCaptainId() != crewDTO.getCaptain().getCaptainId());
-		    
 		    
 		    // Check if the Crew name already exists in the DB
 		    // and is not the name of this one that is currently being updated
@@ -119,21 +147,39 @@ public class CrewService {
 	                    .body(String.format("Failed to update! Crew with with name '%s' already exists!", crewDTO.getCrewName()));
 		    }
 		    
+		    
+		    /*
+		     * PERSONNEL VALIDATION
+		     */
+		    
 		    // Check if the inputed list of Personnels exceeds the Crew's max capacity
 		    if(crewDTO.getPersonnels() != null && crewDTO.getPersonnels().size() > crewDTO.getMaxCapacity()) {
 		        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 		                             .body(String.format("Failed to update! The number of personnel (%d) exceeds the crew's max capacity (%d).",
 		                                                 crewDTO.getPersonnels().size(), crewDTO.getMaxCapacity()));
+		    } else {
+		    	
+			    // To allow updates to the personnel list
+			    List<Integer> personnelIds = new ArrayList<>();
+			    for (Personnel personnel : crewDTO.getPersonnels()) {
+			        personnelIds.add(personnel.getPersonnelId());
+			    }
+			    
+			    // Update the Personnel's crew field using the custom query
+			    repo.updateCrewPersonnel(currentCrew.getCrewId(), personnelIds);
+			    repo.removePersonnelNotInList(personnelIds);
+			    
+			    // If no conflicts, update the Crew!
+			    return ResponseEntity.status(HttpStatus.OK)
+				             .body(repo.save(new Crew(crewId, crewDTO.getCrewName(),
+	   		                                              crewDTO.getMaxCapacity(),
+	   		                                              crewDTO.isAvailability(),
+	   		                                              crewDTO.isHasCaptain(),
+	   		                                              crewDTO.getCaptain(),
+	   		                                              currentCrew.getPersonnels())));
 		    }
 		    
-		    // If no conflicts, update the Crew!
-		    return ResponseEntity.status(HttpStatus.OK)
-			             .body(repo.save(new Crew(crewId, crewDTO.getCrewName(),
-   		                                              crewDTO.getMaxCapacity(),
-   		                                              crewDTO.isAvailability(),
-   		                                              crewDTO.isHasCaptain(),
-   		                                              crewDTO.getCaptain(),
-   		                                              crewDTO.getPersonnels())));
+
 		}
 	
 	

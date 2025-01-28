@@ -1,5 +1,9 @@
 package com.skillstorm.repositories;
 
+import java.util.List;
+
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,4 +15,12 @@ public interface CrewRepository extends CrudRepository<Crew, Integer> {
 	boolean existsByCrewNameIgnoreCase(String crewName);
 	
 	boolean existsByCaptain_CaptainId(int captainId);
+	
+	@Modifying
+	@Query(value = "UPDATE personnel SET crew_id = ?1 WHERE personnel_id IN (?2)", nativeQuery = true)
+	int updateCrewPersonnel(int crewId, List<Integer> personnelIds);
+	
+	@Modifying
+	@Query(value = "UPDATE personnel SET crew_id = NULL WHERE personnel_id NOT IN (?1)", nativeQuery = true)
+	int removePersonnelNotInList(List<Integer> personnelIds);
 }
