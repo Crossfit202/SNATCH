@@ -16,8 +16,12 @@ export class LootService {
     }
 
     addLoot(loot: Loot): Observable<Loot> {
+        if (loot.lootId && loot.lootId !== 0) {
+            return this.http.put<Loot>(`${this.apiUrl}/${loot.lootId}`, loot);
+        }
         return this.http.post<Loot>(this.apiUrl, loot);
     }
+
 
     deleteLoot(id: number): Observable<void> {
         return this.http.delete<void>(`${this.apiUrl}/${id}`);
