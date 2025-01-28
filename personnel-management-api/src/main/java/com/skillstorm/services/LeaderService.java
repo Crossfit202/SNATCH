@@ -46,6 +46,10 @@ public class LeaderService {
 		} else {
 			return ResponseEntity.status(HttpStatus.CREATED)
 					 .body(repo.save(new Leader(0, leaderDTO.getLeaderName(), null)));
+//			Leader savedLeader = repo.save(new Leader(0, leaderDTO.getLeaderName(), null));
+//			Leader completeLeader = repo.findById(savedLeader.getLeaderId()).orElse(null);
+//			return ResponseEntity.status(HttpStatus.CREATED)
+//								 .body(completeLeader);
 		}
 		
 		

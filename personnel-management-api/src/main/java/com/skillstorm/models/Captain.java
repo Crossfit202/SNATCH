@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,12 +26,12 @@ public class Captain {
 	@Column(name = "captain_name")
 	private String captainName;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "leader_id", referencedColumnName = "leader_id")
 	@JsonIgnoreProperties("captains")
 	private Leader leader;
 	
-	@OneToOne(mappedBy = "captain")
+	@OneToOne(mappedBy = "captain", fetch = FetchType.EAGER)
 	@JsonIgnoreProperties({"captain", "hasCaptain", "personnels"})
 	private Crew crew;
 
