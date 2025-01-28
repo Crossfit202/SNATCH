@@ -72,9 +72,10 @@ public class CaptainService {
 			Leader leader = leaderRepo.findById(captainDTO.getLeader().getLeaderId())
 		                			  .orElse(null);
 			
-			// Get Crew Object from input Crew ID
-	        Crew crew = crewRepo.findById(captainDTO.getCrew().getCrewId())
-	                			.orElse(null);
+			Crew crew = (captainDTO.getCrew() != null) ? 
+		            crewRepo.findById(captainDTO.getCrew().getCrewId()).orElse(null) 
+		            : null;
+
 			
 			// Save the new Captain
 			Captain savedCaptain = repo.save(new Captain(0, captainDTO.getCaptainName(), leader, crew));

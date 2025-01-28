@@ -1,43 +1,72 @@
 <app-navbar></app-navbar>
 <h1 class="text-center mb-4">Captains</h1>
 
+<!-- Captain List -->
 <div class="container">
-  <ul class="list-unstyled">
-    <li *ngFor="let captain of captains" class="mb-4 bg-light p-3 rounded shadow-sm">
-      <div class="d-flex justify-content-between align-items-start">
-        <ul class="list-unstyled ps-3 mb-0">
-          <li><strong>Captain:</strong> {{ captain.captainName }}</li>
-          <li><strong>Leader:</strong> {{ captain.leader?.leaderName }}</li>
-          <li><strong>Crew:</strong> {{ captain.crew?.crewName }}</li>
-        </ul>
-        <div>
-          <button (click)="deleteCaptain(captain.captainId)" class="btn btn-danger btn-sm me-2">Delete</button>
-          <button (click)="editCaptain(captain)" class="btn btn-primary btn-sm">Edit</button>
+  <ul class="list-group">
+    <li *ngFor="let captain of captains" class="list-group-item p-3">
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="bg-light p-3 rounded shadow-sm flex-grow-1">
+          <p><strong>Captain:</strong> {{ captain.captainName }}</p>
+          <p><strong>Leader:</strong> {{ captain.leader.leaderName }}</p>
+          <p><strong>Crew:</strong> {{ captain.crew ? captain.crew.crewName : 'No Crew' }}</p>
         </div>
+        <div class="ms-3">
+          <button (click)="toggleEdit(captain.captainId)" class="btn btn-warning btn-sm me-2">
+            Edit
+          </button>
+          <button (click)="deleteCaptain(captain.captainId)" class="btn btn-danger btn-sm">
+            Delete
+          </button>
+        </div>
+      </div>
+
+      <!-- Accordion-style edit form -->
+      <div *ngIf="editingCaptainId === captain.captainId" class="mt-3 p-3 bg-light rounded shadow-sm">
+        <form (ngSubmit)="updateCaptain()" *ngIf="selectedCaptain">
+          <div class="mb-3">
+            <label class="form-label">Captain Name:</label>
+            <input [(ngModel)]="selectedCaptain.captainName" name="captainName" class="form-control" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Leader:</label>
+            <select [(ngModel)]="selectedCaptain.leader" name="leader" class="form-select">
+              <option *ngFor="let leader of leaders" [ngValue]="leader">{{ leader.leaderName }}</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Crew:</label>
+            <select [(ngModel)]="selectedCaptain.crew" name="crew" class="form-select">
+              <option [ngValue]="null">No Crew</option>
+              <option *ngFor="let crew of crews" [ngValue]="crew">{{ crew.crewName }}</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-success btn-sm">Save</button>
+          <button type="button" (click)="cancelEdit()" class="btn btn-secondary btn-sm ms-2">Cancel</button>
+        </form>
       </div>
     </li>
   </ul>
 </div>
 
+<!-- Add Captain Form -->
 <h2 class="text-center mt-5 mb-4">Add Captain</h2>
-
 <div class="container">
   <form (ngSubmit)="addCaptain()" class="bg-light p-4 rounded shadow-sm">
     <div class="mb-3">
-      <label for="captainName" class="form-label">Captain Name:</label>
-      <input id="captainName" [(ngModel)]="newCaptain.captainName" name="captainName" class="form-control" required />
+      <label class="form-label">Captain Name:</label>
+      <input [(ngModel)]="newCaptain.captainName" name="captainName" class="form-control" required />
     </div>
     <div class="mb-3">
-      <label for="leader" class="form-label">Leader:</label>
-      <select id="leader" [(ngModel)]="newCaptain.leader" name="leader" class="form-select">
-        <option [ngValue]="null">None</option>
+      <label class="form-label">Leader:</label>
+      <select [(ngModel)]="newCaptain.leader" name="leader" class="form-select">
         <option *ngFor="let leader of leaders" [ngValue]="leader">{{ leader.leaderName }}</option>
       </select>
     </div>
     <div class="mb-3">
-      <label for="crew" class="form-label">Crew:</label>
-      <select id="crew" [(ngModel)]="newCaptain.crew" name="crew" class="form-select">
-        <option [ngValue]="null">None</option>
+      <label class="form-label">Crew:</label>
+      <select [(ngModel)]="newCaptain.crew" name="crew" class="form-select">
+        <option [ngValue]="null">No Crew</option>
         <option *ngFor="let crew of crews" [ngValue]="crew">{{ crew.crewName }}</option>
       </select>
     </div>
