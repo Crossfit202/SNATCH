@@ -22,6 +22,10 @@ export class PersonnelService {
     return this.http.post<Personnel>(this.apiURL, personnel);
   }
 
+  updatePersonnel(id: number, personnel: Personnel): Observable<Personnel> {
+    return this.http.put<Personnel>(`${this.apiURL}/${id}`, personnel);
+  }
+
   deletePersonnel(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiURL}/${id}`);
   }
