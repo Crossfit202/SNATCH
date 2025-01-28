@@ -9,10 +9,11 @@ import { Observable } from 'rxjs';
 export class LeaderService {
 
   private apiUrl = '/api/leader';
+
   constructor(private http: HttpClient) { }
 
   getLeaders(): Observable<Leader[]> {
-    return this.http.get<Leader[]>(this.apiUrl)
+    return this.http.get<Leader[]>(this.apiUrl);
   }
 
   addLeader(leader: Leader): Observable<Leader> {
@@ -23,5 +24,7 @@ export class LeaderService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-
+  updateLeader(leader: Leader): Observable<Leader> {
+    return this.http.put<Leader>(`${this.apiUrl}/${leader.leaderId}`, leader);
+  }
 }

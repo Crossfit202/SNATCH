@@ -101,7 +101,7 @@ public class Personnel {
 		return isAssigned;
 	}
 
-	public void setAssigned(boolean isAssigned) {
+	public void setIsAssigned(boolean isAssigned) {
 		this.isAssigned = isAssigned;
 	}
 

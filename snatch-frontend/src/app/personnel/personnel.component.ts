@@ -29,10 +29,14 @@ export class PersonnelComponent implements OnInit {
 
   // GET ALL
   loadPersonnels(): void {
-    this.personnelService.getAllPersonnels().subscribe((personnels: Personnel[]) => {
-      this.personnels = personnels;
+    this.personnelService.getAllPersonnels().subscribe((personnels: any[]) => {
+      this.personnels = personnels.map(personnel => ({
+        ...personnel,
+        isAssigned: personnel.assigned  // Map backend 'assigned' to frontend 'isAssigned'
+      }));
     });
   }
+
 
   // POST
   addPersonnel(): void {
