@@ -1,6 +1,9 @@
 package com.skillstorm.dtos;
 
+import java.util.List;
+
 import com.skillstorm.models.Captain;
+import com.skillstorm.models.Personnel;
 
 public class CrewDTO {
 	
@@ -14,15 +17,17 @@ public class CrewDTO {
 	
 	private Captain captain;
 	
-	
+	private List<Personnel> personnels;
 
-	public CrewDTO(String crewName, int maxCapacity, boolean avaiability, boolean hasCaptain, Captain captain) {
+	public CrewDTO(String crewName, int maxCapacity, boolean availability, boolean hasCaptain, Captain captain,
+			List<Personnel> personnels) {
 		super();
 		this.crewName = crewName;
 		this.maxCapacity = maxCapacity;
-		this.availability = avaiability;
+		this.availability = availability;
 		this.hasCaptain = hasCaptain;
 		this.captain = captain;
+		this.personnels = personnels;
 	}
 
 	public String getCrewName() {
@@ -45,8 +50,8 @@ public class CrewDTO {
 		return availability;
 	}
 
-	public void setAvailability(boolean avaiability) {
-		this.availability = avaiability;
+	public void setAvailability(boolean availability) {
+		this.availability = availability;
 	}
 
 	public boolean isHasCaptain() {
@@ -65,12 +70,21 @@ public class CrewDTO {
 		this.captain = captain;
 	}
 
-	
+	public List<Personnel> getPersonnels() {
+		return personnels;
+	}
+
+	public void setPersonnels(List<Personnel> personnels) {
+		this.personnels = personnels;
+	}
+
 	@Override
 	public String toString() {
 		return "CrewDTO [crewName=" + crewName + ", maxCapacity=" + maxCapacity + ", availability=" + availability
-				+ ", hasCaptain=" + hasCaptain + ", captain=" + captain + "]";
+				+ ", hasCaptain=" + hasCaptain + ", captain=" + captain + ", personnels=" + personnels + "]";
 	}
+
+	
 	
 
 }

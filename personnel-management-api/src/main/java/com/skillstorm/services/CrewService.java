@@ -55,10 +55,14 @@ public class CrewService {
 	
 //	CREATE ONE - POST
 	public ResponseEntity<Object> addOne(CrewDTO crewDTO) {
+		
+		// Check if inputed Crew Name is a duplicate
 		if(repo.existsByCrewNameIgnoreCase(crewDTO.getCrewName())) {
 			return ResponseEntity.status(HttpStatus.CONFLICT)
 								 .body(String.format("Crew with name '%s' already exists!", crewDTO.getCrewName()));
 		} 
+		
+		// Check if the inputed Captain is already assigned to a Crew
 		if(crewDTO.getCaptain() != null && repo.existsByCaptain_CaptainId(crewDTO.getCaptain().getCaptainId())) {
 			return ResponseEntity.status(HttpStatus.CONFLICT)
                     .body(String.format("Captain with ID '%d' is already assigned to a crew!", crewDTO.getCaptain().getCaptainId()));
@@ -78,51 +82,58 @@ public class CrewService {
 	
 //	PUT
 		public ResponseEntity<Object> updateOne(int crewId, CrewDTO crewDTO) {
-			// check if the crew ID exists in DB, else exit
+			// Check if the Crew ID exists in DB, else exit
 		    if(!repo.existsById(crewId)) {
 		    	return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 			             .body(String.format("Failed to update! Crew with ID %d does not exist. Ensure the ID is correct or create a new Crew.", crewId));
 		    }
 		    
-		    // get the current crew's ID
+		    // Get the urrent Crew's ID
 		    Crew currentCrew = repo.findById(crewId).get();
 			
-		    // check if the captain ID is already assigned to a crew
-		    // and is not the one you are currently assigned to
+		    // Check if the Captain ID is already assigned to a Crew
+		    // and is not the one it is currently assigned to
 		    boolean captainExists = repo.existsByCaptain_CaptainId(crewDTO.getCaptain().getCaptainId()) 
 		    						&& (currentCrew.getCaptain().getCaptainId() != crewDTO.getCaptain().getCaptainId());
 		    
 		    
-		    // check if the crew name already exists in the DB
-		    // and is not the name of the one are currently updating
+		    // Check if the Crew name already exists in the DB
+		    // and is not the name of this one that is currently being updated
 		    boolean crewNameExists = repo.existsByCrewNameIgnoreCase(crewDTO.getCrewName()) 
 		    						 && !currentCrew.getCrewName().equalsIgnoreCase(crewDTO.getCrewName());
 		    
-		    // if both the captain chosen and crew name conflicts with existing data
+		    // If both the Captain selected and Crew name conflicts with existing data
 		    if(captainExists && crewNameExists) {
 		    	return ResponseEntity.status(HttpStatus.CONFLICT)
 		    						 .body(String.format("Failed to update! Crew with with name '%s' already exists, and Captain with ID '%d' is already assigned to a crew!", 
 		    								 crewDTO.getCrewName(), crewDTO.getCaptain().getCaptainId()));
 		    	
-		    // if only the captain chosen conflicts
+		    // If only the captain selected conflicts
 		    } else if(captainExists) {
 		    	return ResponseEntity.status(HttpStatus.CONFLICT)
 		    						 .body(String.format("Failed to update! Captain with ID '%d' is already assigned to a crew!", crewDTO.getCaptain().getCaptainId()));
 		    
-		    // if only the name conflicts
+		    // If only the name conflicts
 		    } else if(crewNameExists) {
 		    	return ResponseEntity.status(HttpStatus.CONFLICT)
 	                    .body(String.format("Failed to update! Crew with with name '%s' already exists!", crewDTO.getCrewName()));
 		    }
 		    
-		    // if no conflicts, update the crew!
+		    // Check if the inputed list of Personnels exceeds the Crew's max capacity
+		    if(crewDTO.getPersonnels() != null && crewDTO.getPersonnels().size() > crewDTO.getMaxCapacity()) {
+		        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+		                             .body(String.format("Failed to update! The number of personnel (%d) exceeds the crew's max capacity (%d).",
+		                                                 crewDTO.getPersonnels().size(), crewDTO.getMaxCapacity()));
+		    }
+		    
+		    // If no conflicts, update the Crew!
 		    return ResponseEntity.status(HttpStatus.OK)
 			             .body(repo.save(new Crew(crewId, crewDTO.getCrewName(),
    		                                              crewDTO.getMaxCapacity(),
    		                                              crewDTO.isAvailability(),
    		                                              crewDTO.isHasCaptain(),
    		                                              crewDTO.getCaptain(),
-   		                                              null)));
+   		                                              crewDTO.getPersonnels())));
 		}
 	
 	
