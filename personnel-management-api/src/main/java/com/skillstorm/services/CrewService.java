@@ -198,7 +198,7 @@ public class CrewService {
 			    repo.updateCrewPersonnel(currentCrew.getCrewId(), personnelIds);
 			    
 			    // Remove Personnel currently on the Crew that are not in the incoming List
-			    repo.removePersonnelNotInList(personnelIds);
+			    repo.removePersonnelNotInList(currentCrew.getCrewId(), personnelIds);
 			    
 			    // If no conflicts, update the Crew!
 			    return ResponseEntity.status(HttpStatus.OK)
