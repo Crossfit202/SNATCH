@@ -48,7 +48,7 @@ public class PersonnelController {
 	
 //	UPDATE - PUT
 	@PutMapping("/{personnelId}")
-	public ResponseEntity<Personnel> updateOne(@PathVariable("personnelId") int personnelId, @RequestBody PersonnelDTO personnelDTO) { 
+	public ResponseEntity<Object> updateOne(@PathVariable("personnelId") int personnelId, @RequestBody PersonnelDTO personnelDTO) { 
 		return service.updateOne(personnelId, personnelDTO);
 	}
 	

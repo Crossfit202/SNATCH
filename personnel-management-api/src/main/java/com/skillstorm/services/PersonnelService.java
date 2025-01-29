@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.skillstorm.dtos.PersonnelDTO;
 import com.skillstorm.models.Crew;
 import com.skillstorm.models.Personnel;
@@ -105,20 +107,50 @@ public class PersonnelService {
 	}
 
 // 	UPDATE ONE PERSONNEL - PUT
-	public ResponseEntity<Personnel> updateOne(int personnelId, PersonnelDTO personnelDTO) {
-		if (repo.existsById(personnelId)) {
-			return ResponseEntity.status(HttpStatus.OK)
+	@Transactional
+	public ResponseEntity<Object> updateOne(int personnelId, PersonnelDTO personnelDTO) {
+	    if(!repo.existsById(personnelId)) {
+	    	return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+		             			 .body(String.format("Failed to update! Personnel with ID %d does not exist. Ensure the ID is correct or create a new Personnel.", 
+		             					 				personnelId));
+	    }
+		
+	    // Get the current Personnel's ID
+	    Personnel currentPersonnel = repo.findById(personnelId).get();
+	    
+		// Check if the Personnel name already exists in the DB
+		// and is not the name of this one that is currently being updated
+		boolean personnelNameExists = repo.existsByPersonnelNameIgnoreCase(personnelDTO.getPersonnelName()) 
+		    						 && !currentPersonnel.getPersonnelName().equalsIgnoreCase(personnelDTO.getPersonnelName());
+	    
+		if(personnelNameExists) {
+			return ResponseEntity.status(HttpStatus.CONFLICT)
+       			 .body(String.format("Failed to update! Personnel with with name '%s' already exists!", 
+       									personnelDTO.getPersonnelName()));
+		}
+		
+		boolean isAssigned = personnelDTO.getCrew() != null;
+		
+		if (isAssigned) {
+		    int assignedPersonnelCount = repo.findAllPersonnelsByCrewId(personnelDTO.getCrew().getCrewId()).size();
+		    Integer maxCapacity = repo.findMaxCapByCrewId(personnelDTO.getCrew().getCrewId());
+
+		    if (assignedPersonnelCount >= maxCapacity) {
+		        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+		            .body(String.format("Failed to update! The crew's max capacity (%d) has been reached. Choose a different Crew.",
+		                                maxCapacity));
+		    }
+		}
+			
+		return ResponseEntity.status(HttpStatus.OK)
 					.body(repo.save(new Personnel(personnelId, personnelDTO.getPersonnelName(),
 							personnelDTO.getSpecies(),
 							personnelDTO.getProfileImg(),
-							personnelDTO.isAssigned(),
+							isAssigned,
 							personnelDTO.getCrew(),
 							personnelDTO.getSkills())));
-		} else {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					.body(null);
-		}
 	}
+	
 
 // 	DELETE ONE PERSONNEL
 	public ResponseEntity<Void> deleteById(int personnelId) {
