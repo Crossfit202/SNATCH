@@ -14,10 +14,10 @@ public interface CaptainRepository extends CrudRepository<Captain, Integer> {
 	boolean existsByCrew_CrewId(int crewId);
 	
 	@Modifying
-	@Query(value = "UPDATE crew SET captain_id = ?1 WHERE crew_id = ?2", nativeQuery = true)
+	@Query(value = "UPDATE crew SET captain_id = ?1, has_captain = true WHERE crew_id = ?2", nativeQuery = true)
 	int updateCaptainCrew(int captainId, int crewId);
 	
 	@Modifying
-	@Query(value = "UPDATE crew SET captain_id = NULL WHERE captain_id = ?1", nativeQuery = true)
+	@Query(value = "UPDATE crew SET captain_id = NULL, has_captain = false WHERE captain_id = ?1", nativeQuery = true)
 	int removeCrewNotRequested(int captainId);
 }

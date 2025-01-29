@@ -134,12 +134,12 @@ public class CaptainService {
 	    	
 	        // Remove the current crew's captain (if necessary)
 	        if (currentCaptain.getCrew() != null) {
-	            repo.removeCrewNotRequested(captainId); // Update the crew's captain_id to NULL for all crews except the one with this captainId
+	            repo.removeCrewNotRequested(captainId);
 	        }
 
 	        // Update the Captain's new Crew assignment
 	        if (captainDTO.getCrew() != null) {
-	            repo.updateCaptainCrew(captainId, captainDTO.getCrew().getCrewId()); // Set the new captain for the specified crew
+	            repo.updateCaptainCrew(captainId, captainDTO.getCrew().getCrewId());
 	        }
 	    	
 			// Get Leader Object from input Leader ID
