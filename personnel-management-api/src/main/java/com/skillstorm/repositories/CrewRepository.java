@@ -21,6 +21,6 @@ public interface CrewRepository extends CrudRepository<Crew, Integer> {
 	int updateCrewPersonnel(int crewId, List<Integer> personnelIds);
 	
 	@Modifying
-	@Query(value = "UPDATE personnel SET crew_id = NULL WHERE crew_id = ?1 AND personnel_id NOT IN (?2)", nativeQuery = true)
+	@Query(value = "UPDATE personnel SET crew_id = NULL WHERE crew_id = ?1 AND (?2 IS NULL OR personnel_id NOT IN (?2))", nativeQuery = true)
 	int removePersonnelNotInList(int crewId, List<Integer> personnelIds);
 }
