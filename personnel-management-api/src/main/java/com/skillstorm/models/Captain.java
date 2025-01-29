@@ -3,6 +3,7 @@ package com.skillstorm.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -31,7 +32,7 @@ public class Captain {
 	@JsonIgnoreProperties("captains")
 	private Leader leader;
 	
-	@OneToOne(mappedBy = "captain", fetch = FetchType.EAGER)
+	@OneToOne(mappedBy = "captain", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JsonIgnoreProperties({"captain", "hasCaptain", "personnels"})
 	private Crew crew;
 
