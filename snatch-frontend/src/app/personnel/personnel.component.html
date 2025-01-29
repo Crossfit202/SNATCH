@@ -10,7 +10,14 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ personnel.personnelName }}</h5>
                     <div><strong>Species:</strong> {{ personnel.species }}</div>
-                    <div><strong>Available:</strong> {{ personnel.isAssigned ? 'No' : 'Yes' }}</div>
+
+                    <!-- Highlight Available line in Green if personnel is available -->
+                    <div
+                        [ngClass]="{'text-success fw-bold': personnel.isAssigned === false, 'text-danger fw-bold': personnel.isAssigned === true}">
+
+                        <strong>Available:</strong> {{ personnel.isAssigned ? 'No' : 'Yes' }}
+                    </div>
+
 
                     <ul class="list-unstyled">
                         <li *ngFor="let skill of personnel.skills">
@@ -45,7 +52,6 @@
                             </select>
                         </div>
 
-
                         <button type="submit" class="btn btn-success btn-sm">Save</button>
                         <button type="button" (click)="cancelEdit()"
                             class="btn btn-secondary btn-sm ms-2">Cancel</button>
@@ -75,8 +81,6 @@
                 <option *ngFor="let skill of skills" [ngValue]="skill">{{ skill.skillName }}</option>
             </select>
         </div>
-
-
 
         <button type="submit" class="btn btn-success w-100">Add</button>
     </form>

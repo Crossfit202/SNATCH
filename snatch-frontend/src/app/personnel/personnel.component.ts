@@ -32,10 +32,12 @@ export class PersonnelComponent implements OnInit {
     this.personnelService.getAllPersonnels().subscribe((personnels: Personnel[]) => {
       this.personnels = personnels.map(personnel => ({
         ...personnel,
-        isAssigned: personnel.isAssigned
+        isAssigned: personnel.assigned ?? false // ✅ Map `assigned` to `isAssigned`
       }));
     });
   }
+
+
 
   loadSkills(): void {
     this.skillService.getAllSkills().subscribe((skills: Skill[]) => {

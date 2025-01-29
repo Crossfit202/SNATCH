@@ -96,35 +96,3 @@ VALUES
 
 SELECT * FROM loot;
 
-
--- getting skills for animals --
--- SELECT 
---     p.personnel_name AS Animal,
---     p.species AS Species,
---     s.skill_name AS Skill
--- FROM 
---     personnel p
--- JOIN 
---     personnel_skill ps ON p.personnel_id = ps.personnel_id
--- JOIN 
---     skill s ON ps.skill_id = s.skill_id
--- ORDER BY 
---     p.personnel_name, s.skill_name;
-    
--- getting skills for one animal --    
--- SELECT 
---     p.personnel_name AS Animal,
---     p.species AS Species,
---     s.skill_name AS Skill
--- FROM 
---     personnel p
--- JOIN 
---     personnel_skill ps ON p.personnel_id = ps.personnel_id
--- JOIN 
---     skill s ON ps.skill_id = s.skill_id
--- WHERE 
---     p.personnel_name = 'Sneaky';
-
-
-
--- DESCRIBE `snatch`.`loot`;
