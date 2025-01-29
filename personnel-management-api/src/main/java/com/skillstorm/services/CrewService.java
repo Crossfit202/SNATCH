@@ -204,8 +204,24 @@ public class CrewService {
 
 //  DELETE ONE CREW
 	public ResponseEntity<Void> deleteById(int crewId) {
-		repo.deleteById(crewId);
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+//		repo.deleteById(crewId);
+//		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+		
+	    if (repo.existsById(crewId)) {
+	        Crew crew = repo.findById(crewId).get();
+
+	        // Check if the crew has an assigned captain
+	        if (crew.getCaptain() != null) {
+	        	Captain captain = crew.getCaptain();
+	            captain.setCrew(null); // Set captain's crew to null
+	            captainRepo.save(captain); // Save the captain update
+	        }
+
+	        repo.deleteById(crewId);
+	        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+	    } else {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+	    }
 	}
 
 }

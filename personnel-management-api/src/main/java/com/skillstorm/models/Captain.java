@@ -32,7 +32,7 @@ public class Captain {
 	@JsonIgnoreProperties("captains")
 	private Leader leader;
 	
-	@OneToOne(mappedBy = "captain", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "captain", fetch = FetchType.EAGER)
 	@JsonIgnoreProperties({"captain", "hasCaptain", "personnels"})
 	private Crew crew;
 
