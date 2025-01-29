@@ -46,18 +46,17 @@ public class PersonnelService {
 					.body(String.format("Personnel with name '%s' already exists!", personnelDTO.getPersonnelName()));
 		}
 		
+		boolean isAssigned = personnelDTO.getCrew() != null;
+		
 		// if selected crew is not null
 		// get list of personnels, else give empty list
-		List<Personnel> personnels = (personnelDTO.getCrew() != null) ? repo.findAllPersonnelsByCrewId(personnelDTO.getCrew().getCrewId()) : new ArrayList<>();
+		List<Personnel> personnels = isAssigned ? repo.findAllPersonnelsByCrewId(personnelDTO.getCrew().getCrewId()) : new ArrayList<>();
 
 		// check if the crew selected has already hit its max capacity or not
-		if (personnelDTO.getCrew() != null && personnels.size() >= repo.findMaxCapByCrewId(personnelDTO.getCrew().getCrewId())) {
+		if(isAssigned && personnels.size() >= repo.findMaxCapByCrewId(personnelDTO.getCrew().getCrewId())) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 					.body(String.format("Max capacity reached for Crew. Please assign a different Crew."));
 		} else {
-			
-			boolean isAssigned = personnelDTO.getCrew() != null;
-			
 			return ResponseEntity.status(HttpStatus.CREATED)
 					.body(repo.save(new Personnel(0, personnelDTO.getPersonnelName(),
 							personnelDTO.getSpecies(),

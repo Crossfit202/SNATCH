@@ -60,7 +60,7 @@ public class Personnel {
 		this.personnelName = personnelName;
 		this.species = species;
 		this.profileImg = profileImg;
-		this.isAssigned = false;
+		this.isAssigned = isAssigned;
 		this.crew = crew;
 		this.skills = skills;
 	}
