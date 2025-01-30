@@ -10,6 +10,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "loot")
 public class Loot {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "loot_id")
@@ -22,10 +23,9 @@ public class Loot {
 	private int quantity;
 	
 	
-
+	// CONSTRUCTORS
 	public Loot() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 
@@ -34,9 +34,10 @@ public class Loot {
 	this.lootId = lootId;
 	this.itemName = itemName;
 	this.quantity = quantity;
-}
+	}
 
 
+	// GETTERS AND SETTERS
 	public int getLootId() {
 		return lootId;
 	}
@@ -73,7 +74,7 @@ public class Loot {
 
 
 
-	//	toString()
+	// TO STRING
 	@Override
 	public String toString() {
 		return "Loot [lootId=" + lootId + ", itemName=" + itemName + ", quantity=" + quantity + "]";

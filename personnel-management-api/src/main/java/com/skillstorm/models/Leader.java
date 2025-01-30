@@ -25,13 +25,22 @@ public class Leader {
 	@Column(name = "leader_name")
 	private String leaderName;
 
+	/*
+	 * ENTITY RELATIONSHIPS
+	 * 	- no FK in Leader table; FK in Captain table
+	 * 
+	 * FetchType.EAGER
+	 * 	- originally added to ensure respective objects are immediately loaded in within a transaction (see Service methods)
+	 * 	- may want to test eventually if it is even needed
+	 */
 	@OneToMany(mappedBy = "leader", fetch = FetchType.EAGER)
 	@JsonIgnoreProperties("leader")
 	private List<Captain> captains;
 
+	
+	// CONSTRUCTORS
 	public Leader() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Leader(int leaderId, String leaderName, List<Captain> captains) {
@@ -41,6 +50,8 @@ public class Leader {
 		this.captains = captains;
 	}
 
+	
+	// GETTERS AND SETTERS
 	public int getLeaderId() {
 		return leaderId;
 	}
@@ -65,6 +76,7 @@ public class Leader {
 		this.captains = captains;
 	}
 
+	// TO STRING
 	@Override
 	public String toString() {
 		return "Leader [leaderId=" + leaderId + ", leaderName=" + leaderName + ", captains=" + captains + "]";

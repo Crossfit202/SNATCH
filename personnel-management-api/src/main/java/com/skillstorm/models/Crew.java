@@ -18,6 +18,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "crew")
 public class Crew {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "crew_id")
@@ -26,15 +27,21 @@ public class Crew {
 	@Column(name = "crew_name")
 	private String crewName;
 	
+	// Max number of personnel allowed for the Crew
 	@Column(name = "max_capacity")
 	private int maxCapacity;
 	
+	// Is the Crew available to take on a Heist?
 	@Column(name = "availability")
 	private boolean availability;
 	
+	// Is there a Captain assigned--for filtering purposes if expanding app
 	@Column(name = "has_captain")
 	private boolean hasCaptain;
 	
+	/*
+	 * ENTITY RELATIONSHIPS
+	 */
 	@OneToOne
 	@JoinColumn(name = "captain_id", referencedColumnName = "captain_id")
 	@JsonIgnoreProperties({"leader", "crew"})
@@ -44,9 +51,10 @@ public class Crew {
 	@JsonIgnoreProperties("crew")
 	private List<Personnel> personnels;
 
+	
+	// CONSTRUCTORS
 	public Crew() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Crew(int crewId, String crewName, int maxCapacity, boolean availability, boolean hasCaptain, Captain captain,
@@ -61,6 +69,8 @@ public class Crew {
 		this.personnels = personnels;
 	}
 
+	
+	// GETTERS AND SETTERS
 	public int getCrewId() {
 		return crewId;
 	}
@@ -117,6 +127,8 @@ public class Crew {
 		this.personnels = personnels;
 	}
 
+	
+	// TO STRING
 	@Override
 	public String toString() {
 		return "Crew [crewId=" + crewId + ", crewName=" + crewName + ", maxCapacity=" + maxCapacity + ", availability="
