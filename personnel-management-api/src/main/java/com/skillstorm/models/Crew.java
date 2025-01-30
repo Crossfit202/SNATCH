@@ -40,7 +40,7 @@ public class Crew {
 	@JsonIgnoreProperties({"leader", "crew"})
 	private Captain captain;
 	
-	@OneToMany(mappedBy = "crew", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "crew")
 	@JsonIgnoreProperties("crew")
 	private List<Personnel> personnels;
 

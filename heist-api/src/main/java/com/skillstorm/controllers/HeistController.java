@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.skillstorm.dtos.HeistDTO;
+import com.skillstorm.dtos.HeistWithCrewDTO;
 import com.skillstorm.models.Heist;
 import com.skillstorm.services.HeistService;
 
@@ -30,14 +31,14 @@ public class HeistController {
 //	GET ALL
 	
 	@GetMapping
-	public Iterable<Heist> findAll() {
+	public ResponseEntity<Iterable<HeistWithCrewDTO>> findAll() {
 		return service.findAll();
 	}
 	
 //	GET BY ID
 	
 	@GetMapping("/{heistId}")
-	public ResponseEntity<Heist> findById(@PathVariable("heistId") int heistId) {
+	public ResponseEntity<Object> findById(@PathVariable("heistId") int heistId) {
 		return service.findById(heistId);
 	}
 	
@@ -49,13 +50,13 @@ public class HeistController {
 	
 //	CREATE - POST
 	@PostMapping
-	public ResponseEntity<Heist> addOne(@RequestBody HeistDTO heistDTO) {
+	public ResponseEntity<Object> addOne(@RequestBody HeistDTO heistDTO) {
 		return service.addOne(heistDTO);
 	}
 	
 //	UPDATE - PUT
 	@PutMapping("/{heistId}")
-	public ResponseEntity<Heist> updateOne(@PathVariable("heistId") int heistId, @RequestBody HeistDTO heistDTO) { 
+	public ResponseEntity<Object> updateOne(@PathVariable("heistId") int heistId, @RequestBody HeistDTO heistDTO) { 
 		return service.updateOne(heistId, heistDTO);
 	}
 	
