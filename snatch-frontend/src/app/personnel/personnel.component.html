@@ -41,6 +41,30 @@
             </div>
         </div>
 
+        <!-- Right Section: Add Personnel Form -->
+        <div class="add-personnel-section">
+            <h1 class="text-center mb-4">Add Personnel</h1>
+            <form (ngSubmit)="addPersonnel()" class="bg-light p-4">
+                <div class="mb-3">
+                    <label class="form-label">Personnel Name:</label>
+                    <input [(ngModel)]="newPersonnel.personnelName" name="personnelName" class="form-control"
+                        required />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Species:</label>
+                    <input [(ngModel)]="newPersonnel.species" name="species" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Skills:</label>
+                    <select [(ngModel)]="newPersonnel.skills" name="skills" class="form-select" multiple
+                        [compareWith]="compareSkills">
+                        <option *ngFor="let skill of skills" [ngValue]="skill">{{ skill.skillName }}</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-success w-100">Add</button>
+            </form>
+        </div>
+
         <!-- Centered Edit Modal -->
         <div *ngIf="editingPersonnelId !== null" class="edit-modal">
             <div class="edit-modal-content">
@@ -70,30 +94,5 @@
                 </form>
             </div>
         </div>
-    </div>
-
-
-
-    <!-- Right Section: Add Personnel Form -->
-    <div class="add-personnel-section">
-        <h1 class="text-center mb-4">Add Personnel</h1>
-        <form (ngSubmit)="addPersonnel()" class="bg-light p-4">
-            <div class="mb-3">
-                <label class="form-label">Personnel Name:</label>
-                <input [(ngModel)]="newPersonnel.personnelName" name="personnelName" class="form-control" required />
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Species:</label>
-                <input [(ngModel)]="newPersonnel.species" name="species" class="form-control" required />
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Skills:</label>
-                <select [(ngModel)]="newPersonnel.skills" name="skills" class="form-select" multiple
-                    [compareWith]="compareSkills">
-                    <option *ngFor="let skill of skills" [ngValue]="skill">{{ skill.skillName }}</option>
-                </select>
-            </div>
-            <button type="submit" class="btn btn-success w-100">Add</button>
-        </form>
     </div>
 </div>

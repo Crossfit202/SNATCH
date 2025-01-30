@@ -1,3 +1,12 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    /* Prevents extra scrolling */
+}
+
 li {
     list-style-type: none;
     /* Ensures individual list items have no bullets */
@@ -14,6 +23,7 @@ li {
     max-width: 100vw;
     /* Prevents accidental overflow */
     padding: 0;
+    height: 100%;
     box-sizing: border-box;
     /* Ensures padding doesn’t affect width */
 }
@@ -23,6 +33,7 @@ li {
     width: 50vw;
     /* Forces exactly half the viewport */
     max-width: 50vw;
+    height: calc(100vh - 83.98px);
     /* Prevents any overflow */
     padding: 10px 30px;
     /* Adds spacing but avoids pushing content out */
@@ -35,7 +46,16 @@ li {
     padding-right: 0 !important;
     margin: 0 auto;
     width: 100vw;
-    /* Forces it to always fit within the screen */
+    height: calc(100vh - 83.98px);
+    /* Full viewport height */
+    display: flex;
+    flex-direction: column;
+    /* Ensures navbar and content stack properly */
+}
+
+
+.add-personnel-section {
+    background-color: #ece7d9;
 }
 
 .personnel-section {
@@ -43,7 +63,7 @@ li {
     /* Forces exactly half the viewport */
     max-width: 50vw;
     /* Prevents any overflow */
-    height: 80vh;
+    height: calc(100vh - 83.98px);
     /* Set a fixed height for scrolling */
     overflow-y: auto;
     /* Enables vertical scrolling */
@@ -53,6 +73,8 @@ li {
     /* Prevents padding from increasing size */
     border-right: 2px solid #ddd;
     /* Optional: Adds a subtle separator */
+
+    background-color: #7db7bd;
 }
 
 /* Optional: Hide the scrollbar for a cleaner look */
@@ -61,7 +83,7 @@ li {
 }
 
 .personnel-section::-webkit-scrollbar-thumb {
-    background-color: #aaa;
+    background-color: white;
     border-radius: 10px;
 }
 
