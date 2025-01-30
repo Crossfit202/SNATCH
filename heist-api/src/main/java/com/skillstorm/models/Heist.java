@@ -10,6 +10,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "heist")
 public class Heist {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "heist_id")
@@ -27,12 +28,14 @@ public class Heist {
 	@Column(name = "status")
 	private String status; 
 	
+	// FK TO CREW--USED OPENFEIGN WITH WRAPPER DTO
 	@Column(name = "crew_id")
 	private int crewId;
 
+	
+	// CONSTRUCTORS
 	public Heist() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Heist(int heistId, String description, String location, boolean isAssigned, String status, int crewId) {
@@ -45,6 +48,8 @@ public class Heist {
 		this.crewId = crewId;
 	}
 
+	
+	// GETTERS AND SETTERS
 	public int getHeistId() {
 		return heistId;
 	}
@@ -93,6 +98,7 @@ public class Heist {
 		this.crewId = crewId;
 	}
 
+	// TO STRING
 	@Override
 	public String toString() {
 		return "Heist [heistId=" + heistId + ", description=" + description + ", location=" + location + ", isAssigned="

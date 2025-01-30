@@ -15,6 +15,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "skill")
 public class Skill {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "skill_id")
@@ -23,13 +24,17 @@ public class Skill {
 	@Column(name = "skill_name")
 	private String skillName;
 	
+	/*
+	 * ENTITY RELATIONSHIPS
+	 */
 	@ManyToMany(mappedBy = "skills")
 	@JsonIgnoreProperties({"skills", "crew"})
 	private List<Personnel> personnels;
 
+	
+	// CONSTRUCTORS
 	public Skill() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Skill(int skillId, String skillName, List<Personnel> personnels) {
@@ -39,6 +44,8 @@ public class Skill {
 		this.personnels = personnels;
 	}
 
+	
+	// GETTERS AND SETTERS
 	public int getSkillId() {
 		return skillId;
 	}
@@ -63,6 +70,7 @@ public class Skill {
 		this.personnels = personnels;
 	}
 
+	// TO STRING
 	@Override
 	public String toString() {
 		return "Skill [skillId=" + skillId + ", skillName=" + skillName + ", personnels=" + personnels + "]";

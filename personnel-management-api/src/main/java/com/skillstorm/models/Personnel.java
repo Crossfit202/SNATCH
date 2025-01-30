@@ -18,6 +18,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "personnel")
 public class Personnel {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "personnel_id")
@@ -32,10 +33,13 @@ public class Personnel {
 	@Column(name = "profile_img")
 	private String profileImg;
 	
+	// Is the personnel assigned to a Crew?--for filtering purposes if expanding app
 	@Column(name = "is_assigned")
 	private boolean isAssigned;
 	
-	
+	/*
+	 * ENTITY RELATIONSHIPS
+	 */
 	@ManyToOne
 	@JoinColumn(name = "crew_id", referencedColumnName = "crew_id")
 	@JsonIgnoreProperties({"personnels", "hasCaptain", "availability", "maxCapacity"})
@@ -48,9 +52,10 @@ public class Personnel {
 	@JsonIgnoreProperties("personnels")
 	private List<Skill> skills;
 
+	
+	// CONSTRUCTORS
 	public Personnel() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Personnel(int personnelId, String personnelName, String species, String profileImg, boolean isAssigned,
@@ -65,6 +70,8 @@ public class Personnel {
 		this.skills = skills;
 	}
 
+	
+	// GETTERS AND SETTERS
 	public int getPersonnelId() {
 		return personnelId;
 	}
@@ -121,6 +128,8 @@ public class Personnel {
 		this.skills = skills;
 	}
 
+	
+	// TO STRING
 	@Override
 	public String toString() {
 		return "Personnel [personnelId=" + personnelId + ", personnelName=" + personnelName + ", species=" + species

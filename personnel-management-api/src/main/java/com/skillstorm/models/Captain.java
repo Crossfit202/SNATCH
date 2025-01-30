@@ -27,18 +27,27 @@ public class Captain {
 	@Column(name = "captain_name")
 	private String captainName;
 	
+	/*
+	 * ENTITY RELATIONSHIPS
+	 * 
+	 * FetchType.EAGER
+	 * 	- originally added to ensure respective objects are immediately loaded in within a transaction (see Service methods)
+	 * 	- may want to test eventually if it is even needed
+	 */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "leader_id", referencedColumnName = "leader_id")
 	@JsonIgnoreProperties("captains")
 	private Leader leader;
 	
+	// No FK in Captain table; FK in Crew table
 	@OneToOne(mappedBy = "captain", fetch = FetchType.EAGER)
 	@JsonIgnoreProperties({"captain", "hasCaptain", "personnels"})
 	private Crew crew;
 
+	
+	// CONSTRUCTORS
 	public Captain() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Captain(int captainId, String captainName, Leader leader, Crew crew) {
@@ -49,6 +58,8 @@ public class Captain {
 		this.crew = crew;
 	}
 
+	
+	// GETTERS AND SETTERS
 	public int getCaptainId() {
 		return captainId;
 	}
@@ -81,6 +92,8 @@ public class Captain {
 		this.crew = crew;
 	}
 
+	
+	// TO STRING
 	@Override
 	public String toString() {
 		return "Captain [captainId=" + captainId + ", captainName=" + captainName + ", leader=" + leader + ", crew="
