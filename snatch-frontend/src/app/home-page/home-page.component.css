@@ -17,6 +17,7 @@ header {
 
 body {
     background-color: #ece7d9;
+    height: 100vh;
 }
 
 
@@ -46,4 +47,28 @@ body {
 
 .bg-primary {
     background-color: #7db7bd !important;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+a {
+    background-color: rgb(67, 170, 67);
+}
+
+a:hover {
+    background-color: #7db7bd
+}
+
+.container>a {
+    background-color: white;
+    margin-top: 10px;
+}
+
+.container>a:hover {
+    background-color: #ece7d9;
+}
+
+.bg-primary h2 {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
