@@ -5,9 +5,9 @@ export class Personnel {
     personnelName: string;
     species: string;
     profileImg: string;
-    isAssigned: boolean; // The existing property
-    assigned?: boolean;  // ✅ Add this optional property to match the backend response
-    crew: any; // Assuming crew is nullable or has a specific type
+    isAssigned: boolean;
+    assigned?: boolean;
+    crew: any;
     skills: Skill[];
 
     constructor(

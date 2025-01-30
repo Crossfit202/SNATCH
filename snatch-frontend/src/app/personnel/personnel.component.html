@@ -1,23 +1,29 @@
 <app-navbar></app-navbar>
 
-<!-- Full-width container to ensure they take the full screen -->
+<!-- Full-width container to ensure they take up the entire screen -->
 <div class="container-fluid">
     <div class="main-div">
+
         <!-- Left Section: Personnel List -->
         <div class="personnel-section">
             <h1 class="text-center mb-4">Personnel</h1>
             <div class="row g-3">
+                <!-- Loop through each personnel and display in a card format -->
                 <div *ngFor="let personnel of personnels" class="col-md-6">
                     <div class="card h-100 shadow-sm" [ngClass]="{
                         'border-success': personnel.isAssigned === false, 
                         'border-danger': personnel.isAssigned === true
                     }">
+                        <!-- Profile Image -->
                         <img [src]="'assets/images/mugshot/' + personnel.profileImg" alt="{{ personnel.personnelName }}"
                             class="card-img-top rounded-circle mx-auto mt-3" style="width: 200px; height: 200px;" />
+
                         <div class="card-body">
+                            <!-- Display personnel details -->
                             <h5 class="card-title">{{ personnel.personnelName }}</h5>
                             <div><strong>Species:</strong> {{ personnel.species }}</div>
 
+                            <!-- Show availability status, styled dynamically based on assigned status -->
                             <div [ngClass]="{
                                 'text-success fw-bold': personnel.isAssigned === false, 
                                 'text-danger fw-bold': personnel.isAssigned === true
@@ -25,12 +31,15 @@
                                 <strong>Available:</strong> {{ personnel.isAssigned ? 'No' : 'Yes' }}
                             </div>
 
+                            <!-- Display personnel skills -->
                             <ul class="list-unstyled">
                                 <li *ngFor="let skill of personnel.skills">
                                     <strong>Skill:</strong> {{ skill.skillName }}
                                 </li>
                             </ul>
                         </div>
+
+                        <!-- Action buttons (Edit & Delete) -->
                         <div class="card-footer d-flex justify-content-between">
                             <button (click)="openEditPopup(personnel)" class="btn btn-warning btn-sm">Edit</button>
                             <button (click)="deletePersonnel(personnel.personnelId)"
@@ -45,15 +54,21 @@
         <div class="add-personnel-section">
             <h1 class="text-center mb-4">Add Personnel</h1>
             <form (ngSubmit)="addPersonnel()" class="bg-light p-4">
+
+                <!-- Input: Personnel Name -->
                 <div class="mb-3">
                     <label class="form-label">Personnel Name:</label>
                     <input [(ngModel)]="newPersonnel.personnelName" name="personnelName" class="form-control"
                         required />
                 </div>
+
+                <!-- Input: Species -->
                 <div class="mb-3">
                     <label class="form-label">Species:</label>
                     <input [(ngModel)]="newPersonnel.species" name="species" class="form-control" required />
                 </div>
+
+                <!-- Multi-Select: Skills -->
                 <div class="mb-3">
                     <label class="form-label">Skills:</label>
                     <select [(ngModel)]="newPersonnel.skills" name="skills" class="form-select" multiple
@@ -61,24 +76,32 @@
                         <option *ngFor="let skill of skills" [ngValue]="skill">{{ skill.skillName }}</option>
                     </select>
                 </div>
+
+                <!-- Submit Button -->
                 <button type="submit" class="btn btn-success w-100">Add</button>
             </form>
         </div>
 
-        <!-- Centered Edit Modal -->
+        <!-- Centered Edit Modal (Displayed when editing a personnel) -->
         <div *ngIf="editingPersonnelId !== null" class="edit-modal">
             <div class="edit-modal-content">
                 <h3 class="text-center">Edit Personnel</h3>
                 <form (ngSubmit)="updatePersonnel()" *ngIf="selectedPersonnel">
+
+                    <!-- Input: Personnel Name -->
                     <div class="mb-3">
                         <label class="form-label">Personnel Name:</label>
                         <input [(ngModel)]="selectedPersonnel.personnelName" name="personnelName" class="form-control"
                             required />
                     </div>
+
+                    <!-- Input: Species -->
                     <div class="mb-3">
                         <label class="form-label">Species:</label>
                         <input [(ngModel)]="selectedPersonnel.species" name="species" class="form-control" required />
                     </div>
+
+                    <!-- Multi-Select: Skills -->
                     <div class="mb-3">
                         <label class="form-label">Skills:</label>
                         <select [(ngModel)]="selectedPersonnel.skills" name="skills" class="form-select" multiple
@@ -86,6 +109,8 @@
                             <option *ngFor="let skill of skills" [ngValue]="skill">{{ skill.skillName }}</option>
                         </select>
                     </div>
+
+                    <!-- Save & Cancel Buttons -->
                     <div class="d-flex justify-content-between">
                         <button type="submit" class="btn btn-success btn-sm">Save</button>
                         <button type="button" (click)="closeEditPopup()"

@@ -1,14 +1,21 @@
+<!-- Navigation bar component -->
 <app-navbar></app-navbar>
 
-<!-- Full-width container to ensure they take the full screen -->
+<!-- Full-width container to ensure the layout takes up the full screen -->
 <div class="container-fluid">
   <div class="main-div">
+
     <!-- Left Section: Captains List -->
     <div class="captains-section">
       <h1 class="text-center mb-4">Captains</h1>
+
+      <!-- List of captains -->
       <ul class="list-group">
+        <!-- Loop through captains and display each in a list item -->
         <li *ngFor="let captain of captains" class="list-group-item p-3">
           <div class="d-flex justify-content-between align-items-center">
+
+            <!-- Captain details displayed in a styled container -->
             <ul>
               <div class="bg-light p-3 rounded shadow-sm flex-grow-1">
                 <p><strong>{{ captain.captainName }}</strong></p>
@@ -16,6 +23,8 @@
                 <p><strong>Crew:</strong> {{ captain.crew ? captain.crew.crewName : 'No Crew' }}</p>
               </div>
             </ul>
+
+            <!-- Action buttons for editing and deleting the captain -->
             <div class="ms-3">
               <button (click)="toggleEdit(captain.captainId)" class="btn btn-warning btn-sm me-2">
                 Edit
@@ -26,13 +35,17 @@
             </div>
           </div>
 
-          <!-- Edit Form -->
+          <!-- Edit Form: Displays only when a captain is being edited -->
           <div *ngIf="editingCaptainId === captain.captainId" class="mt-3 p-3 bg-light rounded shadow-sm">
             <form (ngSubmit)="updateCaptain()" *ngIf="selectedCaptain">
+
+              <!-- Captain Name Input -->
               <div class="mb-3">
                 <label class="form-label">Captain Name:</label>
                 <input [(ngModel)]="selectedCaptain.captainName" name="captainName" class="form-control" required />
               </div>
+
+              <!-- Dropdown to select a leader -->
               <div class="mb-3">
                 <label class="form-label">Leader:</label>
                 <select [(ngModel)]="selectedCaptain.leader" name="leader" class="form-select">
@@ -40,6 +53,8 @@
                   </option>
                 </select>
               </div>
+
+              <!-- Dropdown to select a crew -->
               <div class="mb-3">
                 <label class="form-label">Crew:</label>
                 <select [(ngModel)]="selectedCaptain.crew" name="crew" class="form-select">
@@ -47,6 +62,8 @@
                   <option *ngFor="let crew of crews" [ngValue]="crew">{{ crew.crewName }}</option>
                 </select>
               </div>
+
+              <!-- Save and Cancel buttons -->
               <button type="submit" class="btn btn-success btn-sm">Save</button>
               <button type="button" (click)="cancelEdit()" class="btn btn-secondary btn-sm ms-2">Cancel</button>
             </form>
@@ -59,16 +76,22 @@
     <div class="add-captain-section">
       <h1 class="text-center mb-4">Add Captain</h1>
       <form (ngSubmit)="addCaptain()" class="bg-light p-4">
+
+        <!-- Input for Captain Name -->
         <div class="mb-3">
           <label class="form-label">Captain Name:</label>
           <input [(ngModel)]="newCaptain.captainName" name="captainName" class="form-control" required />
         </div>
+
+        <!-- Dropdown to select a Leader -->
         <div class="mb-3">
           <label class="form-label">Leader:</label>
           <select [(ngModel)]="newCaptain.leader" name="leader" class="form-select">
             <option *ngFor="let leader of leaders" [ngValue]="leader">{{ leader.leaderName }}</option>
           </select>
         </div>
+
+        <!-- Dropdown to select a Crew -->
         <div class="mb-3">
           <label class="form-label">Crew:</label>
           <select [(ngModel)]="newCaptain.crew" name="crew" class="form-select">
@@ -76,6 +99,8 @@
             <option *ngFor="let crew of crews" [ngValue]="crew">{{ crew.crewName }}</option>
           </select>
         </div>
+
+        <!-- Button to submit the new captain -->
         <button type="submit" class="btn btn-success w-100">Add</button>
       </form>
     </div>

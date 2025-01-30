@@ -1,20 +1,28 @@
 <app-navbar></app-navbar>
+<!-- Navigation bar included at the top of the page -->
 
-<!-- Full-width container to ensure they take the full screen -->
+<!-- Full-width container to ensure they take up the entire screen -->
 <div class="container-fluid">
     <div class="main-div">
+
         <!-- Left Section: Heist List -->
         <div class="heists-section">
-            <h1 class="text-center mb-4">Heists</h1>
+            <h1 class="text-center mb-4">Heists</h1> <!-- Heading for the heist list -->
+
             <ul class="list-unstyled">
+                <!-- Loop through the list of heists and display each one -->
                 <li *ngFor="let heist of heists" class="mb-4 bg-light p-3 rounded shadow-sm">
                     <div class="d-flex justify-content-between align-items-start">
+
+                        <!-- Displaying heist details in a list format -->
                         <ul class="list-unstyled ps-3 mb-0">
                             <li><strong>Description:</strong> {{ heist.description }}</li>
                             <li><strong>Location:</strong> {{ heist.location }}</li>
                             <li><strong>Status:</strong> {{ heist.status }}</li>
                             <li><strong>Crew ID:</strong> {{ heist.crewId }}</li>
                         </ul>
+
+                        <!-- Buttons to edit or delete the heist -->
                         <div>
                             <button (click)="toggleEdit(heist)" class="btn btn-warning btn-sm me-2">Edit</button>
                             <button (click)="deleteHeist(heist.heistId)" class="btn btn-danger btn-sm">Delete</button>
@@ -49,6 +57,7 @@
                                 <input [(ngModel)]="selectedHeist.crewId" name="crewId" class="form-control" required />
                             </div>
 
+                            <!-- Buttons to save or cancel edits -->
                             <button type="submit" class="btn btn-success btn-sm">Save</button>
                             <button type="button" (click)="cancelEdit()"
                                 class="btn btn-secondary btn-sm ms-2">Cancel</button>
@@ -60,7 +69,8 @@
 
         <!-- Right Section: Add Heist Form -->
         <div class="add-heist-section">
-            <h1 class="text-center mb-4">Add Heist</h1>
+            <h1 class="text-center mb-4">Add Heist</h1> <!-- Heading for the add heist form -->
+
             <form (ngSubmit)="addHeist()" class="bg-light p-4">
                 <div class="mb-3">
                     <label class="form-label">Description:</label>
@@ -85,6 +95,7 @@
                     <input type="number" [(ngModel)]="newHeist.crewId" name="crewId" class="form-control" required />
                 </div>
 
+                <!-- Submit button to add a new heist -->
                 <button type="submit" class="btn btn-success w-100">Add</button>
             </form>
         </div>

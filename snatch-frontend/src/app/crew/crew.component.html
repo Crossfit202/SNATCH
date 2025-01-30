@@ -1,25 +1,39 @@
 <app-navbar></app-navbar>
+<!-- Navbar component that provides navigation across the application -->
 
-<!-- Full-width container to ensure they take the full screen -->
+<!-- Full-width container to ensure the content spans the entire screen -->
 <div class="container-fluid">
   <div class="main-div">
+
     <!-- Left Section: Crews List -->
     <div class="crews-section">
       <h1 class="text-center mb-4">Crews</h1>
+
+      <!-- Unordered list to display all crews -->
       <ul class="list-unstyled">
+
+        <!-- Loop through each crew object and display details -->
         <li *ngFor="let crew of crews" class="mb-4 bg-light p-3 rounded shadow-sm">
+
+          <!-- Flex container for displaying crew details and action buttons -->
           <div class="d-flex justify-content-between align-items-start">
+
+            <!-- Nested list for crew details -->
             <ul class="list-unstyled ps-3 mb-0">
               <li><strong>Crew:</strong> {{ crew.crewName }}</li>
               <li><strong>Max Capacity:</strong> {{ crew.personnels.length }} / {{ crew.maxCapacity }}</li>
               <li><strong>Captain:</strong> {{ crew.captain?.captainName || 'None' }}</li>
+
               <li>
                 <strong>Personnel:</strong>
+                <!-- List of personnel assigned to the crew -->
                 <ul class="list-unstyled ps-3">
                   <li *ngFor="let personnel of crew.personnels">{{ personnel.personnelName }}</li>
                 </ul>
               </li>
             </ul>
+
+            <!-- Action buttons for editing and deleting a crew -->
             <div>
               <button (click)="toggleEdit(crew.crewId)" class="btn btn-warning btn-sm me-2">Edit</button>
               <button (click)="deleteCrew(crew.crewId)" class="btn btn-danger btn-sm">Delete</button>
@@ -28,12 +42,16 @@
 
           <!-- EDIT FORM (Only Visible if Editing) -->
           <div *ngIf="editingCrewId === crew.crewId" class="mt-3 p-3 bg-light rounded shadow-sm">
+
             <form (ngSubmit)="updateCrew()">
+
+              <!-- Input field for editing crew name -->
               <div class="mb-3">
                 <label class="form-label">Crew Name:</label>
                 <input [(ngModel)]="selectedCrew!.crewName" name="crewName" class="form-control" required />
               </div>
 
+              <!-- Dropdown to select the crew captain -->
               <div class="mb-3">
                 <label class="form-label">Captain:</label>
                 <select [(ngModel)]="selectedCrew!.captain" name="captain" class="form-select">
@@ -42,6 +60,7 @@
                 </select>
               </div>
 
+              <!-- Dropdown to select personnel assigned to the crew -->
               <div class="mb-3">
                 <label class="form-label">Personnel:</label>
                 <select (change)="updateSelectedPersonnel($event)" class="form-select" multiple>
@@ -52,8 +71,10 @@
                 </select>
               </div>
 
+              <!-- Save and cancel buttons -->
               <button type="submit" class="btn btn-success btn-sm">Save</button>
               <button type="button" (click)="cancelEdit()" class="btn btn-secondary btn-sm ms-2">Cancel</button>
+
             </form>
           </div>
         </li>
@@ -63,18 +84,24 @@
     <!-- Right Section: Add Crew Form -->
     <div class="add-crew-section">
       <h1 class="text-center mb-4">Add Crew</h1>
+
+      <!-- Form to add a new crew -->
       <form (ngSubmit)="addCrew()" class="bg-light p-4">
+
+        <!-- Input field for new crew name -->
         <div class="mb-3">
           <label class="form-label">Crew Name:</label>
           <input [(ngModel)]="newCrew.crewName" name="crewName" class="form-control" required />
         </div>
 
+        <!-- Input field for defining max capacity of the crew -->
         <div class="mb-3">
           <label class="form-label">Max Capacity:</label>
           <input type="number" [(ngModel)]="newCrew.maxCapacity" name="maxCapacity" class="form-control" min="1"
             required />
         </div>
 
+        <!-- Dropdown to select the captain for the new crew -->
         <div class="mb-3">
           <label class="form-label">Captain:</label>
           <select [(ngModel)]="newCrew.captain" name="captain" class="form-select">
@@ -83,8 +110,11 @@
           </select>
         </div>
 
+        <!-- Submit button to add new crew -->
         <button type="submit" class="btn btn-success w-100">Add</button>
+
       </form>
     </div>
+
   </div>
 </div>
