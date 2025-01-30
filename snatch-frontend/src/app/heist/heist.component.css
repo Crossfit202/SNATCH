@@ -11,6 +11,7 @@
     padding: 0;
     box-sizing: border-box;
     /* Ensures padding doesn’t affect width */
+    height: 100%;
 }
 
 .heists-section,
@@ -23,6 +24,11 @@
     /* Adds spacing but avoids pushing content out */
     box-sizing: border-box;
     /* Prevents padding from increasing size */
+    height: calc(100vh - 83.98px);
+}
+
+.add-heist-section {
+    background-color: #ece7d9;
 }
 
 /* Optional: Ensure responsiveness */
@@ -31,6 +37,7 @@
         flex-direction: column;
         /* Stack them vertically on small screens */
         height: auto;
+
     }
 
     .heists-section,
@@ -45,7 +52,7 @@
     padding-right: 0 !important;
     margin: 0 auto;
     width: 100vw;
-    /* Forces it to always fit within the screen */
+    height: calc(100vh - 83.98px);
 }
 
 .heists-section {
@@ -53,7 +60,6 @@
     /* Forces exactly half the viewport */
     max-width: 50vw;
     /* Prevents any overflow */
-    height: 80vh;
     /* Set a fixed height for scrolling */
     overflow-y: auto;
     /* Enables vertical scrolling */
@@ -63,6 +69,8 @@
     /* Prevents padding from increasing size */
     border-right: 2px solid #ddd;
     /* Optional: Adds a subtle separator */
+    background-color: #7db7bd;
+    height: calc(100vh - 83.98px);
 }
 
 /* Optional: Hide the scrollbar for a cleaner look */
@@ -71,10 +79,15 @@
 }
 
 .heists-section::-webkit-scrollbar-thumb {
-    background-color: #aaa;
+    background-color: white;
     border-radius: 10px;
 }
 
 .heists-section::-webkit-scrollbar-track {
     background: transparent;
+}
+
+li {
+    margin-top: 30px;
+    border-radius: 10px;
 }

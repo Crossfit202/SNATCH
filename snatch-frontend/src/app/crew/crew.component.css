@@ -11,6 +11,7 @@
     padding: 0;
     box-sizing: border-box;
     /* Ensures padding doesn’t affect width */
+    height: 100%;
 }
 
 .crews-section,
@@ -23,7 +24,13 @@
     /* Adds spacing but avoids pushing content out */
     box-sizing: border-box;
     /* Prevents padding from increasing size */
+    height: calc(100vh - 83.98px);
 }
+
+.add-crew-section {
+    background-color: #ece7d9;
+}
+
 
 /* Optional: Ensure responsiveness */
 @media (max-width: 768px) {
@@ -53,7 +60,6 @@
     /* Forces exactly half the viewport */
     max-width: 50vw;
     /* Prevents any overflow */
-    height: 80vh;
     /* Set a fixed height for scrolling */
     overflow-y: auto;
     /* Enables vertical scrolling */
@@ -63,6 +69,7 @@
     /* Prevents padding from increasing size */
     border-right: 2px solid #ddd;
     /* Optional: Adds a subtle separator */
+    background-color: #7db7bd;
 }
 
 /* Optional: Hide the scrollbar for a cleaner look */
@@ -71,7 +78,7 @@
 }
 
 .crews-section::-webkit-scrollbar-thumb {
-    background-color: #aaa;
+    background-color: white;
     border-radius: 10px;
 }
 

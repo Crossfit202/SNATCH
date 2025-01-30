@@ -25,6 +25,11 @@ export class HeistService {
         return this.http.post<Heist>(this.apiUrl, heist);
     }
 
+    updateHeist(id: number, heist: Heist): Observable<Heist> {
+        return this.http.put<Heist>(`${this.apiUrl}/${id}`, heist);
+    }
+
+
     // Delete a heist by ID
     deleteHeist(id: number): Observable<void> {
         return this.http.delete<void>(`${this.apiUrl}/${id}`);
