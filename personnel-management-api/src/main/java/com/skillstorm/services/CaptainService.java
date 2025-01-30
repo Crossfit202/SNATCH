@@ -173,8 +173,13 @@ public class CaptainService {
 	        // Check if the captain has an assigned crew
 	        if (captain.getCrew() != null) {
 	            Crew crew = captain.getCrew();
-	            crew.setCaptain(null); // Remove captain reference from crew
-	            crewRepo.save(crew); // Save the crew update
+	            
+	            // Remove Captain reference from Crew
+	            crew.setCaptain(null); 
+	            crew.setHasCaptain(false);
+	            
+	            // Save the Crew update
+	            crewRepo.save(crew);
 	        }
 
 	        repo.deleteById(captainId);
