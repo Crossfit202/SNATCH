@@ -19,12 +19,16 @@ import com.skillstorm.repositories.SkillRepository;
 
 @Service
 public class PersonnelService {
+	
 	private PersonnelRepository repo;
 	
+	// Inject Crew Repo to retrieve Crew Object
 	private CrewRepository crewRepo;
 	
+	// Inject Skill Repo to retrieve Skill Object
 	private SkillRepository skillRepo;
 
+	// Constructor with constructor injection for repositories
 	public PersonnelService(PersonnelRepository repo, CrewRepository crewRepo, SkillRepository skillRepo) {
 		super();
 		this.repo = repo;
@@ -37,6 +41,7 @@ public class PersonnelService {
 	 * SERVICE METHODS
 	 */
 
+	
 // 	GET ALL PERSONNEL
 	public Iterable<Personnel> findAll() {
 		return repo.findAll();
@@ -44,6 +49,8 @@ public class PersonnelService {
 
 //  FIND PERSONNEL BY ID
 	public ResponseEntity<Object> findById(int personnelId) {
+		
+		// Check if requested Personnel ID exists in the DB
 		if (repo.existsById(personnelId)) {
 			return ResponseEntity.status(HttpStatus.OK)
 					.body(repo.findById(personnelId).get());
@@ -55,27 +62,35 @@ public class PersonnelService {
 
 // 	CREATE ONE PERSONNEL - POST
 	public ResponseEntity<Object> addOne(PersonnelDTO personnelDTO) {
+		
+		// Check if input for Personnel Name is a duplicate
 		if (repo.existsByPersonnelNameIgnoreCase(personnelDTO.getPersonnelName())) {
 			return ResponseEntity.status(HttpStatus.CONFLICT)
-					.body(String.format("Personnel with name '%s' already exists!", personnelDTO.getPersonnelName()));
+								 .body(String.format("Personnel with name '%s' already exists!", 
+										 				personnelDTO.getPersonnelName()));
 		}
 		
+		/*
+		 * PERSONNEL-CREW RELATIONSHIP VALIDATIONS
+		 */
+		
+		// Set isAssigned flag to true if Personnel is associated with a Crew
 		boolean isAssigned = personnelDTO.getCrew() != null;
 		
-		// if selected crew is not null
-		// get list of personnels, else give empty list
+		// If a Crew is selected
+		// Get List of Personnel, else give empty list
 		List<Personnel> personnels = isAssigned ? repo.findAllPersonnelsByCrewId(personnelDTO.getCrew().getCrewId()) : new ArrayList<>();
 
-		// check if the crew selected has already hit its max capacity or not
+		// Check if selected Crew is already at max capacity
 		if(isAssigned && personnels.size() >= repo.findMaxCapByCrewId(personnelDTO.getCrew().getCrewId())) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					.body(String.format("Max capacity reached for Crew. Please assign a different Crew."));
+								 .body(String.format("Max capacity reached for Crew. Please assign a different Crew."));
 		} else {
 			
-			// Get Captain Object from input Captain ID (set as null otherwise)
+			// Get Captain Object (set as null if no incoming captain)
 		    Crew crew = isAssigned ? crewRepo.findById(personnelDTO.getCrew().getCrewId()).orElse(null) : null;
 			
-			// Get List of Skill Objects from input List (Stream attempt?)
+			// Get incoming List of Skill Objects (Stream attempt?)
 		    // Convert list to stream
 		    List<Skill> skills = personnelDTO.getSkills().stream()
 		    		// for each skill in skills, get the full skill object by its id or else set to null (non-terminal)
@@ -97,26 +112,32 @@ public class PersonnelService {
 //			}
 			
 			return ResponseEntity.status(HttpStatus.CREATED)
-					.body(repo.save(new Personnel(0, personnelDTO.getPersonnelName(),
-							personnelDTO.getSpecies(),
-							personnelDTO.getProfileImg(),
-							isAssigned,
-							crew,
-							skills)));
+								 .body(repo.save(new Personnel(0, personnelDTO.getPersonnelName(),
+										 						  personnelDTO.getSpecies(),
+										 						  personnelDTO.getProfileImg(),
+										 						  isAssigned,
+										 						  crew,
+										 						  skills)));
 		}
 	}
 
 // 	UPDATE ONE PERSONNEL - PUT
 	@Transactional
 	public ResponseEntity<Object> updateOne(int personnelId, PersonnelDTO personnelDTO) {
+		
+		// Check if requested Personnel ID exists in the DB
 	    if(!repo.existsById(personnelId)) {
 	    	return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 		             			 .body(String.format("Failed to update! Personnel with ID %d does not exist. Ensure the ID is correct or create a new Personnel.", 
 		             					 				personnelId));
 	    }
 		
-	    // Get the current Personnel's ID
+	    // Get the current Personnel
 	    Personnel currentPersonnel = repo.findById(personnelId).get();
+	    
+	    /*
+	     * PERSONNEL NAME VALIDATION
+	     */
 	    
 		// Check if the Personnel name already exists in the DB
 		// and is not the name of this one that is currently being updated
@@ -129,6 +150,9 @@ public class PersonnelService {
        									personnelDTO.getPersonnelName()));
 		}
 		
+		/*
+		 * CREW MAX CAPACITY CHECK
+		 */
 		boolean isAssigned = personnelDTO.getCrew() != null;
 		
 		if (isAssigned) {
@@ -143,12 +167,12 @@ public class PersonnelService {
 		}
 			
 		return ResponseEntity.status(HttpStatus.OK)
-					.body(repo.save(new Personnel(personnelId, personnelDTO.getPersonnelName(),
-							personnelDTO.getSpecies(),
-							personnelDTO.getProfileImg(),
-							isAssigned,
-							personnelDTO.getCrew(),
-							personnelDTO.getSkills())));
+							 .body(repo.save(new Personnel(personnelId, personnelDTO.getPersonnelName(),
+									 									personnelDTO.getSpecies(),
+									 									personnelDTO.getProfileImg(),
+									 									isAssigned,
+									 									personnelDTO.getCrew(),
+									 									personnelDTO.getSkills())));
 	}
 	
 

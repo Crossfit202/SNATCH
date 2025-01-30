@@ -18,10 +18,10 @@ public class CaptainService {
 
 	private CaptainRepository repo;
 	
-	// Inject Leader Repo to retrieve Leader JSON Object
+	// Inject Leader Repo to retrieve Leader Object
 	private LeaderRepository leaderRepo;
 	
-	// Inject Crew Repo to retrieve Crew JSON Object
+	// Inject Crew Repo to retrieve Crew Object
 	private CrewRepository crewRepo;
 
 	// Constructor with constructor injection for repositories
@@ -38,12 +38,12 @@ public class CaptainService {
 	 */
 	
 	
-	// GET ALL
+// 	GET ALL
 	public Iterable<Captain> findAll() {
 		return repo.findAll();
 	}
 	
-	// GET BY ID
+// 	GET BY ID
 	public ResponseEntity<Object> findById(int captainId) {
 		
 		// Check if requested Captain ID exists in the DB
@@ -56,7 +56,7 @@ public class CaptainService {
 		}
 	}
 	
-	// CREATE ONE
+// 	CREATE ONE
 	public ResponseEntity<Object> addOne(CaptainDTO captainDTO) {
 		
 		// Check if input for Captain Name is a duplicate
@@ -65,10 +65,10 @@ public class CaptainService {
 					             .body(String.format("'%s' already exists!", captainDTO.getCaptainName()));
 		} else {
 			
-			// Get Leader Object from input Leader ID
-			Leader leader = leaderRepo.findById(captainDTO.getLeader().getLeaderId())
-		                			  .orElse(null);
+			// Get Leader Object
+			Leader leader = leaderRepo.findById(captainDTO.getLeader().getLeaderId()).orElse(null);
 			
+			// Get Crew Object (if supplied)
 			Crew crew = (captainDTO.getCrew() != null) ? crewRepo.findById(captainDTO.getCrew().getCrewId()).orElse(null) : null;
 
 			// Save the new Captain
@@ -90,25 +90,30 @@ public class CaptainService {
 		
 	}
 	
-	// UPDATE ONE
+// 	UPDATE ONE
 	@Transactional
 	public ResponseEntity<Object> updateOne(int captainId, CaptainDTO captainDTO) {
 		
-		// Check if the Captain ID exists in DB, else quick exit (no point in doing the rest!)
+		// Check if the Captain ID exists in DB, else quick exit
 		if(!repo.existsById(captainId)) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					 .body(String.format("Failed to update! Captain with ID %d does not exist. Ensure the ID is correct or create a new Captain.", captainId));
+					 			 .body(String.format("Failed to update! Captain with ID %d does not exist. Ensure the ID is correct or create a new Captain.", 
+					 					 				captainId));
 		}
+		
+		/*
+		 * CREW AND CAPTAIN NAME CONFLICT VALIDATION
+		 */
 			
-		// Get the current Captain's ID
+		// Get the current Captain
 		Captain currentCaptain = repo.findById(captainId).get();
 		
-	    // Check if the Crew ID is already assigned to a Captain
+	    // Check if the supplied Crew ID is already assigned to a Captain
 	    // and is not the one it is currently assigned to
 	    boolean crewAlreadyAssigned = repo.existsByCrew_CrewId(captainDTO.getCrew().getCrewId()) 
 	    								&& (currentCaptain.getCrew().getCrewId() != captainDTO.getCrew().getCrewId());
 		
-		// Check if the Captain name already exists in the DB
+		// Check if the supplied Captain name already exists in the DB (if user is renaming)
 		// and is not the name of this one that is currently being updated
 		boolean captainNameExists = repo.existsByCaptainNameIgnoreCase(captainDTO.getCaptainName()) 
 		    						 && !currentCaptain.getCaptainName().equalsIgnoreCase(captainDTO.getCaptainName());
@@ -132,7 +137,11 @@ public class CaptainService {
                     									captainDTO.getCaptainName()));
 	    } else {
 	    	
-	        // Remove the current crew's captain (if necessary)
+	    	/*
+	    	 * UPDATE DB VALUES IF CHANGING CAPTAINS
+	    	 */
+	    	
+	        // Remove the current crew's captain
 	        if (currentCaptain.getCrew() != null) {
 	            repo.removeCrewNotRequested(captainId);
 	        }
@@ -142,11 +151,14 @@ public class CaptainService {
 	            repo.updateCaptainCrew(captainId, captainDTO.getCrew().getCrewId());
 	        }
 	    	
-			// Get Leader Object from input Leader ID
+	        /*
+	         * TO RETRIEVE RELATED OBJECTS
+	         */
+	        
+			// Get Leader Object
 			Leader leader = leaderRepo.findById(captainDTO.getLeader().getLeaderId()).orElse(null);
 				
-			// Get Crew Object from input Crew ID
-			// Set Crew Object to null if not provided
+			// Get Crew Object (if supplied)
 			Crew crew = captainDTO.getCrew() != null ? crewRepo.findById(captainDTO.getCrew().getCrewId()).orElse(null) : null;
 		        
 			// Save the updated Captain
@@ -161,12 +173,10 @@ public class CaptainService {
 	    }
 	}
 	
-	// DELETE ONE
+// 	DELETE ONE
 	public ResponseEntity<Void> deleteOne(int captainId) {
-//		repo.deleteById(captainId);
-//		return ResponseEntity.status(HttpStatus.NO_CONTENT)
-//							 .body(null);
 		
+		// Check if requested Captain exists in DB
 	    if (repo.existsById(captainId)) {
 	        Captain captain = repo.findById(captainId).get();
 
