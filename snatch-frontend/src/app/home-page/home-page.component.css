@@ -1,15 +1,45 @@
 header {
-    background-color: grey;
+    background-image: url('/assets/images/homepage/banner.png');
     background-size: cover;
     background-position: center;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-    height: 60vh;
-
+    background-repeat: no-repeat;
+    height: 45vh;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-footer {
-    background-color: darkgrey;
+
+
+.card-body {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+
+/* Add a highlight and shaking effect on hover */
+.card {
+    transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* Hover effect */
+.card:hover {
+    transform: translateX(2px) rotate(1deg);
+    box-shadow: 0px 0px 15px rgba(255, 255, 0, 0.7);
+    /* Yellow glow */
+    animation: shake 0.3s ease-in-out infinite alternate;
+}
+
+/* Shake animation */
+@keyframes shake {
+    0% {
+        transform: translateX(-2px) rotate(-1deg);
+    }
+
+    100% {
+        transform: translateX(2px) rotate(1deg);
+    }
+}
+
+.bg-primary {
+    background-color: #7db7bd !important;
 }

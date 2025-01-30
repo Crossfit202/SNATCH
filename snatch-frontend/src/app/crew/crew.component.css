@@ -1,0 +1,80 @@
+.main-div {
+    display: flex;
+    flex-wrap: wrap;
+    /* Ensures elements don't overflow */
+    justify-content: space-around;
+    align-items: flex-start;
+    width: 100%;
+    /* Ensures it doesn't exceed the screen */
+    max-width: 100vw;
+    /* Prevents accidental overflow */
+    padding: 0;
+    box-sizing: border-box;
+    /* Ensures padding doesn’t affect width */
+}
+
+.crews-section,
+.add-crew-section {
+    width: 50vw;
+    /* Forces exactly half the viewport */
+    max-width: 50vw;
+    /* Prevents any overflow */
+    padding: 10px 30px;
+    /* Adds spacing but avoids pushing content out */
+    box-sizing: border-box;
+    /* Prevents padding from increasing size */
+}
+
+/* Optional: Ensure responsiveness */
+@media (max-width: 768px) {
+    .main-div {
+        flex-direction: column;
+        /* Stack them vertically on small screens */
+        height: auto;
+    }
+
+    .crews-section,
+    .add-crew-section {
+        width: 100%;
+        /* Make them full width when stacked */
+    }
+}
+
+.container-fluid {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin: 0 auto;
+    width: 100vw;
+    /* Forces it to always fit within the screen */
+}
+
+.crews-section {
+    width: 50vw;
+    /* Forces exactly half the viewport */
+    max-width: 50vw;
+    /* Prevents any overflow */
+    height: 80vh;
+    /* Set a fixed height for scrolling */
+    overflow-y: auto;
+    /* Enables vertical scrolling */
+    padding: 10px 30px;
+    /* Adds spacing but avoids pushing content out */
+    box-sizing: border-box;
+    /* Prevents padding from increasing size */
+    border-right: 2px solid #ddd;
+    /* Optional: Adds a subtle separator */
+}
+
+/* Optional: Hide the scrollbar for a cleaner look */
+.crews-section::-webkit-scrollbar {
+    width: 6px;
+}
+
+.crews-section::-webkit-scrollbar-thumb {
+    background-color: #aaa;
+    border-radius: 10px;
+}
+
+.crews-section::-webkit-scrollbar-track {
+    background: transparent;
+}

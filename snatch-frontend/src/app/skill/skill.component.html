@@ -1,29 +1,35 @@
 <app-navbar></app-navbar>
-<h2 class="text-center mb-4">Skills</h2>
 
-<!-- Skills List -->
-<div class="container">
-    <ul class="list-group">
-        <li *ngFor="let skill of skills" class="list-group-item d-flex justify-content-between align-items-center">
-            <!-- Skill Name -->
-            <span>{{ skill.skillName }}</span>
-            <!-- Delete Button -->
-            <button (click)="deleteSkills(skill.skillId)" class="btn btn-danger btn-sm">
-                Delete
-            </button>
-        </li>
-    </ul>
-</div>
-
-<h2 class="text-center mt-5 mb-4">Add Skill</h2>
-
-<!-- Add Skill Form -->
-<div class="container">
-    <form (ngSubmit)="addSkill()" class="bg-light p-4 rounded shadow-sm">
-        <div class="mb-3">
-            <label for="skillName" class="form-label">Skill Name:</label>
-            <input id="skillName" [(ngModel)]="newSkill.skillName" name="skillName" class="form-control" required />
+<!-- Full-width container to ensure they take the full screen -->
+<div class="container-fluid">
+    <div class="main-div">
+        <!-- Left Section: Skills List -->
+        <div class="skills-section">
+            <h1 class="text-center mb-4">Skills</h1>
+            <ul class="list-group">
+                <li *ngFor="let skill of skills"
+                    class="list-group-item d-flex justify-content-between align-items-center">
+                    <!-- Skill Name -->
+                    <span>{{ skill.skillName }}</span>
+                    <!-- Delete Button -->
+                    <button (click)="deleteSkills(skill.skillId)" class="btn btn-danger btn-sm">
+                        Delete
+                    </button>
+                </li>
+            </ul>
         </div>
-        <button type="submit" class="btn btn-success w-100">Add</button>
-    </form>
+
+        <!-- Right Section: Add Skill Form -->
+        <div class="add-skill-section">
+            <h1 class="text-center mb-4">Add Skill</h1>
+            <form (ngSubmit)="addSkill()" class="bg-light p-4">
+                <div class="mb-3">
+                    <label for="skillName" class="form-label">Skill Name:</label>
+                    <input id="skillName" [(ngModel)]="newSkill.skillName" name="skillName" class="form-control"
+                        required />
+                </div>
+                <button type="submit" class="btn btn-success w-100">Add</button>
+            </form>
+        </div>
+    </div>
 </div>

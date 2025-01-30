@@ -1,75 +1,81 @@
 <app-navbar></app-navbar>
-<h1 class="text-center mb-4">Captains</h1>
 
-<!-- Captain List -->
-<div class="container">
-  <ul class="list-group">
-    <li *ngFor="let captain of captains" class="list-group-item p-3">
-      <div class="d-flex justify-content-between align-items-center">
-        <div class="bg-light p-3 rounded shadow-sm flex-grow-1">
-          <p><strong>Captain:</strong> {{ captain.captainName }}</p>
-          <p><strong>Leader:</strong> {{ captain.leader.leaderName }}</p>
-          <p><strong>Crew:</strong> {{ captain.crew ? captain.crew.crewName : 'No Crew' }}</p>
+<!-- Full-width container to ensure they take the full screen -->
+<div class="container-fluid">
+  <div class="main-div">
+    <!-- Left Section: Captains List -->
+    <div class="captains-section">
+      <h1 class="text-center mb-4">Captains</h1>
+      <ul class="list-group">
+        <li *ngFor="let captain of captains" class="list-group-item p-3">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="bg-light p-3 rounded shadow-sm flex-grow-1">
+              <p><strong>{{ captain.captainName }}</strong></p>
+              <p><strong>Leader:</strong> {{ captain.leader.leaderName }}</p>
+              <p><strong>Crew:</strong> {{ captain.crew ? captain.crew.crewName : 'No Crew' }}</p>
+            </div>
+            <div class="ms-3">
+              <button (click)="toggleEdit(captain.captainId)" class="btn btn-warning btn-sm me-2">
+                Edit
+              </button>
+              <button (click)="deleteCaptain(captain.captainId)" class="btn btn-danger btn-sm">
+                Delete
+              </button>
+            </div>
+          </div>
+
+          <!-- Edit Form -->
+          <div *ngIf="editingCaptainId === captain.captainId" class="mt-3 p-3 bg-light rounded shadow-sm">
+            <form (ngSubmit)="updateCaptain()" *ngIf="selectedCaptain">
+              <div class="mb-3">
+                <label class="form-label">Captain Name:</label>
+                <input [(ngModel)]="selectedCaptain.captainName" name="captainName" class="form-control" required />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Leader:</label>
+                <select [(ngModel)]="selectedCaptain.leader" name="leader" class="form-select">
+                  <option *ngFor="let leader of leaders" [ngValue]="leader">{{ leader.leaderName }}
+                  </option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Crew:</label>
+                <select [(ngModel)]="selectedCaptain.crew" name="crew" class="form-select">
+                  <option [ngValue]="null">No Crew</option>
+                  <option *ngFor="let crew of crews" [ngValue]="crew">{{ crew.crewName }}</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-success btn-sm">Save</button>
+              <button type="button" (click)="cancelEdit()" class="btn btn-secondary btn-sm ms-2">Cancel</button>
+            </form>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Right Section: Add Captain Form -->
+    <div class="add-captain-section">
+      <h1 class="text-center mb-4">Add Captain</h1>
+      <form (ngSubmit)="addCaptain()" class="bg-light p-4">
+        <div class="mb-3">
+          <label class="form-label">Captain Name:</label>
+          <input [(ngModel)]="newCaptain.captainName" name="captainName" class="form-control" required />
         </div>
-        <div class="ms-3">
-          <button (click)="toggleEdit(captain.captainId)" class="btn btn-warning btn-sm me-2">
-            Edit
-          </button>
-          <button (click)="deleteCaptain(captain.captainId)" class="btn btn-danger btn-sm">
-            Delete
-          </button>
+        <div class="mb-3">
+          <label class="form-label">Leader:</label>
+          <select [(ngModel)]="newCaptain.leader" name="leader" class="form-select">
+            <option *ngFor="let leader of leaders" [ngValue]="leader">{{ leader.leaderName }}</option>
+          </select>
         </div>
-      </div>
-
-      <!-- Accordion-style edit form -->
-      <div *ngIf="editingCaptainId === captain.captainId" class="mt-3 p-3 bg-light rounded shadow-sm">
-        <form (ngSubmit)="updateCaptain()" *ngIf="selectedCaptain">
-          <div class="mb-3">
-            <label class="form-label">Captain Name:</label>
-            <input [(ngModel)]="selectedCaptain.captainName" name="captainName" class="form-control" required />
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Leader:</label>
-            <select [(ngModel)]="selectedCaptain.leader" name="leader" class="form-select">
-              <option *ngFor="let leader of leaders" [ngValue]="leader">{{ leader.leaderName }}</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Crew:</label>
-            <select [(ngModel)]="selectedCaptain.crew" name="crew" class="form-select">
-              <option [ngValue]="null">No Crew</option>
-              <option *ngFor="let crew of crews" [ngValue]="crew">{{ crew.crewName }}</option>
-            </select>
-          </div>
-          <button type="submit" class="btn btn-success btn-sm">Save</button>
-          <button type="button" (click)="cancelEdit()" class="btn btn-secondary btn-sm ms-2">Cancel</button>
-        </form>
-      </div>
-    </li>
-  </ul>
-</div>
-
-<!-- Add Captain Form -->
-<h2 class="text-center mt-5 mb-4">Add Captain</h2>
-<div class="container">
-  <form (ngSubmit)="addCaptain()" class="bg-light p-4 rounded shadow-sm">
-    <div class="mb-3">
-      <label class="form-label">Captain Name:</label>
-      <input [(ngModel)]="newCaptain.captainName" name="captainName" class="form-control" required />
+        <div class="mb-3">
+          <label class="form-label">Crew:</label>
+          <select [(ngModel)]="newCaptain.crew" name="crew" class="form-select">
+            <option [ngValue]="null">No Crew</option>
+            <option *ngFor="let crew of crews" [ngValue]="crew">{{ crew.crewName }}</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-success w-100">Add</button>
+      </form>
     </div>
-    <div class="mb-3">
-      <label class="form-label">Leader:</label>
-      <select [(ngModel)]="newCaptain.leader" name="leader" class="form-select">
-        <option *ngFor="let leader of leaders" [ngValue]="leader">{{ leader.leaderName }}</option>
-      </select>
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Crew:</label>
-      <select [(ngModel)]="newCaptain.crew" name="crew" class="form-select">
-        <option [ngValue]="null">No Crew</option>
-        <option *ngFor="let crew of crews" [ngValue]="crew">{{ crew.crewName }}</option>
-      </select>
-    </div>
-    <button type="submit" class="btn btn-success w-100">Add</button>
-  </form>
+  </div>
 </div>

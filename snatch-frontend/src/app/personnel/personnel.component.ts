@@ -37,8 +37,6 @@ export class PersonnelComponent implements OnInit {
     });
   }
 
-
-
   loadSkills(): void {
     this.skillService.getAllSkills().subscribe((skills: Skill[]) => {
       this.skills = skills;
@@ -66,7 +64,6 @@ export class PersonnelComponent implements OnInit {
     });
   }
 
-
   updatePersonnel(): void {
     if (!this.selectedPersonnel) return;
 
@@ -86,7 +83,7 @@ export class PersonnelComponent implements OnInit {
 
     this.personnelService.updatePersonnel(this.selectedPersonnel.personnelId, personnelPayload).subscribe(() => {
       this.loadPersonnels();
-      this.cancelEdit();
+      this.closeEditPopup(); // ✅ Close modal after update
     });
   }
 
@@ -94,23 +91,17 @@ export class PersonnelComponent implements OnInit {
     return skill1 && skill2 ? skill1.skillId === skill2.skillId : false;
   }
 
+  openEditPopup(personnel: Personnel): void {
+    this.editingPersonnelId = personnel.personnelId;
+    this.selectedPersonnel = { ...personnel, skills: personnel.skills || [] };
+    document.body.classList.add("modal-open"); // Prevents background scrolling
+  }
 
-
-  cancelEdit(): void {
+  closeEditPopup(): void {
     this.editingPersonnelId = null;
     this.selectedPersonnel = null;
+    document.body.classList.remove("modal-open"); // Re-enables scrolling
   }
-
-  toggleEdit(personnelId: number): void {
-    this.editingPersonnelId = this.editingPersonnelId === personnelId ? null : personnelId;
-    const personnel = this.personnels.find(p => p.personnelId === personnelId);
-
-    this.selectedPersonnel = personnel
-      ? { ...personnel, skills: personnel.skills || [] } // Ensure skills array exists
-      : new Personnel(0, '', '', '', false, null, []);
-  }
-
-
 
   deletePersonnel(id: number): void {
     this.personnelService.deletePersonnel(id).subscribe(() => {
