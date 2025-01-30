@@ -22,12 +22,12 @@ public class LeaderService {
 	 * SERVICE METHODS
 	 */
 	
-	// GET ALL
+// 	GET ALL
 	public Iterable<Leader> findAll() {
 		return repo.findAll();
 	}
 	
-	// GET BY ID
+// 	GET BY ID
 	public ResponseEntity<Object> findById(int leaderId) {
 		if(repo.existsById(leaderId)) {
 			return ResponseEntity.status(HttpStatus.OK)
@@ -38,25 +38,25 @@ public class LeaderService {
 		}
 	}
 	
-	// CREATE ONE
+// 	CREATE ONE
 	public ResponseEntity<Object> addOne(LeaderDTO leaderDTO) {
+		
+		// Check if input for Leader Name is a duplicate
 		if(repo.existsByLeaderNameIgnoreCase(leaderDTO.getLeaderName())) {
 			return ResponseEntity.status(HttpStatus.CONFLICT)
 								 .body(String.format("Leader with name '%s' already exists!", leaderDTO.getLeaderName()));
 		} else {
 			return ResponseEntity.status(HttpStatus.CREATED)
 					 .body(repo.save(new Leader(0, leaderDTO.getLeaderName(), null)));
-//			Leader savedLeader = repo.save(new Leader(0, leaderDTO.getLeaderName(), null));
-//			Leader completeLeader = repo.findById(savedLeader.getLeaderId()).orElse(null);
-//			return ResponseEntity.status(HttpStatus.CREATED)
-//								 .body(completeLeader);
 		}
 		
 		
 	}
 	
-	// UPDATE ONE
+// 	UPDATE ONE
 	public ResponseEntity<Object> updateOne(int leaderId, LeaderDTO leaderDTO) {
+		
+		// Check if the Leader ID exists in DB, else quick exit
 		if(repo.existsById(leaderId)) {
 			return ResponseEntity.status(HttpStatus.OK)
 			 			 		 .body(repo.save(new Leader(leaderId, leaderDTO.getLeaderName(), null)));
@@ -67,7 +67,7 @@ public class LeaderService {
 		}
 	}
 	
-	// DELETE ONE
+// 	DELETE ONE
 	public ResponseEntity<Void> deleteOne(int leaderId) {
 		repo.deleteById(leaderId);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT)

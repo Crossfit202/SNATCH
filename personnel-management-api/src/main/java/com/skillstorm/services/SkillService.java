@@ -29,6 +29,8 @@ public class SkillService {
 //	FIND BY ID
 	
 	public ResponseEntity<Skill> findById(int skillId) {
+		
+		// Check if requested Skill ID exists in the DB
 		if (repo.existsById(skillId))
 			return ResponseEntity.status(HttpStatus.OK)
 							     .body(repo.findById(skillId).get());
@@ -46,6 +48,8 @@ public class SkillService {
 	
 //	PUT
 		public ResponseEntity<Skill> updateOne(int skillId, SkillDTO skillDTO) {
+			
+			// Check if requested Skill ID exists in the DB
 		    if (repo.existsById(skillId))
 		    	return ResponseEntity.status(HttpStatus.OK)
 		    			             .body(repo.save(new Skill(skillId, skillDTO.getSkillName(), null)));

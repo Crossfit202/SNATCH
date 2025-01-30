@@ -25,8 +25,7 @@ public class CrewService {
 	// Inject HeistClient to communicate with Heist API
 	private HeistClient heistClient;
 
-	// Inject Personnel Repo to retrieve Personnel Object (hmmm...might not need
-	// actually...)
+	// Inject Personnel Repo to retrieve Personnel Object
 	private PersonnelRepository personnelRepo;
 
 	// Inject Captain Repo to retrieve Captain Object
@@ -41,10 +40,12 @@ public class CrewService {
 		this.captainRepo = captainRepo;
 	}
 
+	
 	/*
 	 * SERVICE METHODS
 	 */
 
+	
 //	GET ALL CREW
 	public Iterable<Crew> findAll() {
 		return repo.findAll();
@@ -79,7 +80,7 @@ public class CrewService {
 //	CREATE ONE CREW - POST
 	public ResponseEntity<Object> addOne(CrewDTO crewDTO) {
 
-		// Check if incoming Crew Name is a duplicate
+		// Check if input for Crew Name is a duplicate
 		if (repo.existsByCrewNameIgnoreCase(crewDTO.getCrewName())) {
 			return ResponseEntity.status(HttpStatus.CONFLICT)
 								 .body(String.format("Crew with name '%s' already exists!", 
@@ -93,7 +94,7 @@ public class CrewService {
 										 				crewDTO.getCaptain().getCaptainId()));
 		} else {
 
-			// Get Captain Object from incoming Captain ID
+			// Get Captain Object (if supplied)
 			Captain captain = captainRepo.findById(crewDTO.getCaptain().getCaptainId()).orElse(null);
 
 			// Save the new Crew with associated Captain Object
@@ -107,7 +108,7 @@ public class CrewService {
 			// Retrieve the newly saved Crew Object
 			Crew completeCrew = repo.findById(savedCrew.getCrewId()).orElse(null);
 
-			// Might want to refactor this into throwing an Exception in the future
+			// Refactor this into throwing an Exception in the future...Global Exception Handler?
 			// Null handling in case the Crew did not save properly
 			if (completeCrew != null) {
 				return ResponseEntity.status(HttpStatus.CREATED).body(completeCrew);
@@ -124,14 +125,14 @@ public class CrewService {
 	@Transactional
 	public ResponseEntity<Object> updateOne(int crewId, CrewDTO crewDTO) {
 
-		// Check if the Crew ID exists in DB, else quick exit (no point in doing the rest!)
+		// Check if the Crew ID exists in DB, else quick exit
 		if (!repo.existsById(crewId)) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 								 .body(String.format("Failed to update! Crew with ID %d does not exist. Ensure the ID is correct or create a new Crew.",
 										 				crewId));
 		}
 
-		// Get the current Crew's ID
+		// Get the current Crew
 		Crew currentCrew = repo.findById(crewId).get();
 
 		/*
@@ -155,20 +156,23 @@ public class CrewService {
 									 .body(String.format("Failed to update! Crew with with name '%s' already exists, and Captain with ID '%d' is already assigned to a crew!",
 											 				crewDTO.getCrewName(), crewDTO.getCaptain().getCaptainId()));
 
-				// If only the captain selected conflicts
+			// If only the captain selected conflicts
 			} else if (captainExists) {
 				return ResponseEntity.status(HttpStatus.CONFLICT)
 									 .body(String.format("Failed to update! Captain with ID '%d' is already assigned to a crew!",
 											 				crewDTO.getCaptain().getCaptainId()));
 
-				// If only the name conflicts
+			// If only the name conflicts
 			} else if (crewNameExists) {
 				return ResponseEntity.status(HttpStatus.CONFLICT)
 									 .body(String.format("Failed to update! Crew with with name '%s' already exists!", 
 											 				crewDTO.getCrewName()));
 			}
+			
 		} else {
+			// To allow null Captains
 			currentCrew.setCaptain(null);
+			// To flip the boolean to false if Captain is null
 			currentCrew.setHasCaptain(false);
 		}
 
