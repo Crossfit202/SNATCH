@@ -64,32 +64,36 @@ export class HeistComponent implements OnInit {
   // Add a new heist
   addHeist(): void {
     this.heistService.addHeist(this.newHeist).subscribe((createdHeist) => {
-      this.heists.push({ heist: createdHeist, crew: null }); // Ensure correct structure
-      this.newHeist = new Heist();
+      this.newHeist = new Heist(); // Reset form
+      this.loadHeists(); // Fetch updated heist list
     }, error => {
       console.error("Error adding heist:", error);
     });
   }
 
 
+
   // Delete a heist
-  deleteHeist(id: number): void {
-    this.heistService.deleteHeist(id).subscribe(() => {
-      this.heists = this.heists.filter(h => h.heistId !== id);
+  deleteHeist(heistId: number): void {
+    this.heistService.deleteHeist(heistId).subscribe(() => {
+      this.loadHeists(); // Fetch updated heist list after deletion
     }, error => {
       console.error("Error deleting heist:", error);
     });
   }
 
+
   // Toggle edit mode for a specific heist
   toggleEdit(heistId: number): void {
-    if (this.editingHeistId === heistId) {
-      this.cancelEdit(); // Cancel if clicked again
-    } else {
+    const heistToEdit = this.heists.find(h => h.heist.heistId === heistId);
+    if (heistToEdit) {
       this.editingHeistId = heistId;
-      this.selectedHeist = { ...this.heists.find(h => h.heistId === heistId)! };
+      this.selectedHeist = { ...heistToEdit.heist }; // Clone to avoid modifying original
+    } else {
+      console.error("Error: Heist not found for editing.");
     }
   }
+
 
   // Cancel edit mode
   cancelEdit(): void {
@@ -99,17 +103,18 @@ export class HeistComponent implements OnInit {
 
   // Update a heist
   updateHeist(): void {
-    if (this.selectedHeist) {
-      this.heistService.updateHeist(this.selectedHeist).subscribe(updatedHeist => {
-        const index = this.heists.findIndex(h => h.heist.heistId === updatedHeist.heistId);
-        if (index !== -1) {
-          this.heists[index].heist = updatedHeist; // Update only the heist part
-        }
-        this.cancelEdit();
+    if (this.selectedHeist && this.selectedHeist.heistId) {
+      this.heistService.updateHeist(this.selectedHeist).subscribe(() => {
+        this.editingHeistId = null;
+        this.selectedHeist = null;
+        this.loadHeists();
       }, error => {
         console.error("Error updating heist:", error);
       });
+    } else {
+      console.error("Error: Heist ID is missing, cannot update.");
     }
   }
+
 
 }
