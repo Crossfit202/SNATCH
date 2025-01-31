@@ -85,7 +85,7 @@ export class PersonnelComponent implements OnInit {
       species: this.selectedPersonnel.species,
       profileImg: this.selectedPersonnel.profileImg,
       isAssigned: this.selectedPersonnel.isAssigned,
-      crew: null, // Always null for now
+      crew: this.selectedPersonnel.crew ? { crewId: this.selectedPersonnel.crew.crewId } : null, // ✅ Keep crew if assigned
       skills: this.selectedPersonnel.skills.map(skill => ({
         skillId: skill.skillId, // Send only necessary fields
         skillName: skill.skillName,

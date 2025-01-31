@@ -1,73 +1,115 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Heist } from '../models/Heist';
 import { HeistService } from '../services/heist.service';
+import { Heist } from '../models/Heist';
+import { Crew } from '../models/Crew';
+import { CrewService } from '../services/crew.service';
 import { NavbarComponent } from '../reused-components/navbar.component';
 
 @Component({
-  selector: 'app-heist', // Defines the component selector for use in templates
-  templateUrl: './heist.component.html', // Links to the HTML template file
-  styleUrls: ['./heist.component.css'], // Links to the component's styles
-  standalone: true, // Ensures the component is independent (only include if using standalone components)
-  imports: [CommonModule, FormsModule, NavbarComponent], // Modules and components imported for use
+  selector: 'app-heist', // Defines the component selector
+  standalone: true, // This is a standalone Angular component
+  imports: [CommonModule, FormsModule, NavbarComponent], // Import necessary modules
+  templateUrl: './heist.component.html', // The HTML template for this component
+  styleUrls: ['./heist.component.css'] // The CSS styles for this component
 })
 export class HeistComponent implements OnInit {
+  // List of heists
+  heists: any[] = [];
 
-  heists: Heist[] = []; // Stores the list of heists retrieved from the backend
-  newHeist: Heist = new Heist(0, '', '', '', 0, false); // Represents a new heist object for the form
-  editingHeistId: number | null = null; // Tracks which heist is currently being edited
-  selectedHeist: Heist | null = null; // Stores the selected heist for editing
+  // New heist object for adding a heist
+  newHeist: Heist = new Heist();
 
-  constructor(private heistService: HeistService) { } // Injects the HeistService for API calls
+  // List of available crews
+  crews: Crew[] = [];
 
-  // Lifecycle hook that runs when the component initializes
+  // Tracks which heist is currently being edited
+  editingHeistId: number | null = null;
+
+  // Holds the selected heist for editing
+  selectedHeist: Heist | null = null;
+
+  constructor(
+    private heistService: HeistService, // Injects the heist service
+    private crewService: CrewService // Injects the crew service
+  ) { }
+
   ngOnInit(): void {
-    this.loadHeists(); // Load heists from the backend when the component initializes
+    // Load all heists and crews on initialization
+    this.loadHeists();
+    this.loadCrews();
   }
 
-  // Fetches all heists from the backend and stores them in the `heists` array
+  // Load all heists from the backend
   loadHeists(): void {
-    this.heistService.getAllHeist().subscribe((data) => {
-      this.heists = data;
+    this.heistService.getHeists().subscribe(data => {
+      console.log("Heists fetched:", data); // Debugging log
+      this.heists = data; // Store full object, including crew details
+    }, error => {
+      console.error("Error fetching heists:", error);
     });
   }
 
-  // Adds a new heist using the values from `newHeist`
+
+  // Load all crews from the backend
+  loadCrews(): void {
+    this.crewService.getAllCrews().subscribe(data => {
+      this.crews = data;
+    }, error => {
+      console.error("Error fetching crews:", error);
+    });
+  }
+
+  // Add a new heist
   addHeist(): void {
-    this.heistService.addHeist(this.newHeist).subscribe((heist) => {
-      this.heists.push(heist); // Add the new heist to the displayed list
-      this.newHeist = new Heist(0, '', '', '', 0, false); // Reset form fields after submission
+    this.heistService.addHeist(this.newHeist).subscribe((createdHeist) => {
+      this.heists.push({ heist: createdHeist, crew: null }); // Ensure correct structure
+      this.newHeist = new Heist();
+    }, error => {
+      console.error("Error adding heist:", error);
     });
   }
 
-  // Deletes a heist by its ID
+
+  // Delete a heist
   deleteHeist(id: number): void {
     this.heistService.deleteHeist(id).subscribe(() => {
-      this.heists = this.heists.filter((heist) => heist.heistId !== id); // Remove the deleted heist from the list
+      this.heists = this.heists.filter(h => h.heistId !== id);
+    }, error => {
+      console.error("Error deleting heist:", error);
     });
   }
 
-  // Toggles edit mode for a specific heist
-  toggleEdit(heist: Heist): void {
-    this.editingHeistId = this.editingHeistId === heist.heistId ? null : heist.heistId; // Toggle edit state
-    this.selectedHeist = { ...heist }; // Create a copy of the heist for editing
+  // Toggle edit mode for a specific heist
+  toggleEdit(heistId: number): void {
+    if (this.editingHeistId === heistId) {
+      this.cancelEdit(); // Cancel if clicked again
+    } else {
+      this.editingHeistId = heistId;
+      this.selectedHeist = { ...this.heists.find(h => h.heistId === heistId)! };
+    }
   }
 
-  // Updates the selected heist with new values
-  updateHeist(): void {
-    if (!this.selectedHeist) return; // Exit if no heist is selected
-
-    this.heistService.updateHeist(this.selectedHeist.heistId, this.selectedHeist).subscribe(() => {
-      this.loadHeists(); // Refresh the list after updating
-      this.editingHeistId = null; // Exit edit mode
-      this.selectedHeist = null; // Reset selected heist
-    });
-  }
-
-  // Cancels editing and resets selection
+  // Cancel edit mode
   cancelEdit(): void {
     this.editingHeistId = null;
     this.selectedHeist = null;
   }
+
+  // Update a heist
+  updateHeist(): void {
+    if (this.selectedHeist) {
+      this.heistService.updateHeist(this.selectedHeist).subscribe(updatedHeist => {
+        const index = this.heists.findIndex(h => h.heist.heistId === updatedHeist.heistId);
+        if (index !== -1) {
+          this.heists[index].heist = updatedHeist; // Update only the heist part
+        }
+        this.cancelEdit();
+      }, error => {
+        console.error("Error updating heist:", error);
+      });
+    }
+  }
+
 }

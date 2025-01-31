@@ -7,33 +7,27 @@ import { Heist } from '../models/Heist';
     providedIn: 'root'
 })
 export class HeistService {
-    private apiUrl = '/api/heist';
+    private apiUrl = '/api/heist'; // Update with your backend URL
 
     constructor(private http: HttpClient) { }
 
-    // Get all captains
-    getAllHeist(): Observable<Heist[]> {
+    // Get all heists
+    getHeists(): Observable<Heist[]> {
         return this.http.get<Heist[]>(this.apiUrl);
     }
 
-    // Get a single heist by ID
-    getHeistById(id: number): Observable<Heist> {
-        return this.http.get<Heist>(`${this.apiUrl}/${id}`);
-    }
-
+    // Add a new heist
     addHeist(heist: Heist): Observable<Heist> {
         return this.http.post<Heist>(this.apiUrl, heist);
     }
 
-    updateHeist(id: number, heist: Heist): Observable<Heist> {
-        return this.http.put<Heist>(`${this.apiUrl}/${id}`, heist);
+    // Update an existing heist
+    updateHeist(heist: Heist): Observable<Heist> {
+        return this.http.put<Heist>(`${this.apiUrl}/${heist.heistId}`, heist);
     }
 
-
-    // Delete a heist by ID
-    deleteHeist(id: number): Observable<void> {
-        return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    // Delete a heist
+    deleteHeist(heistId: number): Observable<void> {
+        return this.http.delete<void>(`${this.apiUrl}/${heistId}`);
     }
-
-
 }
